@@ -1,0 +1,4 @@
+allure-results/
+.idea
+target/
+logs/
