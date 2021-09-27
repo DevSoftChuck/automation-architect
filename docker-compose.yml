@@ -10,7 +10,7 @@ services:
   chrome:
     restart: unless-stopped
     image: selenium/node-chrome
-    dependS_on:
+    depends_on:
       - selenium-hub
     environment:
       HUB_PORT_4444_TCP_ADDR: selenium-hub
