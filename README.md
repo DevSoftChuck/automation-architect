@@ -1,8 +1,3 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-![GitHub last commit](https://img.shields.io/github/last-commit/DevSoftChuck/automation-architect?style=flat-square)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/DevSoftChuck/automation-architect?style=flat-square)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555)](https://www.linkedin.com/in/ivan-andraschko)
-
 # Automation project
 
 **Design Pattern:** Page Object Model
