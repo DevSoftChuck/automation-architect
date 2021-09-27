@@ -21,20 +21,3 @@ Feature: Login
               |$[USER] 				    |						|Please enter your password.                                                                               |
               |${!test,a4,@,a8,!.com}	|$[PASSWORD] 			|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
               |$[USER] 				    |${N8} 					|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |						|Please enter your password.                                                                               |
-              |${!test,a4,@,a8,!.com}	|$[PASSWORD] 			|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |${N8} 					|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |						|Please enter your password.                                                                               |
-              |${!test,a4,@,a8,!.com}	|$[PASSWORD] 			|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |${N8} 					|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |						|Please enter your password.                                                                               |
-              |${!test,a4,@,a8,!.com}	|$[PASSWORD] 			|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |${N8} 					|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |						|Please enter your password.                                                                               |
-              |${!test,a4,@,a8,!.com}	|$[PASSWORD] 			|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |${N8} 					|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |						|Please enter your password.                                                                               |
-              |${!test,a4,@,a8,!.com}	|$[PASSWORD] 			|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |${N8} 					|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|
-              |$[USER] 				    |						|Please enter your password.                                                                               |
-              |${!test,a4,@,a8,!.com}	|$[PASSWORD] 			|Please check your username and password. If you still can't log in, contact your Salesforce administrator.|

@@ -28,7 +28,7 @@ before_script:
 
 #RUN TEST
 script:
-  - mvn test -Dtravis.buildNumber=$TRAVIS_BUILD_NUMBER -Dtravis.buildURL=$TRAVIS_BUILD_WEB_URL -Dtravis.branch=$TRAVIS_BRANCH -Dtravis.osName=$TRAVIS_OS_NAME -Dtravis.jdkVersion=$TRAVIS_JDK_VERSION
+  - mvn test -Dtests.executor=grid -Dtravis.buildNumber=$TRAVIS_BUILD_NUMBER -Dtravis.buildURL=$TRAVIS_BUILD_WEB_URL -Dtravis.branch=$TRAVIS_BRANCH -Dtravis.osName=$TRAVIS_OS_NAME -Dtravis.jdkVersion=$TRAVIS_JDK_VERSION
 
 #UPLOADING TEST REPORTS
 after_script:
