@@ -5,7 +5,7 @@ jdk:
   - oraclejdk8
 
 #LINUX VERSION
-dist: focal
+dist: trusty
 
 #GUI & VIRTUAL BROWSER
 services:
