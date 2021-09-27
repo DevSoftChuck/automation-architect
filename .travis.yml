@@ -1,0 +1,57 @@
+sudo: required
+os: linux
+language: java
+jdk:
+  - openjdk8
+
+#LINUX VERSION
+dist: focal
+
+#GUI & VIRTUAL BROWSER
+services:
+  - xvfb
+  - docker
+
+#SET VERSIONS OF BROWSERS
+addons:
+  chrome: stable
+  firefox: latest
+
+#DOWNLOAD AND INSTALL ALL REQUIRED DRIVERS
+install:
+  - npm install -g allure-commandline --save-dev
+before_script:
+  - echo ========================================================================
+  - echo =========================BUILD EXECUTION STARTED========================
+  - echo ========================================================================
+  - docker-compose up -d
+
+#RUN TEST
+script:
+  - mvn test -Dtravis.buildNumber=$TRAVIS_BUILD_NUMBER -Dtravis.buildURL=$TRAVIS_BUILD_WEB_URL -Dtravis.branch=$TRAVIS_BRANCH -Dtravis.osName=$TRAVIS_OS_NAME -Dtravis.jdkVersion=$TRAVIS_JDK_VERSION
+
+#UPLOADING TEST REPORTS
+after_script:
+  - echo ========================================================================
+  - echo ========================BUILD EXECUTION FINISHED========================
+  - echo ========================================================================
+  - echo ========================================================================
+  - echo =========================UPLOADING TEST REPORTS=========================
+  - echo ========================================================================
+  - git clone --single-branch --branch gh-pages https://github.com/DevSoftChuck/automation-architect.git target/github-pages
+  - sleep 5
+  - cp -R target/github-pages/history build/allure-results
+  - cd build
+  - allure generate --clean
+  - sleep 10
+  - cd ..
+  - cp -R build/allure-report/* target/github-pages/
+  - cd target/github-pages/
+  - git config user.name "Travis CI"
+  - git config user.email "deploy@travis-ci.org"
+  - git add -A
+  - git commit -m "Auto deploy from Travis CI $TRAVIS_BUILD_NUMBER"
+  - git push origin gh-pages
+  - echo ========================================================================
+  - echo ===============================DONE 100%================================
+  - echo ========================================================================
