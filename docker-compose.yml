@@ -12,7 +12,7 @@ services:
     image: selenium/node-chrome
     dependS_on:
       - selenium-hub
-    environemnt:
+    environment:
       HUB_PORT_4444_TCP_ADDR: selenium-hub
       HUB_PORT_4444_TCP_PORT: 4444
 
