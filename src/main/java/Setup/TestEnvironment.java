@@ -59,7 +59,7 @@ public class TestEnvironment {
     protected static final String DEFAULT_TESTS_EXECUTOR = System.getProperty
             ("tests.executor", "chrome");
     protected static final String SELENIUM_GRID_URL = System.getProperty
-            ("selenium.gridURL", "http://192.168.100.170:4444/wd/hub");
+            ("selenium.gridURL", "http://localhost:4444/wd/hub");
     protected static final String BROWSERSTACK_HOST_URL = System.getProperty
             ("browserstack.hostURL", "https://localhost:3000");
 
