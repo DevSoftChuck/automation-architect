@@ -50,7 +50,6 @@ after_script:
   - allure generate --clean
   - ls -la
   - sleep 10
-  - cd ..
   - cp -R allure-report/* target/github-pages/
   - cd target/github-pages/
   - git config user.name "Travis CI"
