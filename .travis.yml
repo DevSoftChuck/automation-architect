@@ -1,8 +1,12 @@
-sudo: required
 os: linux
 language: java
 jdk:
   - oraclejdk8
+
+env:
+  global:
+    #$GITHUB_TOKEN
+    secure: VH3oeUmJk3+fE2TqR7FQjwBRmU8UJWmVW7kEUJPNyiFo5ZFANaYPFfxK+kWALyHpHeRmtKfCjPR48ZNS3pZG382yxP/hArzfWq2pmOanhb5S8AJyQcxJY4+0CeuU1hp6oHHY3tzVtkPu4tfObgw4mI8IEnqKpq+SegdCma0r0wg2CcliBaN/GoH8n8NUUef0prYP1AkimSoUxylhygeC9ZdDq9pxSXewDhe6SOH3xZoxQc9/q40CNPFC0W/tkc41bThirVkfSOFJVGj7MWSdIVcPyb2OxtXwGr+DSzodIMCH/tx69ia4lzIP4RMPiOkEbbSF+VhUh1N9J+6oYemgWVeWzJOX8w0k65Drw1rpZVM5ZBzX45OkVnXR+AibuJlMK6AU4C+J4RlHPO/Muo/YO10JVLq3+JmY64xJn8BaTQvYehZlr1YU9DSttCHI+Cmz7hG7vhq8b5g3WBGoNuoL5FELo9RTk0gKCSehwwAQwmiPrGPP//BCbgWBdjFlNyd8hNYpV9RzTvy1MPLkAwGS2/xByn4foHdJnqwlz1CyjLFDxHJzc+LT/S2xbw0EaZFXNu2z0Q5ASgShDwi6AnEbkfcRKXAK4uagh2pbF0tqg0/z6Gzr5s6w5N6kYZ02tU05owwciuz9Vul+Xo3Y42i7hfU33uKk0bMWzPf+dFJpSB0=
 
 #LINUX VERSION
 dist: trusty
@@ -38,7 +42,7 @@ after_script:
   - echo ========================================================================
   - echo =========================UPLOADING TEST REPORTS=========================
   - echo ========================================================================
-  - git clone --single-branch --branch travis https://github.com/DevSoftChuck/automation-architect.git target/github-pages
+  - git clone --single-branch --branch travis https://DevSoftChuck:$GITHUB_TOKEN@github.com/DevSoftChuck/automation-architect.git target/github-pages
   - sleep 5
   - cp -R target/github-pages/history build/allure-results
   - cd build
@@ -48,7 +52,7 @@ after_script:
   - cp -R build/allure-report/* target/github-pages/
   - cd target/github-pages/
   - git config user.name "Travis CI"
-  - git config user.email "deploy@travis-ci.org"
+  - git config user.email "deploy@travis-ci.com"
   - git add -A
   - git commit -m "Auto deploy from Travis CI $TRAVIS_BUILD_NUMBER"
   - git push origin travis
