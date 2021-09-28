@@ -2,7 +2,7 @@
   "values" : [ "oraclejdk8" ],
   "name" : "JDK Version:"
 }, {
-  "values" : [ "23" ],
+  "values" : [ "24" ],
   "name" : "Travis build Run:"
 }, {
   "values" : [ "linux" ],
@@ -17,6 +17,6 @@
   "values" : [ "grid" ],
   "name" : "Browser:"
 }, {
-  "values" : [ "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238610142" ],
+  "values" : [ "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238610264" ],
   "name" : "Travis build URL:"
 } ]

@@ -1,4 +1,14 @@
 [ {
+  "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238610264",
+  "data" : {
+    "failed" : 0,
+    "broken" : 0,
+    "skipped" : 0,
+    "passed" : 2,
+    "unknown" : 0,
+    "total" : 2
+  }
+}, {
   "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238610142",
   "data" : {
     "failed" : 0,
