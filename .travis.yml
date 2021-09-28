@@ -48,9 +48,10 @@ after_script:
   - sleep 5
   - cp -R target/github-pages/history allure-results
   - allure generate --clean
+  - ls -la
   - sleep 10
   - cd ..
-  - cp -R allure-results/* target/github-pages/
+  - cp -R allure-report/* target/github-pages/
   - cd target/github-pages/
   - git config user.name "Travis CI"
   - git config user.email "deploy@travis-ci.com"
