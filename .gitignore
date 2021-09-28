@@ -2,3 +2,5 @@ allure-results/
 .idea
 target/
 logs/
+allure-report/
+reports/
