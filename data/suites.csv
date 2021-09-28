@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Tue Sep 28 03:23:05 UTC 2021","Tue Sep 28 03:23:12 UTC 2021","6548","Regression test in parallel","Regression - Chrome Browser","Steps.Runner.CucumberRunner","Steps.Runner.CucumberRunner","runTests","runTests",""
+"passed","Tue Sep 28 03:26:57 UTC 2021","Tue Sep 28 03:27:04 UTC 2021","6488","Regression test in parallel","Regression - Chrome Browser","Steps.Runner.CucumberRunner","Steps.Runner.CucumberRunner","runTests","runTests",""
