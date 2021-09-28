@@ -46,7 +46,6 @@ after_script:
   - sleep 5
   - ls -la
   - cp -R target/github-pages/history allure-results
-  - cd build
   - allure generate --clean
   - sleep 10
   - cd ..
