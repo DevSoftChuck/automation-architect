@@ -4,11 +4,20 @@
       "failed" : 0,
       "broken" : 0,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 2,
       "unknown" : 0,
-      "total" : 1
+      "total" : 2
     },
     "items" : [ {
+      "uid" : "656ae407073bda5b",
+      "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238610142/#testresult/656ae407073bda5b",
+      "status" : "passed",
+      "time" : {
+        "start" : 1632802068069,
+        "stop" : 1632802071533,
+        "duration" : 3464
+      }
+    }, {
       "uid" : "4d7106e5bbd77943",
       "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238609636/#testresult/4d7106e5bbd77943",
       "status" : "passed",
@@ -24,11 +33,20 @@
       "failed" : 0,
       "broken" : 0,
       "skipped" : 0,
-      "passed" : 4,
+      "passed" : 5,
       "unknown" : 0,
-      "total" : 4
+      "total" : 5
     },
     "items" : [ {
+      "uid" : "10f50d16880ae2a7",
+      "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238610142/#testresult/10f50d16880ae2a7",
+      "status" : "passed",
+      "time" : {
+        "start" : 1632802044597,
+        "stop" : 1632802050112,
+        "duration" : 5515
+      }
+    }, {
       "uid" : "db8f00c705eceff6",
       "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238609636/#testresult/db8f00c705eceff6",
       "status" : "passed",
