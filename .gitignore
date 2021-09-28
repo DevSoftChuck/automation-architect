@@ -3,4 +3,4 @@ allure-results/
 target/
 logs/
 allure-report/
-reports/
+cucumber-reports/
