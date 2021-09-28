@@ -2,17 +2,30 @@
   "uid" : "b1a8273437954620fa374b796ffaacdd",
   "children" : [ {
     "name" : "runTests",
-    "uid" : "166b985e0038b3ac",
+    "uid" : "db8f00c705eceff6",
     "parentUid" : "b1a8273437954620fa374b796ffaacdd",
     "status" : "passed",
     "time" : {
-      "start" : 1632799617933,
-      "stop" : 1632799624421,
-      "duration" : 6488
+      "start" : 1632801284828,
+      "stop" : 1632801291372,
+      "duration" : 6544
     },
     "flaky" : false,
     "newFailed" : false,
     "parameters" : [ "\"Login with correct username and password\"", "\"Optional[Login]\"" ]
+  }, {
+    "name" : "runTests",
+    "uid" : "4d7106e5bbd77943",
+    "parentUid" : "b1a8273437954620fa374b796ffaacdd",
+    "status" : "passed",
+    "time" : {
+      "start" : 1632801312168,
+      "stop" : 1632801315365,
+      "duration" : 3197
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ "\"Login with wrong username or password\"", "\"Optional[Login]\"" ]
   } ],
   "name" : "behaviors"
 }
