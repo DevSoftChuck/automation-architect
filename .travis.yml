@@ -43,6 +43,7 @@ after_script:
   - echo ========================================================================
   - echo =========================UPLOADING TEST REPORTS=========================
   - echo ========================================================================
+  - ls -la
   - git clone --single-branch --branch travis https://DevSoftChuck:$GITHUB_TOKEN@github.com/DevSoftChuck/automation-architect.git target/github-pages
   - sleep 5
   - cp -R target/github-pages/history allure-results
