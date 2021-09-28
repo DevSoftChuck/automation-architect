@@ -1,0 +1,22 @@
+{
+  "de27acb0669f7212a4d15496cf202c07" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 1,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "3922e3d56d54f580",
+      "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608373/#testresult/3922e3d56d54f580",
+      "status" : "passed",
+      "time" : {
+        "start" : 1632799141020,
+        "stop" : 1632799147569,
+        "duration" : 6549
+      }
+    } ]
+  }
+}

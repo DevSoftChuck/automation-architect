@@ -1,0 +1,6 @@
+[ {
+  "name" : "GRADLE",
+  "type" : "GRADLE",
+  "buildName" : "Allure Report via Travis CI: 18",
+  "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608373"
+} ]

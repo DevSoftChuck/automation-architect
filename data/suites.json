@@ -1,0 +1,30 @@
+{
+  "uid" : "98d3104e051c652961429bf95fa0b5d6",
+  "children" : [ {
+    "name" : "Regression test in parallel",
+    "children" : [ {
+      "name" : "Regression - Chrome Browser",
+      "children" : [ {
+        "name" : "Steps.Runner.CucumberRunner",
+        "children" : [ {
+          "name" : "runTests",
+          "uid" : "3922e3d56d54f580",
+          "parentUid" : "af0c661e57e3ec1e0d6be9ec6d1a187f",
+          "status" : "passed",
+          "time" : {
+            "start" : 1632799141020,
+            "stop" : 1632799147569,
+            "duration" : 6549
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "\"Login with correct username and password\"", "\"Optional[Login]\"" ]
+        } ],
+        "uid" : "af0c661e57e3ec1e0d6be9ec6d1a187f"
+      } ],
+      "uid" : "67a3dc2db9ac2f5a0ceaf838f68710bc"
+    } ],
+    "uid" : "631243c7866de0d7ca719299d4b06912"
+  } ],
+  "name" : "suites"
+}

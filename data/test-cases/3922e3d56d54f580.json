@@ -1,0 +1,116 @@
+{
+  "uid" : "3922e3d56d54f580",
+  "name" : "runTests",
+  "fullName" : "Steps.Runner.CucumberRunner.runTests",
+  "historyId" : "de27acb0669f7212a4d15496cf202c07",
+  "time" : {
+    "start" : 1632799141020,
+    "stop" : 1632799147569,
+    "duration" : 6549
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "setUpClass",
+    "time" : {
+      "start" : 1632799140328,
+      "stop" : 1632799140946,
+      "duration" : 618
+    },
+    "description" : "",
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "afterStages" : [ {
+    "name" : "afterClass",
+    "time" : {
+      "start" : 1632799147664,
+      "stop" : 1632799149637,
+      "duration" : 1973
+    },
+    "description" : "",
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "tearDownClass",
+    "time" : {
+      "start" : 1632799149637,
+      "stop" : 1632799149637,
+      "duration" : 0
+    },
+    "description" : "",
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "package",
+    "value" : "Steps.Runner.CucumberRunner"
+  }, {
+    "name" : "testClass",
+    "value" : "Steps.Runner.CucumberRunner"
+  }, {
+    "name" : "testMethod",
+    "value" : "runTests"
+  }, {
+    "name" : "parentSuite",
+    "value" : "Regression test in parallel"
+  }, {
+    "name" : "suite",
+    "value" : "Regression - Chrome Browser"
+  }, {
+    "name" : "subSuite",
+    "value" : "Steps.Runner.CucumberRunner"
+  }, {
+    "name" : "host",
+    "value" : "localhost"
+  }, {
+    "name" : "thread",
+    "value" : "5039@localhost.PoolService-0(10)"
+  }, {
+    "name" : "framework",
+    "value" : "testng"
+  }, {
+    "name" : "language",
+    "value" : "java"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "arg0",
+    "value" : "\"Login with correct username and password\""
+  }, {
+    "name" : "arg1",
+    "value" : "\"Optional[Login]\""
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "3922e3d56d54f580.json",
+  "parameterValues" : [ "\"Login with correct username and password\"", "\"Optional[Login]\"" ]
+}

@@ -1,0 +1,22 @@
+[ {
+  "values" : [ "oraclejdk8" ],
+  "name" : "JDK Version:"
+}, {
+  "values" : [ "18" ],
+  "name" : "Travis build Run:"
+}, {
+  "values" : [ "linux" ],
+  "name" : "OS Name:"
+}, {
+  "values" : [ "travis" ],
+  "name" : "Branch:"
+}, {
+  "values" : [ "https://inallmedia4-dev-ed.lightning.force.com" ],
+  "name" : "All tests were executed on:"
+}, {
+  "values" : [ "grid" ],
+  "name" : "Browser:"
+}, {
+  "values" : [ "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608373" ],
+  "name" : "Travis build URL:"
+} ]
