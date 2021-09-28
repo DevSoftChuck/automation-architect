@@ -4,11 +4,20 @@
       "failed" : 0,
       "broken" : 0,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 2,
       "unknown" : 0,
-      "total" : 1
+      "total" : 2
     },
     "items" : [ {
+      "uid" : "e9e5929c95ab0639",
+      "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608513/#testresult/e9e5929c95ab0639",
+      "status" : "passed",
+      "time" : {
+        "start" : 1632799385995,
+        "stop" : 1632799392543,
+        "duration" : 6548
+      }
+    }, {
       "uid" : "3922e3d56d54f580",
       "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608373/#testresult/3922e3d56d54f580",
       "status" : "passed",

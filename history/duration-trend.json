@@ -1,4 +1,9 @@
 [ {
+  "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608513",
+  "data" : {
+    "duration" : 6548
+  }
+}, {
   "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608373",
   "data" : {
     "duration" : 6549

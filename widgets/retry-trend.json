@@ -1,4 +1,10 @@
 [ {
+  "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608513",
+  "data" : {
+    "run" : 1,
+    "retry" : 0
+  }
+}, {
   "reportUrl" : "https://app.travis-ci.com/DevSoftChuck/automation-architect/builds/238608373",
   "data" : {
     "run" : 1,
