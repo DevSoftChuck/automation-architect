@@ -32,7 +32,7 @@ before_script:
 
 #RUN TEST
 script:
-  - mvn test -Dtests.executor=grid -Dtravis.buildNumber=$TRAVIS_BUILD_NUMBER -Dtravis.buildURL=$TRAVIS_BUILD_WEB_URL -Dtravis.branch=$TRAVIS_BRANCH -Dtravis.osName=$TRAVIS_OS_NAME -Dtravis.jdkVersion=$TRAVIS_JDK_VERSION
+  - ls -l
 
 #UPLOADING TEST REPORTS
 after_script:
@@ -48,7 +48,7 @@ after_script:
   - allure generate --clean
   - sleep 10
   - cd ..
-  - cp -R allure-report/* target/github-pages/
+  - cp -R allure-results/* target/github-pages/
   - cd target/github-pages/
   - git config user.name "Travis CI"
   - git config user.email "deploy@travis-ci.com"
