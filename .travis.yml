@@ -47,7 +47,7 @@ after_script:
   - cp -R target/github-pages/history allure-results
   - allure generate --clean
   - sleep 10
-  - cp -R allure-report/* target/github-pages/
+  - cp -R allure-report/* target/github-pages/allure-reports
   - cp -R cucumber-reports/* target/github-pages/cucumber-reports
   - cd target/github-pages/
   - git config user.name "Travis CI"

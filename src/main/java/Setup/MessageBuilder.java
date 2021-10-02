@@ -2,52 +2,12 @@ package Setup;
 
 import io.cucumber.java.Scenario;
 import org.apache.commons.lang3.StringUtils;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
 
 /**
  * @author Ivan Andraschko
  **/
 
 public class MessageBuilder extends TestEnvironment {
-
-    public static String getXmlSuiteName(ITestContext iTestContext) {
-        return iTestContext.getCurrentXmlTest().getSuite().getName();
-    }
-
-    public static String getXmlTestName(ITestContext iTestContext) {
-        return iTestContext.getName();
-    }
-
-    public static String getTestDescription(ITestResult iTestResult) {
-        return iTestResult.getMethod().getDescription().toUpperCase();
-    }
-
-    public void messageStartSuite(ITestContext iTestContext) {
-        logger.info(StringUtils.repeat("#", 110));
-        logger.info(StringUtils.repeat("=", 31) + "STARTING TEST SUITE " + iTestContext.getStartDate() + StringUtils.repeat("=", 30));
-        logger.info(StringUtils.repeat("#", 110));
-    }
-
-    public void messageEndSuite(ITestContext iTestContext) {
-        logger.info(StringUtils.repeat("#", 110));
-        logger.info(StringUtils.repeat("=", 32) + "END OF TEST SUITE " + iTestContext.getEndDate() + StringUtils.repeat("=", 31));
-        logger.info(StringUtils.repeat("#", 110));
-    }
-
-    public void messageStartTest(ITestResult iTestResult) {
-        logger.info(StringUtils.repeat("=", 48) + " TEST STARTED " + StringUtils.repeat("=", 48));
-        logger.info(ANSI_BLUE + "TEST NAME: " + getTestDescription(iTestResult) + ANSI_RESET);
-        logger.info(String.format("Chosen executor: \"%S\"", SeleniumDriver.getTestsExecutor()));
-    }
-
-    public void messageSuccessTest() {
-        logger.info(StringUtils.repeat("=", 37) + " TEST FINISHED WITH " + ANSI_GREEN + "SUCCESS STATUS " + ANSI_RESET + StringUtils.repeat("=", 38));
-    }
-
-    public void messageFailTest() {
-        logger.info(StringUtils.repeat("=", 38) + " TEST FINISHED WITH " + ANSI_RED + "FAILED STATUS " + ANSI_RESET + StringUtils.repeat("=", 38));
-    }
 
     public void messageStartScenario(Scenario scenario) {
         logger.info(StringUtils.repeat("#", 110));

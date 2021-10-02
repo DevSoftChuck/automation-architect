@@ -1,14 +1,12 @@
 @test
 Feature: Login
-#
+
     Background: Access to login page
         Given User goes to "$[LOGIN_URL]" page
         And User is on Login page
 
     @Regression
     Scenario: Login with correct username and password
-        Given User goes to "$[LOGIN_URL]" page
-        And User is on Login page
         When Tries to log in with the username "$[USER]" and password "$[PASSWORD]"
 
     @Regression

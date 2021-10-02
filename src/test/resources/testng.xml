@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Regression test in parallel" thread-count="1" data-provider-thread-count="1" parallel="tests" verbose="1" >
+<suite  name="Regression test in parallel" thread-count="5" data-provider-thread-count="5" parallel="tests" verbose="1">
     <listeners>
-        <listener class-name="Setup.Listeners.TestNGAnnotationTransformer"/>
+        <listener class-name="Steps.Runner.Listeners.TestNGAnnotationTransformer"/>
     </listeners>
     <test name="Regression - Chrome Browser">
         <classes>

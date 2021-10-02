@@ -12,7 +12,7 @@
             <level>INFO</level>
         </filter>
         <encoder>
-            <pattern>%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss} [%t] %-5level - %msg%n</pattern>
         </encoder>
     </appender>
     <logger name="net.andreinc.mockneat.utils.file.FileManager" level="OFF"/>
@@ -32,7 +32,7 @@
                 </filter>
                 <file>${LOG_PATH}/${testid}.log</file>
                 <encoder>
-                    <pattern>%d{HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+                    <pattern>%d{HH:mm:ss} %-5level - %msg%n</pattern>
                     <outputPatternAsHeader>true</outputPatternAsHeader>
                 </encoder>
             </appender>

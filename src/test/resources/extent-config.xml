@@ -5,7 +5,7 @@
 
         <!-- standard, dark -->
 
-        <theme>standard</theme>
+        <theme>dark</theme>
         <!-- document encoding -->
 
         <!-- defaults to UTF-8 -->
@@ -32,12 +32,14 @@
 
             <![CDATA[
                 $(document).ready(function() {
+
                 });
             ]]>
         </scripts>
         <!-- custom styles -->
         <styles>
             <![CDATA[
+
             ]]>
         </styles>
     </configuration>

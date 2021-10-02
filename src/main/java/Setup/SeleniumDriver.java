@@ -150,8 +150,6 @@ public class SeleniumDriver extends TestEnvironment {
             default:
                 throw new IllegalStateException("This browser isn't supported yet! Sorry...");
         }
-        //NOT THE BEST PRACTICE TO MIX IMPLICITLY WITH EXPLICITLY WAIT
-        //getDriver().manage().timeouts().implicitlyWait(Timeouts.FIND_ELEMENT_TIMEOUT.value, TimeUnit.SECONDS);
         getDriver().manage().timeouts().pageLoadTimeout(Timeouts.PAGE_LOAD_TIMEOUT.value, TimeUnit.SECONDS);
         getDriver().manage().timeouts().setScriptTimeout(Timeouts.SCRIPT_TIMEOUT.value, TimeUnit.SECONDS);
         getDriver().manage().deleteAllCookies();
@@ -165,13 +163,11 @@ public class SeleniumDriver extends TestEnvironment {
                 WebDriverManager.chromedriver().setup();
                 desiredCapabilities = DesiredCapabilities.chrome();
                 desiredCapabilities.setBrowserName("chrome");
-                desiredCapabilities.setPlatform(Platform.MAC);
                 return DesiredCapabilities.chrome();
             case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 desiredCapabilities = DesiredCapabilities.firefox();
                 desiredCapabilities.setBrowserName("firefox");
-                desiredCapabilities.setPlatform(Platform.MAC);
                 return DesiredCapabilities.firefox();
             default:
                 throw new IllegalStateException("This browser isn't supported yet. Sorry...");

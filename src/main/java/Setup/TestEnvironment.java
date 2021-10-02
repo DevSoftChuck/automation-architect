@@ -1,6 +1,5 @@
 package Setup;
 
-import Setup.Listeners.TestNGListener;
 import Utils.Utils;
 import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import Utils.PropertiesManager;
 import Utils.EPropertiesNames;
-import org.testng.ITestResult;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,17 +27,24 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.stream.Stream;
 
+/**
+ * @author Ivan Andraschko
+ **/
+
 public class TestEnvironment {
 
     protected static Logger logger = LoggerFactory.getLogger(Logger.class);
     protected static final String TODAY_DATE = new SimpleDateFormat("yyyy-MM-dd HH:ss").format(new Date());
+
+    public static int passedTestsAmount = 0;
+    public static int failedTestsAmount = 0;
 
     //GENERAL SETTINGS//
     protected static final String ANSI_RED = "\u001B[31m";
     protected static final String ANSI_RESET = "\u001B[0m";
     protected static final String ANSI_BLUE = "\u001b[34m";
     protected static final String ANSI_GREEN = "\u001B[32m";
-    protected static final String EXECUTOR = "GRADLE";
+    protected static final String EXECUTOR = "MAVEN";
 
     //ENVIRONMENT PROPERTIES//
     protected static final String TRAVIS_BUILD_NUMBER = System.getProperty
@@ -59,7 +64,7 @@ public class TestEnvironment {
     protected static final String DEFAULT_TESTS_EXECUTOR = System.getProperty
             ("tests.executor", "chrome");
     protected static final String SELENIUM_GRID_URL = System.getProperty
-            ("selenium.gridURL", "http://localhost:4444/wd/hub");
+            ("selenium.gridURL", "http://192.168.56.102:4444/wd/hub");
     protected static final String BROWSERSTACK_HOST_URL = System.getProperty
             ("browserstack.hostURL", "https://localhost:3000");
 
@@ -104,12 +109,12 @@ public class TestEnvironment {
     }
 
     @Attachment(value = "Cucumber scenario FAIL logs", type = "text/plain")
-    protected String allureSaveTextLogCucumber(Scenario scenario) {
+    public String allureSaveTextLogCucumber(Scenario scenario) {
         return logBuilder(scenario.getName().toUpperCase());
     }
 
     @Attachment(value = "Scenario FAIL screenshot", type = "image/png")
-    protected byte[] allureSaveScreenshotPNG() {
+    public byte[] allureSaveScreenshotPNG() {
         return ((TakesScreenshot) SeleniumDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
@@ -146,7 +151,7 @@ public class TestEnvironment {
         return contentBuilder.toString();
     }
 
-    protected void deleteOldLogs() {
+    public void deleteOldLogs() {
         try {
             FileUtils.deleteDirectory(new File(getCurrentPath()
                     + File.separator
@@ -156,11 +161,9 @@ public class TestEnvironment {
         }
     }
 
-    protected void suiteResultsCleaner() {
-//        ContextInjection.passedTestsAmount = 0;
-//        ContextInjection.failedTestsAmount = 0;
-        TestNGListener.passedTests.clear();
-        TestNGListener.failedTests.clear();
+    public void testResultsCleaner() {
+        passedTestsAmount = 0;
+        failedTestsAmount = 0;
     }
 
     protected enum Timeouts {
