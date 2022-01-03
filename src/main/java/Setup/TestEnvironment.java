@@ -2,7 +2,6 @@ package Setup;
 
 import Utils.Utils;
 import io.cucumber.java.Scenario;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
@@ -36,6 +35,14 @@ public class TestEnvironment {
     protected static Logger logger = LoggerFactory.getLogger(Logger.class);
     protected static final String TODAY_DATE = new SimpleDateFormat("yyyy-MM-dd HH:ss").format(new Date());
 
+    //Static variable that stores the amount of time the waits are going to wait.
+    protected static final int SCRIPT_TIMEOUT = 15;
+    protected static final int PAGE_LOAD_TIMEOUT = 30;
+    protected static final int CLICK_TIMEOUT = 15;
+    protected static final int VISIBLE_TIMEOUT = 30;
+    protected static final long POLLING_TIME = 5;
+
+    //AMOUNT OF TEST EXECUTED//
     public static int passedTestsAmount = 0;
     public static int failedTestsAmount = 0;
 
@@ -65,8 +72,6 @@ public class TestEnvironment {
             ("tests.executor", "chrome");
     protected static final String SELENIUM_GRID_URL = System.getProperty
             ("selenium.gridURL", "http://192.168.56.102:4444/wd/hub");
-    protected static final String BROWSERSTACK_HOST_URL = System.getProperty
-            ("browserstack.hostURL", "https://localhost:3000");
 
     //ENVIRONMENT METHODS//
     public static String getCurrentPath() {
@@ -165,29 +170,4 @@ public class TestEnvironment {
         passedTestsAmount = 0;
         failedTestsAmount = 0;
     }
-
-    protected enum Timeouts {
-        SCRIPT_TIMEOUT(15),
-        PAGE_LOAD_TIMEOUT(30),
-        CLICK_TIMEOUT(15),
-        ATTRIBUTE_TIMEOUT(15),
-        VISIBLE_TIMEOUT(15);
-
-        public final int value;
-
-        Timeouts(int value) {
-            this.value = value;
-        }
-    }
-
-    protected static void displayWebDriverManagerBrowsersVersions(Boolean showBrowserVersions) {
-        if (showBrowserVersions) {
-            logger.info(String.format("ChromeDriver available versions: %s", WebDriverManager.chromedriver().getDriverVersions()));
-            logger.info(String.format("GeckoDriver available versions: %s", WebDriverManager.firefoxdriver().getDriverVersions()));
-            logger.info(String.format("OperaDriver available versions: %s ", WebDriverManager.operadriver().getDriverVersions()));
-            logger.info(String.format("EdgeDriver available versions: %s", WebDriverManager.edgedriver().getDriverVersions()));
-            logger.info(String.format("IEDriver available versions: %s", WebDriverManager.iedriver().getDriverVersions()));
-        }
-    }
-
 }

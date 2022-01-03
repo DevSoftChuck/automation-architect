@@ -5,6 +5,7 @@ public enum EPropertiesNames {
     /* ---------------------------------------------- Global Variables ---------------------------------------------- */
 
     USER,
+    USER_CPQ,
     USER_2,
     USER_3,
     EMAIL_AT_MISSING,
@@ -41,16 +42,24 @@ public enum EPropertiesNames {
 
     /* ------------------------------------------- Global Variables - END ------------------------------------------- */
 
-    /* ------------------------------------------------ Lightning APP ----------------------------------------------- */
+    /* ----------------------------------------------- LIGHTNING APPS ----------------------------------------------- */
 
-    LightningBolt,
-    QueueManagement,
-    LightningSales,
-    LightningSalesConsole,
-    SalesforceCMS,
-    LightningScheduler,
-    LightningService
+    LIGHTNING_BOLT_APP_URL,
+    QUEUE_MANAGEMENT_APP_URL,
+    LIGHTNING_SALES_APP_URL,
+    LIGHTNING_SALES_CONSOLE_APP_URL,
+    SALESFORCE_CMS_APP_URL,
+    LIGHTNING_SCHEDULER_APP_URL,
+    LIGHTNING_SERVICE_APP_URL,
+    SALESFORCE_CPQ_APP_URL,
 
-    /* --------------------------------------------- Lightning APP - END -------------------------------------------- */
+    /* -------------------------------------------- LIGHTNING APPS - END -------------------------------------------- */
+
+    /* ---------------------------------------------- LIGHTNING OBJECTS --------------------------------------------- */
+
+    QUOTE_OBJECT_URL
+
+    /*------------------------------------------- LIGHTNING OBJECTS - END ------------------------------------------- */
 
 }
+

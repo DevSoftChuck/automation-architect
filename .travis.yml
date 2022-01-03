@@ -42,9 +42,9 @@ after_script:
   - echo ========================================================================
   - echo =========================UPLOADING TEST REPORTS=========================
   - echo ========================================================================
-  - git clone --single-branch --branch travis https://DevSoftChuck:$GITHUB_TOKEN@github.com/DevSoftChuck/automation-architect.git target/github-pages
+  - git clone --single-branch --branch travis https://DevSoftChuck:$GITHUB_TOKEN@github.com/DevSoftChuck/automation-architect.git target/github-pages/allure-reports
   - sleep 5
-  - cp -R target/github-pages/history allure-results
+  - cp -R target/github-pages/allure-reports/history allure-results
   - allure generate --clean
   - sleep 10
   - cp -R allure-report/* target/github-pages/allure-reports
@@ -58,3 +58,15 @@ after_script:
   - echo ========================================================================
   - echo ===============================DONE 100%================================
   - echo ========================================================================
+
+#after_success:
+#  - anything
+#deploy:
+#  provider: <provider-name>
+#  region: "us-west-2"
+#  app: "<app-name>"
+#  env: "<app-env>"
+#  bucket_name: "<bucket_name>"
+#  bucket_path: "<app-name>"
+#  on:
+#    branch: <branch>

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: selenium-hub-deployment
+spec:
+ replicas: 1 # used to generate pods
+ selector: # used to let this deployment handle any pod running with componen web label
+  matchLabels:
+   app: selenium-hub
+ template:
+  metadata:
+   labels:
+    app: selenium-hub
+  spec:
+   containers:
+    - name: selenium-hub
+      image: selenium/hub:latest
+      ports:
+       - containerPort: 4444
+      livenessProbe:
+       httpGet:
+        path: /wd/hub/status
+        port: 4444
+       initialDelaySeconds: 30
+       timeoutSeconds: 5

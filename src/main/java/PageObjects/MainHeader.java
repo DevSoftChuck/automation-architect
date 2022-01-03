@@ -1,27 +1,39 @@
 package PageObjects;
 
 import Utils.Utils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class HomePage extends Page<HomePage> {
+public class MainHeader extends Page<MainHeader> {
 
     /* ------------------------------------------------ WEB ELEMENTS ------------------------------------------------ */
 
-    //Success message
-    @FindBy(xpath = "//*[@id='flash']")
-    private WebElement successMsg;
+    //Profile img
+    @FindBy(xpath = "//img[@title='User']")
+    private WebElement userProfile;
+    private final By userProfileBy = By.xpath("//img[@title='User']");
+
+    //Application name
+    @FindBy(xpath = "//span[contains(@class,'appName')]/span")
+    private WebElement applicationName;
+
+    //Quotes tab
+    @FindBy(xpath = "//a[@title='Quotes']/ancestor::one-app-nav-bar-item-root[contains(@class,'slds-is-active')]")
+    private WebElement quoteTab;
+    private By quoteTabBy = By.xpath("//a[@title='Quotes']/ancestor::one-app-nav-bar-item-root[contains(@class,'slds-is-active')]");
+
 
     /* --------------------------------------------- WEB ELEMENTS - END --------------------------------------------- */
 
     /* --------------------------------------------- PAGE OBJECT METHODS -------------------------------------------- */
 
-    public HomePage open() {
-        return new HomePage().openPage(HomePage.class);
+    public MainHeader open() {
+        return new MainHeader().openPage(MainHeader.class);
     }
 
     public void isLoaded() {
-        Utils.waitForElementVisible(this.successMsg);
+        Utils.waitForElementToBePresent(this.userProfileBy);
         Utils.waitForDocumentToBeReady();
     }
 
@@ -29,29 +41,30 @@ public class HomePage extends Page<HomePage> {
 
     /* --------------------------------------- METHODS TO GET AND SET A TEXT ---------------------------------------- */
 
-    /** Get a text from the Success message **/
-    public String getSuccessMsg(){
-        Utils.waitForElementVisible(this.successMsg);
-        return this.successMsg.getText();
+    /** Gets text from the application name next to the nine dots  **/
+    public String getApplicationName(){
+        Utils.waitForElementVisible(this.applicationName);
+        return this.applicationName.getText();
     }
 
     /* ------------------------------------- METHODS TO GET AND SET A TEXT - END ------------------------------------- */
 
     /* ---------------------------------------- METHODS TO CLICK ON ELEMENTS ----------------------------------------- */
 
-    /** Clicks on Logout button **/
-    public void clickLogoutButton(){
-        Utils.waitForElementClickable(this.successMsg);
-        this.successMsg.click();
-    }
+    // TO-DO
 
     /* -------------------------------------- METHODS TO CLICK ON ELEMENTS - END -------------------------------------- */
 
     /* ---------------------------------- METHODS TO CHECK IF ELEMENTS ARE DISPLAYED ---------------------------------- */
 
-    /** Returns true if the logout button is displayed. False in other case. **/
-    public boolean isLogoutButtonDisplayed(){
-        return Utils.isExisting(this.successMsg);
+    /** Returns true if the user profile image is displayed. False in other case. **/
+    public boolean isUserProfileDisplayed(){
+        return Utils.isExisting(this.userProfileBy);
+    }
+
+    /** Returns true if the Quote object page is displayed. False in other case. **/
+    public boolean isQuoteObjectTabActivated(){
+        return Utils.isExisting(this.quoteTabBy);
     }
 
     /* ---------------------------------- METHODS TO CHECK IF ELEMENTS ARE DISPLAYED ---------------------------------- */

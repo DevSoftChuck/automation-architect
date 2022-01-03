@@ -29,10 +29,11 @@
         <maven.compile.encoding>UTF-8</maven.compile.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cucumber.version>6.10.4</cucumber.version>
+        <cucumber.version>6.11.0</cucumber.version>
         <extent.version>5.0.8</extent.version>
         <pdfreporter.version>1.7.3</pdfreporter.version>
-        <selenium.java.version>3.141.59</selenium.java.version>
+        <selenium.java.version>4.1.1</selenium.java.version>
+        <selenium.server.version>3.141.59</selenium.server.version>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
         <maven.compiler.plugin.source.version>1.8</maven.compiler.plugin.source.version>
         <maven.compiler.plugin.target.version>1.8</maven.compiler.plugin.target.version>
@@ -65,7 +66,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.10</version>
+            <version>7.4.0</version>
         </dependency>
 
         <dependency>
@@ -97,7 +98,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-server</artifactId>
-            <version>${selenium.java.version}</version>
+            <version>${selenium.server.version}</version>
         </dependency>
 
         <dependency>
@@ -109,17 +110,17 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.10</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
+            <version>1.7.32</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.10</version>
         </dependency>
 
         <dependency>
@@ -183,7 +184,7 @@
                     <argLine>
                         -Dfile.encoding=UTF-8
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                        -Dcucumber.plugin="io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"
+<!--                        -Dcucumber.plugin="io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"-->
                     </argLine>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>

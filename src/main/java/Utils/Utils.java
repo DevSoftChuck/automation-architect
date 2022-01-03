@@ -6,33 +6,21 @@ import java.time.Duration;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.awt.Toolkit;
 import java.awt.HeadlessException;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-
 import Setup.TestEnvironment;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.NoSuchElementException;
-
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static Setup.SeleniumDriver.getDriver;
 
 public class Utils extends TestEnvironment {
-
-    //Static variable that stores the amount of time the waits are going to wait.
-    private static long waitTime = 5;
-    private static long pollingTime = 2;
 
     /* --------------------------------------------------- WAITS ---------------------------------------------------- */
 
@@ -42,8 +30,8 @@ public class Utils extends TestEnvironment {
     public static void waitForElementVisible(WebElement element) {
         try {
             Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(Duration.ofSeconds(waitTime))
-                    .pollingEvery(Duration.ofSeconds(pollingTime))
+                    .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                    .pollingEvery(Duration.ofSeconds(POLLING_TIME))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(NullPointerException.class)
                     .ignoring(StaleElementReferenceException.class);
@@ -53,21 +41,17 @@ public class Utils extends TestEnvironment {
         }
     }
 
-    /** Waits until the element located by the "By" passed by parameter is visible
-     * @param by = Way to locate the element for which it will wait until is visible
+    /** Waits until the element passed by parameter is visible and return it as webelement
+     * @param element = By element for which it will wait until is visible
      * **/
-    public static void waitForElementVisible(By by) {
-        try {
-            Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(Duration.ofSeconds(waitTime))
-                    .pollingEvery(Duration.ofSeconds(pollingTime))
-                    .ignoring(NoSuchElementException.class)
-                    .ignoring(NullPointerException.class)
-                    .ignoring(StaleElementReferenceException.class);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        } catch (ElementNotVisibleException e) {
-            logger.error(String.format("Couldn't display element \"%S\"!", by));
-        }
+    public static WebElement waitForElementVisibleAndReturned(By element) {
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(NullPointerException.class)
+                .ignoring(StaleElementReferenceException.class);
+        return wait.until(ExpectedConditions.presenceOfElementLocated(element));
     }
 
     /** Waits until the element passed by parameter is not visible
@@ -76,8 +60,8 @@ public class Utils extends TestEnvironment {
     public static void waitForElementNotVisible(WebElement element) {
         try {
             Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(Duration.ofSeconds(waitTime))
-                    .pollingEvery(Duration.ofSeconds(pollingTime))
+                    .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                    .pollingEvery(Duration.ofSeconds(POLLING_TIME))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(NullPointerException.class)
                     .ignoring(StaleElementReferenceException.class);
@@ -93,8 +77,8 @@ public class Utils extends TestEnvironment {
     public static void waitForElementNotVisible(By by) {
         try {
             Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(Duration.ofSeconds(waitTime))
-                    .pollingEvery(Duration.ofSeconds(pollingTime))
+                    .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                    .pollingEvery(Duration.ofSeconds(POLLING_TIME))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(NullPointerException.class)
                     .ignoring(StaleElementReferenceException.class);
@@ -109,8 +93,8 @@ public class Utils extends TestEnvironment {
      * **/
     public static void waitForElementToBePresent(By by) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(waitTime))
-                .pollingEvery(Duration.ofSeconds(pollingTime))
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(NullPointerException.class)
                 .ignoring(StaleElementReferenceException.class);
@@ -122,8 +106,8 @@ public class Utils extends TestEnvironment {
      * **/
     public static void waitForElementNotToBePresent(By by) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(waitTime))
-                .pollingEvery(Duration.ofSeconds(pollingTime))
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(NullPointerException.class)
                 .ignoring(StaleElementReferenceException.class);
@@ -136,8 +120,8 @@ public class Utils extends TestEnvironment {
     public static void waitForElementClickable(WebElement element) {
         try {
             Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(Duration.ofSeconds(waitTime))
-                    .pollingEvery(Duration.ofSeconds(pollingTime))
+                    .withTimeout(Duration.ofSeconds(CLICK_TIMEOUT))
+                    .pollingEvery(Duration.ofSeconds(POLLING_TIME))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(NullPointerException.class)
                     .ignoring(StaleElementReferenceException.class);
@@ -151,21 +135,21 @@ public class Utils extends TestEnvironment {
      * @param condition = Condition for which it will wait
      * **/
     public static void waitForCondition(ExpectedCondition condition) {
-        (new WebDriverWait(getDriver(), waitTime)).until(condition);
+        (new WebDriverWait(getDriver(), Duration.ofSeconds(VISIBLE_TIMEOUT))).until(condition);
     }
 
     /** Waits until the number of open windows is equal to the number passed by parameter
      * @param numTabs = Number of tabs that should be opened so it stops waiting
      * **/
     public static void waitForNumberOfWindowsToBe(int numTabs) {
-        new WebDriverWait(getDriver(), waitTime).until(ExpectedConditions.numberOfWindowsToBe(numTabs));
+        new WebDriverWait(getDriver(), Duration.ofSeconds(VISIBLE_TIMEOUT)).until(ExpectedConditions.numberOfWindowsToBe(numTabs));
     }
 
     /** Waits until JavaScript finishes processing **/
     public static void waitForDocumentToBeReady() {
         JavascriptExecutor js = (JavascriptExecutor)getDriver();
         if (js.executeScript("return document.readyState").toString().equals("complete")) {
-            getDriver().manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
         }
         else {
             waitForDocumentToBeReady();
@@ -175,7 +159,7 @@ public class Utils extends TestEnvironment {
     /** Waits until JavaScript finishes processing **/
     public static boolean isPageReady() {
         try {
-            WebDriverWait wait = new WebDriverWait(getDriver(), Timeouts.PAGE_LOAD_TIMEOUT.value);
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
             wait.until(webDriver ->
                     ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
         } catch (WebDriverException e) {
@@ -214,8 +198,7 @@ public class Utils extends TestEnvironment {
 
     /** Waits until Angular finishes processing **/
     public static void waitForAngular() {
-        getDriver().manage().timeouts().setScriptTimeout(15, TimeUnit.SECONDS);
-        WebDriverWait wait = new WebDriverWait(getDriver(), 15, 100);
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(SCRIPT_TIMEOUT));
         wait.until(angularHasFinishedProcessing());
     }
 
@@ -367,7 +350,7 @@ public class Utils extends TestEnvironment {
      * @param element = Element you'd like to know if is displayed
      * **/
     public static boolean isExisting(WebElement element) {
-        getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(VISIBLE_TIMEOUT));
         try {
             return element.isDisplayed();
         } catch (Exception e) {
@@ -379,7 +362,7 @@ public class Utils extends TestEnvironment {
      * @param by = Way to locate the element you'd like to know if is displayed
      * **/
     public static boolean isExisting(By by) {
-        getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(VISIBLE_TIMEOUT));
         List <WebElement> elements =  getDriver().findElements(by);
         return elements.size()>0;
     }
@@ -388,7 +371,7 @@ public class Utils extends TestEnvironment {
      * @param elements = List of web elements you'd like to know if is empty
      * **/
     public static boolean isExisting(List<WebElement> elements) {
-        getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(VISIBLE_TIMEOUT));
         return elements.size()>0;
     }
 
@@ -424,90 +407,6 @@ public class Utils extends TestEnvironment {
     }
 
     /* ------------------------------ METHODS TO SELECT ELEMENTS IN DROPDOWN'S - END -------------------------------- */
-
-    /* -------------------------------- METHODS TO GET SOMETHING IN ANOTHER FORMAT ---------------------------------- */
-
-    /** This method converts a date in the format it's displayed in a registry to the format it's displayed on text fields
-     * As an example, it converts "May 16, 2019" to "05/16/2019"
-     * @param stringToFormat = Date in the format that is shown in a registry page
-     * **/
-    public static String formatStringToDate(String stringToFormat) throws ParseException {
-        if (stringToFormat.equals("Date coming soon")) {
-            return "";
-        } else {
-            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-            Date date = format.parse(stringToFormat);
-            return new SimpleDateFormat("MM/dd/yyyy").format(date);
-        }
-    }
-
-    /** Converts the string taken from the price label of a product tile to a float, removing commas, dashes and cash signs.
-     * @param priceLabel = String taken from a price label that you want to convert to a float.
-     */
-    public static Float getFloatFromPriceLabel(String priceLabel){
-        //Remove the commas in case it has
-        priceLabel = priceLabel.replaceAll(",","");
-
-        // Remove everything before the dollar sign
-        int signIndex = priceLabel.indexOf("$");
-        if (signIndex != -1) {
-            priceLabel = priceLabel.substring(signIndex + 1);
-        }
-
-        //If price is an interval remove everything after the dash
-        int barIndex = priceLabel.indexOf("-");
-        if (barIndex != -1) {
-            priceLabel = priceLabel.substring(0, barIndex);
-        }
-
-        //If price has an space, like for group gifts, remove everything after the space
-        int spaceIndex = priceLabel.indexOf(" ");
-        if (spaceIndex != -1) {
-            priceLabel = priceLabel.substring(0, spaceIndex);
-        }
-
-        //If there is another cash sign remove everything before the dollar sign
-        int secondSignIndex = priceLabel.indexOf("$");
-        if (secondSignIndex != -1) {
-            priceLabel = priceLabel.substring(secondSignIndex + 1);
-        }
-
-        return Float.parseFloat(priceLabel);
-    }
-
-    /** Interprets the text in a price filter and returns a range of prices.
-     * @param price: Text in the price filter label taken from the registry page or shop page.
-     */
-    public static Integer[] takePricesFromFilterLabel(String price){
-        Integer[] result = new Integer[2];
-
-        if (price.contains("Under")){
-            Pattern p = Pattern.compile(".*?\\$(\\d+).*?");
-            Matcher m = p.matcher(price);
-            if(m.find()){
-                result[0]=0;
-                result[1]=Integer.parseInt(m.group(1));
-            }
-        }
-        else if (price.contains("+")){
-            Pattern p = Pattern.compile(".*?\\$(\\d+).*?");
-            Matcher m = p.matcher(price);
-            if (m.find()){
-                result[0]=Integer.parseInt(m.group(1));
-                result[1]=Integer.MAX_VALUE;
-            }
-        } else {
-            Pattern p = Pattern.compile(".*?\\$(\\d+).*?\\$(\\d+).*?");
-            Matcher m = p.matcher(price);
-            if (m.find()){
-                result[0]=Integer.parseInt(m.group(1));
-                result[1]=Integer.parseInt(m.group(2));
-            }
-        }
-        return result;
-    }
-
-    /* ----------------------------- METHODS TO GET SOMETHING IN ANOTHER FORMAT - END ------------------------------- */
 
     /* -------------------------------------- METHODS TO GENERATE RANDOM DATA --------------------------------------- */
 
@@ -691,6 +590,16 @@ public class Utils extends TestEnvironment {
             System.out.println("Constant not found: " + e);
         }
         return source;
+    }
+
+    public static String getConstantValue(EPropertiesNames property) {
+        String value = "";
+        try {
+            return PropertiesManager.getInstance().getConfig(property);
+        } catch(Exception e){
+            System.out.println("Constant "+property.name()+" not found: " + e);
+        }
+        return value;
     }
 
     /* -------------------------------------------- PARSER METHODS - END -------------------------------------------- */

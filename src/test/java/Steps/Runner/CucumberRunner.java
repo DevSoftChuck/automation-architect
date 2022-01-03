@@ -16,6 +16,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.slf4j.MDC;
 import org.testng.annotations.*;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+
 
 /**
  * @author Ivan Andraschko
@@ -25,7 +27,7 @@ import org.testng.annotations.*;
 @CucumberOptions(
 		features = {"src/test/java/Features"},
 		glue = {"Steps"},
-		tags = "@test",
+		tags = "@test or @Cpq",
 		plugin = {	"pretty",
 					"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 					"io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"})
@@ -52,7 +54,7 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 		testEnvironment.allureWriteProperties();
 //		slackLogger.sendTestExecutionStatusToSlack();
 		testEnvironment.testResultsCleaner();
-		SeleniumDriver.destroyDriver();
+//		SeleniumDriver.destroyDriver();
 	}
 
 	@Before()
