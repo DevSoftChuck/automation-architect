@@ -71,7 +71,7 @@ public class TestEnvironment {
     protected static final String DEFAULT_TESTS_EXECUTOR = System.getProperty
             ("tests.executor", "chrome");
     protected static final String SELENIUM_GRID_URL = System.getProperty
-            ("selenium.gridURL", "http://192.168.56.102:4444/wd/hub");
+            ("selenium.gridURL", "http://salesforce-qa-testing.com/");
 
     //ENVIRONMENT METHODS//
     public static String getCurrentPath() {

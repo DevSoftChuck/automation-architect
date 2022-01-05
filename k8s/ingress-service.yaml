@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+ name: ingress-service
+ annotations:
+  kubernetes.io/ingress.class: nginx
+  nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+ rules:
+  - host: salesforce-qa-testing.com
+    http:
+     paths:
+      - path: /
+        pathType: Prefix
+        backend:
+         service:
+          name: selenium-router
+          port:
+           number: 4444
+
+
+
