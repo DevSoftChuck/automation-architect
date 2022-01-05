@@ -10,6 +10,7 @@ metadata:
     name: selenium-event-bus
     component: "selenium-grid-4"
 spec:
+  type: ClusterIP
   selector:
     app: selenium-event-bus
   ports:
@@ -69,6 +70,7 @@ metadata:
     name: selenium-sessions
     component: "selenium-grid-4"
 spec:
+  type: ClusterIP
   selector:
     app: selenium-sessions
   ports:
@@ -123,6 +125,7 @@ metadata:
     name: selenium-session-queue
     component: "selenium-grid-4"
 spec:
+  type: ClusterIP
   selector:
     app: selenium-session-queue
   ports:
@@ -180,6 +183,7 @@ metadata:
     name: selenium-distributor
     component: "selenium-grid-4"
 spec:
+  type: ClusterIP
   selector:
     app: selenium-distributor
   ports:
@@ -303,6 +307,7 @@ metadata:
     name: selenium-chrome-node
     component: "selenium-grid-4"
 spec:
+  type: ClusterIP
   selector:
     app: selenium-chrome-node
   ports:
@@ -367,88 +372,6 @@ spec:
           emptyDir: { "medium": "Memory" }
 ---
 #***************************************
-#SELENIUM EDGE NODE
-#***************************************
-apiVersion: v1
-kind: Service
-metadata:
-  name: selenium-edge-node
-  labels:
-    name: selenium-edge-node
-    component: "selenium-grid-4"
-spec:
-  type: ClusterIP
-  selector:
-    app: selenium-edge-node
-  ports:
-    - name: port1
-      protocol: TCP
-      port: 6901
-      targetPort: 5900
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: selenium-edge-node-deployment
-  labels:
-    app: selenium-edge-node
-    name: selenium-edge-node
-    component: "selenium-grid-4"
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: selenium-edge-node
-  template:
-    metadata:
-      labels:
-        app: selenium-edge-node
-        name: selenium-edge-node
-        component: "selenium-grid-4"
-    spec:
-      containers:
-        - name: selenium-edge-node
-          image: selenium/node-edge:4.1.1-20211217
-          env:
-            - name: SE_EVENT_BUS_HOST
-              value: "selenium-event-bus"
-            - name: SE_EVENT_BUS_PUBLISH_PORT
-              value: "4442"
-            - name: SE_EVENT_BUS_SUBSCRIBE_PORT
-              value: "4443"
-            - name: SCREEN_WIDTH
-              value: "1980"
-            - name: SCREEN_HEIGHT
-              value: "1024"
-            - name: SCREEN_DEPTH
-              value: "24"
-            - name: SCREEN_DPI
-              value: "96"
-            - name: SE_NODE_MAX_SESSIONS
-              value: "2"
-            - name: SE_NODE_OVERRIDE_MAX_SESSIONS
-              value: "true"
-            - name: SE_NODE_SESSION_TIMEOUT
-              value: "600"
-          ports:
-            - containerPort: 5553
-              protocol: TCP
-          volumeMounts:
-            - name: dshm
-              mountPath: /dev/shm
-          resources:
-            requests:
-              memory: "1Gi"
-              cpu: "1"
-            limits:
-              memory: "1Gi"
-              cpu: "1"
-      volumes:
-        - name: dshm
-          emptyDir: { "medium": "Memory" }
----
-#***************************************
 #SELENIUM FIREFOX NODE
 #***************************************
 apiVersion: v1
@@ -459,6 +382,7 @@ metadata:
     name: selenium-ff-node
     component: "selenium-grid-4"
 spec:
+  type: ClusterIP
   selector:
     app: selenium-ff-node
   ports:
