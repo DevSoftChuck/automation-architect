@@ -18,7 +18,6 @@ import org.slf4j.MDC;
 import org.testng.annotations.*;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 
-
 /**
  * @author Ivan Andraschko
  **/
@@ -27,7 +26,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 @CucumberOptions(
 		features = {"src/test/java/Features"},
 		glue = {"Steps"},
-		tags = "@test or @Cpq",
+		tags = "@api or @solo",
 		plugin = {	"pretty",
 					"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 					"io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"})
@@ -52,16 +51,18 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 	public void onFinish() {
 		testEnvironment.allureWriteExecutors();
 		testEnvironment.allureWriteProperties();
-//		slackLogger.sendTestExecutionStatusToSlack();
 		testEnvironment.testResultsCleaner();
-//		SeleniumDriver.destroyDriver();
 	}
 
 	@Before()
 	public void beforeScenario(Scenario scenario) {
-		MDC.put("testid", scenario.getName().toUpperCase());
-		messageBuilder.messageStartScenario(scenario);
-		SeleniumDriver.startBrowser();
+		if (scenario.getName().contains("API_")){
+			testEnvironment.setupRestAssured("https://reqres.in");
+		}else{
+			MDC.put("testid", scenario.getName().toUpperCase());
+			messageBuilder.messageStartScenario(scenario);
+			SeleniumDriver.startBrowser();
+		}
 	}
 
 	@After()
@@ -71,17 +72,20 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 		}else{
 			TestEnvironment.passedTestsAmount++;
 		}
-		messageBuilder.messageFinishScenario(scenario);
-//        slackLogger.sendTestExecutionStatusToSlack(iTestContext);
+
+		if(!scenario.getName().contains("API_")){
+			messageBuilder.messageFinishScenario(scenario);
+			MDC.remove("testid");
+			SeleniumDriver.getDriver().quit();
+			SeleniumDriver.removeDriver();
+		}
+		//        slackLogger.sendTestExecutionStatusToSlack(iTestContext);
 		testEnvironment.testResultsCleaner();
-		MDC.remove("testid");
-        SeleniumDriver.getDriver().quit();
-        SeleniumDriver.removeDriver();
 	}
 
 	@AfterStep()
 	public void afterStep(Scenario scenario) throws Exception {
-		if (scenario.isFailed()) {
+		if (scenario.isFailed() && !scenario.getName().contains("API_")) {
 			String screenshotName = scenario.getName().replaceAll(" ", "_")
 					.concat(String.valueOf(Utils.parser("${S8}")));
 			byte[] screenshot = ((TakesScreenshot) SeleniumDriver.getDriver()).getScreenshotAs(OutputType.BYTES);

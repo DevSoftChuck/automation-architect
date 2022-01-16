@@ -5,7 +5,7 @@ Feature: Login
         Given User goes to "$[LOGIN_URL]" page
         And User is on Login page
 
-    @Regression
+    @Regression @solo
     Scenario: Login with correct username and password
         When Tries to log in with the username "$[USER]" and password "$[PASSWORD]"
 

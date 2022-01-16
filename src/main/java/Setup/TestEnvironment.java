@@ -3,6 +3,13 @@ package Setup;
 import Utils.Utils;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Attachment;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
@@ -25,6 +32,8 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Properties;
 import java.util.stream.Stream;
+
+import static org.hamcrest.Matchers.lessThan;
 
 /**
  * @author Ivan Andraschko
@@ -61,7 +70,7 @@ public class TestEnvironment {
     protected static final String TRAVIS_BRANCH = System.getProperty
             ("travis.branch", "Build was made on localhost");
     protected static final String OS_NAME = System.getProperty
-            ("travis.osName", "Build was made on localhost");//DON'T KNOW HOW TO SET OS TYPE WHEN BUILD RUNS ON LOCAL MACHINE OR ONLINE
+            ("travis.osName", "Build was made on localhost");
     protected static final String JAVA_VERSION = System.getProperty
             ("travis.jdkVersion", "Build was made on localhost");
     protected static final String SLACK_TOKEN = System.getProperty
@@ -169,5 +178,23 @@ public class TestEnvironment {
     public void testResultsCleaner() {
         passedTestsAmount = 0;
         failedTestsAmount = 0;
+    }
+
+    public void setupRestAssured(String baseURL) {
+        RestAssured.baseURI = baseURL;
+
+        RequestSpecification request = new RequestSpecBuilder()
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .addFilter(new RequestLoggingFilter())//Set restAssured to log all requests globally
+                .addFilter(new ResponseLoggingFilter())//Set restAssured to log all responses globally
+                .build();
+
+        ResponseSpecification response = new ResponseSpecBuilder()
+                .expectResponseTime(lessThan(5000L))
+                .build();
+
+        RestAssured.requestSpecification = request;
+        RestAssured.responseSpecification = response;
     }
 }

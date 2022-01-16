@@ -1,4 +1,4 @@
-package Steps;
+package Steps.web;
 
 import PageObjects.MainHeader;
 import PageObjects.LoginPage;

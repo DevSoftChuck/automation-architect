@@ -8,7 +8,7 @@ Java 1.8, Selenium 4.1.1, TestNG 7.4.0, Cucumber 6.11.0, REST Assured (Soon), Ma
 - In terminal type `mvn test` -> This will run all tests from tests package.`(src/test/java/Features)`  
 You can pass some environment values e.g:
    - `-Dtests.executor=chrome` <sub>_**This will run your test cases using the selected executor, the available executors are firefox, grid, saucelabs, and chrome.**_</sub>
-   - `-Dcucumber.filter.tags=tag` <sub>_**This will run all `.feature` scenarios with the provided tag.**_</sub>
+   - `-Dcucumber.filter.tags="@tag or @another and @this"` <sub>_**This will run all `.feature` scenarios with the provided tag.**_</sub>
 
 ## RESULTS AND LOGS
 ### CI/CD
