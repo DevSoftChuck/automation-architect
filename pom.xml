@@ -29,7 +29,7 @@
         <maven.compile.encoding>UTF-8</maven.compile.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cucumber.version>6.11.0</cucumber.version>
+        <cucumber.version>7.0.0</cucumber.version>
         <extent.version>5.0.8</extent.version>
         <pdfreporter.version>1.7.3</pdfreporter.version>
         <selenium.java.version>4.1.1</selenium.java.version>
@@ -42,7 +42,7 @@
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
         <ttaf.version>1.0.8-SNAPSHOT</ttaf.version>
         <aspectj.version>1.9.8.M1</aspectj.version>
-        <allure.version>2.13.6</allure.version>
+        <allure.cucumber.version>2.17.2</allure.cucumber.version>
         <rest.assured.version>4.4.0</rest.assured.version>
 
     </properties>
@@ -87,8 +87,8 @@
         </dependency>
         <dependency>
             <groupId>tech.grasshopper</groupId>
-            <artifactId>extentreports-cucumber6-adapter</artifactId>
-            <version>2.8.3</version>
+            <artifactId>extentreports-cucumber7-adapter</artifactId>
+            <version>1.1.0</version>
         </dependency>
 
         <dependency>
@@ -132,8 +132,8 @@
 
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-cucumber6-jvm</artifactId>
-            <version>${allure.version}</version>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure.cucumber.version}</version>
         </dependency>
 
         <dependency>

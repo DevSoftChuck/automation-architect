@@ -29,7 +29,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 		tags = "@api or @solo",
 		plugin = {	"pretty",
 					"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-					"io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"})
+					"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"})
 public class CucumberRunner extends AbstractTestNGCucumberTests {
 
 	private final MessageBuilder messageBuilder = new MessageBuilder();
