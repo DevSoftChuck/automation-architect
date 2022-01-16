@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: selenium-firefox-node
+ labels:
+  name: selenium-firefox-node
+  component: "selenium-grid-4"
+spec:
+ type: ClusterIP
+ selector:
+  app: selenium-firefox-node
+ ports:
+  - name: port1
+    protocol: TCP
+    port: 6902
+    targetPort: 5900

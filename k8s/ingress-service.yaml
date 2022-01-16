@@ -14,9 +14,23 @@ spec:
         pathType: Prefix
         backend:
          service:
-          name: selenium-router
+          name: jenkins
           port:
-           number: 4444
+           number: 8080
+#      - path: /selenium/*
+#        pathType: ImplementationSpecific
+#        backend:
+#         service:
+#          name: selenium-router
+#          port:
+#           number: 4444
+#      - path: /jenkins/*
+#        pathType: ImplementationSpecific
+#        backend:
+#         service:
+#          name: jenkins
+#          port:
+#           number: 8080
 
 
 
