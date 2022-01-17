@@ -1,14 +1,22 @@
 # Salesforce Automation project
 
 **Several tools for supporting test automation frameworks:**
-Java 1.8, Selenium 4.1.1, TestNG 7.4.0, Cucumber 6.11.0, REST Assured (Soon), Maven, Travis CI (Jenkins Soon), Allure Reports, Cucumber Reports, Slack API (Soon), SeleniumGrid 4.1.1, WebDriverManager, Saucelabs (Soon), GitHub Pages.
+Java 1.8, Selenium 4.1.1, TestNG 7.4.0, Cucumber 7.0.0, REST Assured 4.4.0, Maven, Travis CI (Jenkins Soon), Allure Reports, Cucumber Reports, Slack API (Soon), SeleniumGrid 4.1.1, WebDriverManager, Saucelabs (Soon), GitHub Pages.
 
 ## RUN TESTS
 
 - In terminal type `mvn test` -> This will run all tests from tests package.`(src/test/java/Features)`  
 You can pass some environment values e.g:
    - `-Dtests.executor=chrome` <sub>_**This will run your test cases using the selected executor, the available executors are firefox, grid, saucelabs, and chrome.**_</sub>
-   - `-Dcucumber.filter.tags="@tag or @another and @this"` <sub>_**This will run all `.feature` scenarios with the provided tag.**_</sub>
+   - `-Dcucumber.filter.tags="@tag or @another and @api"` <sub>_**This will run all `.feature` scenarios with the provided tag.**_</sub>
+
+## API 
+Currently, only Rest-Assured is supported, but it could be extended to Okhttp. Some materials that would be useful for expanding the API tests:
+- [JSONPath Online Evaluator](https://jsonpath.com/)
+- [Expressions in JSONPath](https://toolsqa.com/rest-assured/expressions-in-jsonpath/)
+- [Read JSON Response Body using Rest Assured](https://toolsqa.com/rest-assured/read-json-response-body-using-rest-assured/)
+- [Rest Assured Tutorial](https://www.toolsqa.com/rest-assured-tutorial/)
+
 
 ## RESULTS AND LOGS
 ### CI/CD

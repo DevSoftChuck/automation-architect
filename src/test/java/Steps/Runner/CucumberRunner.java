@@ -1,6 +1,5 @@
 package Steps.Runner;
 
-import Setup.MessageBuilder;
 import Setup.SeleniumDriver;
 import Setup.SlackLogger;
 import Setup.TestEnvironment;
@@ -32,7 +31,6 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 					"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"})
 public class CucumberRunner extends AbstractTestNGCucumberTests {
 
-	private final MessageBuilder messageBuilder = new MessageBuilder();
 	private final SlackLogger slackLogger = new SlackLogger();
 	private final TestEnvironment testEnvironment = new TestEnvironment();
 
@@ -60,7 +58,7 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 			testEnvironment.setupRestAssured("https://reqres.in");
 		}else{
 			MDC.put("testid", scenario.getName().toUpperCase());
-			messageBuilder.messageStartScenario(scenario);
+			testEnvironment.messageStartScenario(scenario);
 			SeleniumDriver.startBrowser();
 		}
 	}
@@ -74,7 +72,7 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 		}
 
 		if(!scenario.getName().contains("API_")){
-			messageBuilder.messageFinishScenario(scenario);
+			testEnvironment.messageFinishScenario(scenario);
 			MDC.remove("testid");
 			SeleniumDriver.getDriver().quit();
 			SeleniumDriver.removeDriver();
