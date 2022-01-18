@@ -10,7 +10,7 @@ You can pass some environment values e.g:
    - `-Dtests.executor=chrome` <sub>_**This will run your test cases using the selected executor, the available executors are firefox, grid, saucelabs, and chrome.**_</sub>
    - `-Dcucumber.filter.tags="@tag or @another and @api"` <sub>_**This will run all `.feature` scenarios with the provided tag.**_</sub>
 ### PRECONDITIONS TO RUN APPIUM TESTS
-You must have a device simulator running, so that the appium server can recognize it. The device name is defined in the TestEnvironment.java class. The installation steps are described [here](#appium).
+You must have a device simulator running, so that the appium server can recognize it. The device name is defined in the TestEnvironment.java class. The installation steps are described [here](#APPIUM).
 
 ## API 
 Currently, only Rest-Assured is supported, but it could be extended to Okhttp. Some materials that would be useful for expanding the API tests:
@@ -42,8 +42,7 @@ Here are the steps to deploy the Grid 4 to a Kubernetes cluster on development:
 
 Run your test cases on Selenium grid:
 1. Make sure that SeleniumGrid is running properly, check http://salesforce-qa-testing.com.
-2. In terminal type `mvn test -Dtests.executor=grid -Dremote.browser=chrome`
-
+2. In terminal type `mvn test -Dtests.executor=grid -Dremote.browser=chrome`.
 
 ##APPIUM
 ### Installing Appium 2.0
