@@ -70,18 +70,28 @@ public class TestEnvironment {
             ("travis.buildURL", "Build was made on localhost");
     protected static final String TRAVIS_BRANCH = System.getProperty
             ("travis.branch", "Build was made on localhost");
-    protected static final String OS_NAME = System.getProperty
-            ("travis.osName", "Build was made on localhost");
-    protected static final String JAVA_VERSION = System.getProperty
-            ("travis.jdkVersion", "Build was made on localhost");
-    protected static final String SLACK_TOKEN = System.getProperty
-            ("travis.slack", "");
     protected static final String DEFAULT_REMOTE_BROWSER = System.getProperty
             ("remote.browser", "chrome");
+    protected static final String DEFAULT_MOBILE_REMOTE = System.getProperty
+            ("remote.mobile", "android");
     protected static final String DEFAULT_TESTS_EXECUTOR = System.getProperty
             ("tests.executor", "chrome");
+    protected static final String DEFAULT_MOBILE = System.getProperty
+            ("tests.mobile.executor", "android");
     protected static final String SELENIUM_GRID_URL = System.getProperty
             ("selenium.gridURL", "http://salesforce-qa-testing.com/");
+    protected static final String APPIUM_URL = System.getProperty
+            ("appium.URL", "http://0.0.0.0:4723");
+    protected static final String USERNAME = System.getProperty
+            ("saucelab.username", "");
+    protected static final String ACCESS_KEY = System.getProperty
+            ("saucelab.accesskey", "");
+    protected static final String SAUCELAB_URL = "https://"+USERNAME+":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
+    protected static final String ANDROID_DEVICE_NAME = System.getProperty
+            ("android.device.name", "AndroidEmulator");
+    protected static final String IOS_DEVICE_NAME = System.getProperty
+            ("ios.device.name", "iPhone Simulator");
+
 
     //ENVIRONMENT METHODS//
     public static String getCurrentPath() {
@@ -99,8 +109,6 @@ public class TestEnvironment {
         properties.setProperty("Travis build Run:", TRAVIS_BUILD_NUMBER);
         properties.setProperty("Branch:", TRAVIS_BRANCH);
         properties.setProperty("Browser:", DEFAULT_TESTS_EXECUTOR);
-        properties.setProperty("OS Name:", OS_NAME);
-        properties.setProperty("JDK Version:", JAVA_VERSION);
         try {
             properties.store(new FileOutputStream("allure-results/environment.properties"), null);
         } catch (IOException e) {
