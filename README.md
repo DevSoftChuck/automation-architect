@@ -44,7 +44,7 @@ Run your test cases on Selenium grid:
 1. Make sure that SeleniumGrid is running properly, check http://salesforce-qa-testing.com.
 2. In terminal type `mvn test -Dtests.executor=grid -Dremote.browser=chrome`.
 
-##APPIUM
+## APPIUM
 ### Installing Appium 2.0
 At the moment, Appium 2.0 is not the main line of Appium development, so it cannot be installed with a simple `npm install -g appium`. Instead, Appium 2.0 beta versions will be available with a special NPM tag next, so you can install it on any platform using NPM as follows:
 - `npm install -g appium@next`
