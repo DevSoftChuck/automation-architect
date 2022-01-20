@@ -7,10 +7,24 @@ Java 1.8, Selenium 4.1.1, TestNG 7.4.0, Cucumber 7.0.0, REST Assured 4.4.0, Mave
 
 In terminal type `mvn test` -> This will run all tests from tests package.`(src/test/java/Features)`  
 You can pass some environment values e.g:
-   - `-Dtests.executor=chrome` <sub>_**This will run your test cases using the selected executor, the available executors are firefox, grid, saucelabs, and chrome.**_</sub>
+   - `-Dexecutor=chrome` <sub>_**This will run your test cases using the selected executor, the available executors are firefox, grid, saucelabs, and chrome.**_</sub>
    - `-Dcucumber.filter.tags="@tag or @another and @api"` <sub>_**This will run all `.feature` scenarios with the provided tag.**_</sub>
+
 ### PRECONDITIONS TO RUN APPIUM TESTS
 You must have a device simulator running, so that the appium server can recognize it. The device name is defined in the TestEnvironment.java class. The installation steps are described [here](#APPIUM).
+
+### RUN APPIUM TESTS
+The following environment values determine which application/environment we are going to run:
+- `-Dmobile=android -Dexecutor=chrome` <sub>_**This will run your test cases on android using chrome browser.**_</sub>
+- `-Dmobile=android -Dexecutor=native` <sub>_**This will run your test cases on android using a native application.**_</sub>
+- `-Dmobile=ios -Dexecutor=safari` <sub>_**This will run your test cases on ios using safari browser.**_</sub>
+- `-Dmobile=ios -Dexecutor=chrome` <sub>_**This will run your test cases on android using chrome browser.**_</sub>
+- `-Dmobile=ios -Dexecutor=native` <sub>_**This will run your test cases on ios using a native application.**_</sub>
+- `-Dmobile=saucelab -Dremote.mobile=android -Dexecutor=chrome` <sub>_**This will run your test cases on Saucelabs using an android device and chrome browser.**_</sub>
+- `-Dmobile=saucelab -Dremote.mobile=android -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an android device and a native application.**_</sub>
+- `-Dmobile=saucelab -Dremote.mobile=ios -Dexecutor=chrome` <sub>_**This will run your test cases on Saucelabs using an ios device and chrome browser.**_</sub>
+- `-Dmobile=saucelab -Dremote.mobile=ios -Dexecutor=safari` <sub>_**This will run your test cases on Saucelabs using an ios device and safari browser.**_</sub>
+- `-Dmobile=saucelab -Dremote.mobile=ios -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an ios device and a native application.**_</sub>
 
 ## API 
 Currently, only Rest-Assured is supported, but it could be extended to Okhttp. Some materials that would be useful for expanding the API tests:

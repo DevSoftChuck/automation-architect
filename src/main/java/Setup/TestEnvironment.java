@@ -75,9 +75,9 @@ public class TestEnvironment {
     protected static final String DEFAULT_MOBILE_REMOTE = System.getProperty
             ("remote.mobile", "android");
     protected static final String DEFAULT_TESTS_EXECUTOR = System.getProperty
-            ("tests.executor", "chrome");
+            ("executor", "chrome");
     protected static final String DEFAULT_MOBILE = System.getProperty
-            ("tests.mobile.executor", "android");
+            ("mobile", "android");
     protected static final String SELENIUM_GRID_URL = System.getProperty
             ("selenium.gridURL", "http://salesforce-qa-testing.com/");
     protected static final String APPIUM_URL = System.getProperty

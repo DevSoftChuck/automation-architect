@@ -17,7 +17,6 @@ public class AppiumDriver extends TestEnvironment{
     private static AndroidDriver androidDriver;
     private static IOSDriver iosDriver;
 
-
     private static final List<AndroidDriver> storedAndroidDrivers = new ArrayList<>();
     private static final List<IOSDriver> storedIOSDrivers = new ArrayList<>();
 
@@ -44,25 +43,36 @@ public class AppiumDriver extends TestEnvironment{
     }
 
     public static String getTestsExecutor() {
-        String getTestsExecutor = System.getProperty("tests.executor");
-        if (getTestsExecutor == null) {
-            getTestsExecutor = System.getenv("tests.executor");
-            if (getTestsExecutor == null) {
-                getTestsExecutor = DEFAULT_TESTS_EXECUTOR;
+        String executor = System.getProperty("executor");
+        if (executor == null) {
+            executor = System.getenv("executor");
+            if (executor == null) {
+                executor = DEFAULT_TESTS_EXECUTOR;
             }
         }
-        return getTestsExecutor;
+        return executor;
     }
 
     public static String getMobileDevice() {
-        String getTestsExecutor = System.getProperty("tests.mobile");
-        if (getTestsExecutor == null) {
-            getTestsExecutor = System.getenv("tests.mobile");
-            if (getTestsExecutor == null) {
-                getTestsExecutor = DEFAULT_MOBILE;
+        String mobileExecutor = System.getProperty("mobile");
+        if (mobileExecutor == null) {
+            mobileExecutor = System.getenv("mobile");
+            if (mobileExecutor == null) {
+                mobileExecutor = DEFAULT_MOBILE;
             }
         }
-        return getTestsExecutor;
+        return mobileExecutor;
+    }
+
+    public static String getRemoteMobileDevice() {
+        String remoteMobile = System.getProperty("remote.mobile");
+        if (remoteMobile == null) {
+            remoteMobile = System.getenv("remote.mobile");
+            if (remoteMobile == null) {
+                remoteMobile = DEFAULT_MOBILE_REMOTE;
+            }
+        }
+        return remoteMobile;
     }
 
     public static void startMobile() throws IOException {
@@ -139,7 +149,7 @@ public class AppiumDriver extends TestEnvironment{
                 }
                 break;
             case "saucelab":
-                switch (getMobileDevice().toLowerCase()) {
+                switch (getRemoteMobileDevice().toLowerCase()) {
                     case "android":
                         switch (getTestsExecutor().toLowerCase()) {
                             case "chrome":
