@@ -1,5 +1,6 @@
-package PageObjects;
+package PageObjects.Web;
 
+import PageObjects.Page;
 import Utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

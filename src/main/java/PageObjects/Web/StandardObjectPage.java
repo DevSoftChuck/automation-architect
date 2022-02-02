@@ -1,6 +1,6 @@
-package PageObjects;
+package PageObjects.Web;
 
-import Setup.SeleniumDriver;
+import PageObjects.Page;
 import Utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class StandardObjectPage extends Page<StandardObjectPage>{
+public class StandardObjectPage extends Page<StandardObjectPage> {
 
     /* ------------------------------------------------ WEB ELEMENTS ------------------------------------------------ */
 

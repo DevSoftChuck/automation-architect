@@ -1,13 +1,9 @@
-package PageObjects;
+package PageObjects.Web;
 
+import PageObjects.Page;
 import Utils.Utils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
-
-public class QuoteDetailPage extends Page<QuoteDetailPage>{
+public class QuoteDetailPage extends Page<QuoteDetailPage> {
 
     /* ------------------------------------------------ WEB ELEMENTS ------------------------------------------------ */
 

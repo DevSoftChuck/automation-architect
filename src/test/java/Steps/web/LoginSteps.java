@@ -1,8 +1,8 @@
 package Steps.web;
 
-import PageObjects.MainHeader;
-import PageObjects.LoginPage;
-import PageObjects.StandardObjectPage;
+import PageObjects.Web.MainHeader;
+import PageObjects.Web.LoginPage;
+import PageObjects.Web.StandardObjectPage;
 import Setup.TestEnvironment;
 import Utils.*;
 import io.cucumber.java.en.Given;

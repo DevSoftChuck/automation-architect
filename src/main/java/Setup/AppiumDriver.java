@@ -42,116 +42,107 @@ public class AppiumDriver extends TestEnvironment{
         iosDrivers.set(driver);
     }
 
-    public static String getTestsExecutor() {
+    public static String getExecutor() {
         String executor = System.getProperty("executor");
         if (executor == null) {
             executor = System.getenv("executor");
             if (executor == null) {
-                executor = DEFAULT_TESTS_EXECUTOR;
+                executor = DEFAULT_BROWSER;
             }
         }
         return executor;
     }
 
-    public static String getMobileDevice() {
-        String mobileExecutor = System.getProperty("mobile");
+    public static String getPlatformDevice() {
+        String mobileExecutor = System.getProperty("platform");
         if (mobileExecutor == null) {
-            mobileExecutor = System.getenv("mobile");
+            mobileExecutor = System.getenv("platform");
             if (mobileExecutor == null) {
-                mobileExecutor = DEFAULT_MOBILE;
+                mobileExecutor = DEFAULT_PLATFORM;
             }
         }
         return mobileExecutor;
     }
 
-    public static String getRemoteMobileDevice() {
-        String remoteMobile = System.getProperty("remote.mobile");
-        if (remoteMobile == null) {
-            remoteMobile = System.getenv("remote.mobile");
-            if (remoteMobile == null) {
-                remoteMobile = DEFAULT_MOBILE_REMOTE;
+    public static String getService() {
+        String service = System.getProperty("service");
+        if (service == null) {
+            service = System.getenv("service");
+            if (service == null) {
+                service = DEFAULT_SERVICE;
             }
         }
-        return remoteMobile;
+        return service;
     }
 
-    public static void startMobile() throws IOException {
-        switch (getMobileDevice().toLowerCase()) {
-            case "android":
-                switch (getTestsExecutor().toLowerCase()) {
-                    case "chrome":
-                        WebDriverManager wdm = WebDriverManager.chromedriver();
-                        wdm.setup();
-                        String chromeDriverPath = wdm.getBinaryPath();
-
-                        DesiredCapabilities capabilities = new DesiredCapabilities();
-                        capabilities.setCapability("deviceName", ANDROID_DEVICE_NAME);
-                        capabilities.setCapability("browserName", "Chrome");
-                        capabilities.setCapability("automationName", "uiautomator2");
-                        capabilities.setCapability("chromedriverExecutable", chromeDriverPath);
-
-                        androidDriver = new AndroidDriver(new URL(APPIUM_URL), capabilities);
-                        addAndroidDriver(androidDriver);
-                        break;
-                    case "native":
-                        File appDir = new File("src/test/resources");
-                        File app = new File(appDir, "ApiDemos-debug.apk");
-                        DesiredCapabilities capabilitiesNative = new DesiredCapabilities();
-                        capabilitiesNative.setCapability("deviceName", ANDROID_DEVICE_NAME);
-                        capabilitiesNative.setCapability("app", app.getAbsolutePath());
-                        capabilitiesNative.setCapability("appPackage", "io.appium.android.apis");
-                        androidDriver = new AndroidDriver(new URL(APPIUM_URL), capabilitiesNative);
-                        addAndroidDriver(androidDriver);
-                        break;
-                    default:
-                        throw new IllegalStateException("This browser is not supported yet!");
-                }
-                break;
-            case "ios":
-                switch (getTestsExecutor().toLowerCase()) {
-                    case "chrome":
-                        WebDriverManager wdm = WebDriverManager.chromedriver();
-                        wdm.setup();
-                        String chromeDriverPath = wdm.getBinaryPath();
-
-                        DesiredCapabilities capabilities = new DesiredCapabilities();
-                        capabilities.setCapability("deviceName", IOS_DEVICE_NAME);
-                        capabilities.setCapability("platformVersion", "11.2.2");
-                        capabilities.setCapability("browserName", "Chrome");
-                        capabilities.setCapability("automationName", "XCUITest");
-                        capabilities.setCapability("chromedriverExecutable", chromeDriverPath);
-                        iosDriver = new IOSDriver(new URL(APPIUM_URL), capabilities);
-                        addIOSDriver(iosDriver);
-                        break;
-                    case "safari":
-                        DesiredCapabilities capabilitiesSF = new DesiredCapabilities();
-                        capabilitiesSF.setCapability("deviceName", IOS_DEVICE_NAME);
-                        capabilitiesSF.setCapability("platformVersion", "11.2.2");
-                        capabilitiesSF.setCapability("browserName", "Safari");
-                        capabilitiesSF.setCapability("automationName", "XCUITest");
-                        iosDriver = new IOSDriver(new URL(APPIUM_URL), capabilitiesSF);
-                        addIOSDriver(iosDriver);
-                        break;
-                    case "native":
-                        File appDir = new File("src/test/resources");
-                        File app = new File(appDir.getCanonicalPath(), "TestApp.app.zip");
-
-                        DesiredCapabilities capabilitiesNative = new DesiredCapabilities();
-                        capabilitiesNative.setCapability("deviceName", IOS_DEVICE_NAME);
-                        capabilitiesNative.setCapability("platformVersion", "11.2.2");
-                        capabilitiesNative.setCapability("app", app.getAbsolutePath());
-                        capabilitiesNative.setCapability("automationName", "XCUITest");
-                        iosDriver = new IOSDriver(new URL(APPIUM_URL), capabilitiesNative);
-                        addIOSDriver(iosDriver);
-                        break;
-                    default:
-                        throw new IllegalStateException("This browser is not supported yet!");
-                }
-                break;
-            case "saucelab":
-                switch (getRemoteMobileDevice().toLowerCase()) {
+    public static void startPlatform() throws IOException {
+        switch (getService().toLowerCase()) {
+            case "local":
+                switch (getPlatformDevice().toLowerCase()) {
                     case "android":
-                        switch (getTestsExecutor().toLowerCase()) {
+                        switch (getExecutor().toLowerCase()) {
+                            case "chrome":
+                                WebDriverManager wdm = WebDriverManager.chromedriver();
+                                wdm.setup();
+                                String chromeDriverPath = wdm.getBinaryPath();
+
+                                DesiredCapabilities capabilities = new DesiredCapabilities();
+                                capabilities.setCapability("deviceName", ANDROID_DEVICE_NAME);
+                                capabilities.setCapability("browserName", "Chrome");
+                                capabilities.setCapability("automationName", "uiautomator2");
+                                capabilities.setCapability("chromedriverExecutable", chromeDriverPath);
+
+                                androidDriver = new AndroidDriver(new URL(APPIUM_URL), capabilities);
+                                addAndroidDriver(androidDriver);
+                                break;
+                            case "native":
+                                File appDir = new File("src/test/resources");
+                                File app = new File(appDir, "ApiDemos-debug.apk");
+                                DesiredCapabilities capabilitiesNative = new DesiredCapabilities();
+                                capabilitiesNative.setCapability("deviceName", ANDROID_DEVICE_NAME);
+                                capabilitiesNative.setCapability("app", app.getAbsolutePath());
+                                capabilitiesNative.setCapability("appPackage", "io.appium.android.apis");
+                                androidDriver = new AndroidDriver(new URL(APPIUM_URL), capabilitiesNative);
+                                addAndroidDriver(androidDriver);
+                                break;
+                            default:
+                                throw new IllegalStateException("This executor: "+ getExecutor().toLowerCase() +", is not supported yet!");
+                        }
+                        break;
+                    case "ios":
+                        switch (getExecutor().toLowerCase()) {
+                            case "safari":
+                                DesiredCapabilities capabilitiesSF = new DesiredCapabilities();
+                                capabilitiesSF.setCapability("deviceName", IOS_DEVICE_NAME);
+                                capabilitiesSF.setCapability("platformVersion", "11.2.2");
+                                capabilitiesSF.setCapability("browserName", "Safari");
+                                capabilitiesSF.setCapability("automationName", "XCUITest");
+                                iosDriver = new IOSDriver(new URL(APPIUM_URL), capabilitiesSF);
+                                addIOSDriver(iosDriver);
+                                break;
+                            case "native":
+                                File appDir = new File("src/test/resources");
+                                File app = new File(appDir.getCanonicalPath(), "TestApp.app.zip");
+
+                                DesiredCapabilities capabilitiesNative = new DesiredCapabilities();
+                                capabilitiesNative.setCapability("deviceName", IOS_DEVICE_NAME);
+                                capabilitiesNative.setCapability("platformVersion", "11.2.2");
+                                capabilitiesNative.setCapability("app", app.getAbsolutePath());
+                                capabilitiesNative.setCapability("automationName", "XCUITest");
+                                iosDriver = new IOSDriver(new URL(APPIUM_URL), capabilitiesNative);
+                                addIOSDriver(iosDriver);
+                                break;
+                            default:
+                                throw new IllegalStateException("This executor: "+ getExecutor().toLowerCase() +", is not supported yet!");
+                        }
+                        break;
+                    default:
+                        throw new IllegalStateException("This platform: "+ getPlatformDevice().toLowerCase() +", is not supported yet!");
+                }
+            case "saucelab":
+                switch (getPlatformDevice().toLowerCase()) {
+                    case "android":
+                        switch (getExecutor().toLowerCase()) {
                             case "chrome":
                                 WebDriverManager wdm = WebDriverManager.chromedriver();
                                 wdm.setup();
@@ -178,24 +169,11 @@ public class AppiumDriver extends TestEnvironment{
                                 addAndroidDriver(androidDriver);
                                 break;
                             default:
-                                throw new IllegalStateException("This browser is not supported yet!");
+                                throw new IllegalStateException("This executor: "+ getExecutor().toLowerCase() +", is not supported yet!");
                         }
                         break;
                     case "ios":
-                        switch (getTestsExecutor().toLowerCase()) {
-                            case "chrome":
-                                WebDriverManager wdm = WebDriverManager.chromedriver();
-                                wdm.setup();
-                                String chromeDriverPath = wdm.getBinaryPath();
-                                DesiredCapabilities capabilities = new DesiredCapabilities();
-                                capabilities.setCapability("deviceName", IOS_DEVICE_NAME);
-                                capabilities.setCapability("platformVersion", "11.2.2");
-                                capabilities.setCapability("browserName", "Chrome");
-                                capabilities.setCapability("automationName", "XCUITest");
-                                capabilities.setCapability("chromedriverExecutable", chromeDriverPath);
-                                iosDriver = new IOSDriver(new URL(APPIUM_URL), capabilities);
-                                addIOSDriver(iosDriver);
-                                break;
+                        switch (getExecutor().toLowerCase()) {
                             case "safari":
                                 DesiredCapabilities capabilitiesSF = new DesiredCapabilities();
                                 capabilitiesSF.setCapability("deviceName", IOS_DEVICE_NAME);
@@ -220,15 +198,15 @@ public class AppiumDriver extends TestEnvironment{
                                 addIOSDriver(iosDriver);
                                 break;
                             default:
-                                throw new IllegalStateException("This browser is not supported yet!");
+                                throw new IllegalStateException("This executor: "+ getExecutor().toLowerCase() +", is not supported yet!");
                         }
                         break;
                     default:
-                        throw new IllegalStateException("This mobile or service is not supported yet!");
+                        throw new IllegalStateException("This platform: "+ getPlatformDevice().toLowerCase() +", is not supported yet!");
                 }
                 break;
             default:
-                throw new IllegalStateException("This mobile or service is not supported yet!");
+                throw new IllegalStateException("This service: "+getService().toLowerCase()+", is not supported yet!");
         }
     }
 

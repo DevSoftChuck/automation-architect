@@ -1,10 +1,13 @@
-package PageObjects;
+package PageObjects.Web;
 
+import PageObjects.Page;
+import Setup.DriverFactory.DriverFactory;
 import Utils.Utils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class LoginPage extends Page<LoginPage>{
+public class LoginPage extends Page<LoginPage> {
 
     /* ------------------------------------------------ WEB ELEMENTS ------------------------------------------------ */
 
@@ -72,9 +75,9 @@ public class LoginPage extends Page<LoginPage>{
         return this.errorLbl.getText();
     }
 
-    /* ------------------------------------- METHODS TO GET AND SET A TEXT - END ------------------------------------- */
+    /* ------------------------------------- METHODS TO GET AND SET A TEXT - END ------------------------------------ */
 
-    /* ---------------------------------------- METHODS TO CLICK ON ELEMENTS ----------------------------------------- */
+    /* ---------------------------------------- METHODS TO CLICK ON ELEMENTS ---------------------------------------- */
 
     /** Clicks on Login button **/
     public void clickOnLoginButton(){
@@ -82,16 +85,16 @@ public class LoginPage extends Page<LoginPage>{
         this.loginBtn.click();
     }
 
-    /* -------------------------------------- METHODS TO CLICK ON ELEMENTS - END -------------------------------------- */
+    /* ------------------------------------- METHODS TO CLICK ON ELEMENTS - END ------------------------------------- */
 
 
-    /* ---------------------------------- METHODS TO CHECK IF ELEMENTS ARE DISPLAYED ---------------------------------- */
+    /* --------------------------------- METHODS TO CHECK IF ELEMENTS ARE DISPLAYED --------------------------------- */
 
     /** Returns true if the login button is displayed. False in other case. **/
     public boolean isLoginButtonDisplayed(){
         return Utils.isExisting(this.loginBtn);
     }
 
-    /* ------------------------------- METHODS TO CHECK IF ELEMENTS ARE DISPLAYED - END ------------------------------- */
+    /* ------------------------------ METHODS TO CHECK IF ELEMENTS ARE DISPLAYED - END ------------------------------ */
 
 }

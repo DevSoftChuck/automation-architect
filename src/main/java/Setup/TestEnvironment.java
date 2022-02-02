@@ -35,6 +35,7 @@ import java.util.Properties;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.lessThan;
+import static Setup.DriverFactory.DriverFactory.getDriver;
 
 /**
  * @author Ivan Andraschko
@@ -42,55 +43,56 @@ import static org.hamcrest.Matchers.lessThan;
 
 public class TestEnvironment {
 
-    protected static Logger logger = LoggerFactory.getLogger(Logger.class);
-    protected static final String TODAY_DATE = new SimpleDateFormat("yyyy-MM-dd HH:ss").format(new Date());
+    public static Logger logger = LoggerFactory.getLogger(Logger.class);
+    public static final String TODAY_DATE = new SimpleDateFormat("yyyy-MM-dd HH:ss").format(new Date());
 
     //Static variable that stores the amount of time the waits are going to wait.
-    protected static final int SCRIPT_TIMEOUT = 15;
-    protected static final int PAGE_LOAD_TIMEOUT = 30;
-    protected static final int CLICK_TIMEOUT = 15;
-    protected static final int VISIBLE_TIMEOUT = 30;
-    protected static final long POLLING_TIME = 5;
+    public static final int SCRIPT_TIMEOUT = 15;
+    public static final int PAGE_LOAD_TIMEOUT = 30;
+    public static final int CLICK_TIMEOUT = 15;
+    public static final int VISIBLE_TIMEOUT = 30;
+    public static final long POLLING_TIME = 5;
 
     //AMOUNT OF TEST EXECUTED//
     public static int passedTestsAmount = 0;
     public static int failedTestsAmount = 0;
 
     //GENERAL SETTINGS//
-    protected static final String ANSI_RED = "\u001B[31m";
-    protected static final String ANSI_RESET = "\u001B[0m";
-    protected static final String ANSI_BLUE = "\u001b[34m";
-    protected static final String ANSI_GREEN = "\u001B[32m";
-    protected static final String EXECUTOR = "MAVEN";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE = "\u001b[34m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String EXECUTOR = "MAVEN";
 
     //ENVIRONMENT PROPERTIES//
-    protected static final String TRAVIS_BUILD_NUMBER = System.getProperty
+    public static final String TRAVIS_BUILD_NUMBER = System.getProperty
             ("travis.buildNumber", "Build was made on localhost");
-    protected static final String TRAVIS_BUILD_WEB_URL = System.getProperty
+    public static final String TRAVIS_BUILD_WEB_URL = System.getProperty
             ("travis.buildURL", "Build was made on localhost");
-    protected static final String TRAVIS_BRANCH = System.getProperty
+    public static final String TRAVIS_BRANCH = System.getProperty
             ("travis.branch", "Build was made on localhost");
-    protected static final String DEFAULT_REMOTE_BROWSER = System.getProperty
-            ("remote.browser", "chrome");
-    protected static final String DEFAULT_MOBILE_REMOTE = System.getProperty
-            ("remote.mobile", "android");
-    protected static final String DEFAULT_TESTS_EXECUTOR = System.getProperty
-            ("executor", "chrome");
-    protected static final String DEFAULT_MOBILE = System.getProperty
-            ("mobile", "android");
-    protected static final String SELENIUM_GRID_URL = System.getProperty
+    public static final String DEFAULT_BROWSER = System.getProperty
+            ("browser", "chrome");
+    public static final String DEFAULT_SERVICE = System.getProperty
+            ("service", "selenium");
+    public static final String DEFAULT_PLATFORM = System.getProperty
+            ("platform", "local");
+    public static final String DEFAULT_DEVICE = System.getProperty
+            ("device", "android");
+    public static final String SELENIUM_GRID_URL = System.getProperty
             ("selenium.gridURL", "http://salesforce-qa-testing.com/");
-    protected static final String APPIUM_URL = System.getProperty
+    public static final String APPIUM_URL = System.getProperty
             ("appium.URL", "http://0.0.0.0:4723");
-    protected static final String USERNAME = System.getProperty
+    public static final String USERNAME = System.getProperty
             ("saucelab.username", "");
-    protected static final String ACCESS_KEY = System.getProperty
+    public static final String ACCESS_KEY = System.getProperty
             ("saucelab.accesskey", "");
-    protected static final String SAUCELAB_URL = "https://"+USERNAME+":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
-    protected static final String ANDROID_DEVICE_NAME = System.getProperty
+    public static final String SAUCELAB_URL = "https://"+USERNAME+":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
+    public static final String ANDROID_DEVICE_NAME = System.getProperty
             ("android.device.name", "AndroidEmulator");
-    protected static final String IOS_DEVICE_NAME = System.getProperty
+    public static final String IOS_DEVICE_NAME = System.getProperty
             ("ios.device.name", "iPhone Simulator");
+    public static final String ANDROID_SDK_PATH = System.getenv("ANDROID_HOME");
 
 
     //ENVIRONMENT METHODS//
@@ -98,17 +100,17 @@ public class TestEnvironment {
         return Paths.get(".").toAbsolutePath().normalize().toString();
     }
 
-    protected static long getUnixTime() {
+    public static long getUnixTime() {
         return Instant.now().getEpochSecond();
     }
 
-    public void allureWriteProperties() {
+    public static void allureWriteProperties() {
         Properties properties = new Properties();
         properties.setProperty("All tests were executed on:", PropertiesManager.getInstance().getConfig(EPropertiesNames.BASE_URL));
         properties.setProperty("Travis build URL:", TRAVIS_BUILD_WEB_URL);
         properties.setProperty("Travis build Run:", TRAVIS_BUILD_NUMBER);
         properties.setProperty("Branch:", TRAVIS_BRANCH);
-        properties.setProperty("Browser:", DEFAULT_TESTS_EXECUTOR);
+        properties.setProperty("Browser:", DEFAULT_BROWSER);
         try {
             properties.store(new FileOutputStream("allure-results/environment.properties"), null);
         } catch (IOException e) {
@@ -116,7 +118,7 @@ public class TestEnvironment {
         }
     }
 
-    public void allureWriteExecutors() {
+    public static void allureWriteExecutors() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", EXECUTOR);
         jsonObject.put("type", EXECUTOR);
@@ -138,16 +140,16 @@ public class TestEnvironment {
 
     @Attachment(value = "Scenario FAIL screenshot", type = "image/png")
     public byte[] allureSaveScreenshotPNG() {
-        return ((TakesScreenshot) SeleniumDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
     protected void localSaveScreenshotPNG(Scenario scenario) throws Exception {
         String screenshotName = scenario.getName().replaceAll(" ", "_")
                 .concat(String.valueOf(Utils.parser("${S8}")));
 
-        byte[] screenshot = ((TakesScreenshot) SeleniumDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
+        byte[] screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
         scenario.attach(screenshot, "image/png", screenshotName);
-        File scrFile = ((TakesScreenshot) SeleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
+        File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(scrFile, new File(getCurrentPath()
                 + "target"
                 + File.separator
@@ -174,7 +176,7 @@ public class TestEnvironment {
         return contentBuilder.toString();
     }
 
-    public void deleteOldLogs() {
+    public static void deleteOldLogs() {
         try {
             FileUtils.deleteDirectory(new File(getCurrentPath()
                     + File.separator
@@ -194,7 +196,7 @@ public class TestEnvironment {
         logger.info(StringUtils.repeat("=", 46) + " BEFORE SCENARIO " + StringUtils.repeat("=", 47));
         logger.info(StringUtils.repeat("#", 110));
         logger.info(ANSI_BLUE + "SCENARIO NAME: " + scenario.getName().toUpperCase() + ANSI_RESET);
-        logger.info(String.format("Chosen executor: \"%S\"", SeleniumDriver.getTestsExecutor()));
+        logger.info(String.format("Chosen browser: \"%S\"", getBrowser()));
     }
 
     public void messageFinishScenario(Scenario scenario) {
@@ -221,5 +223,49 @@ public class TestEnvironment {
 
         RestAssured.requestSpecification = request;
         RestAssured.responseSpecification = response;
+    }
+
+    public static String getBrowser() {
+        String browser = System.getProperty("browser");
+        if (browser == null) {
+            browser = System.getenv("browser");
+            if (browser == null) {
+                browser = DEFAULT_BROWSER;
+            }
+        }
+        return browser;
+    }
+
+    public static String getPlatform() {
+        String platform = System.getProperty("platform");
+        if (platform == null) {
+            platform = System.getenv("platform");
+            if (platform == null) {
+                platform = DEFAULT_PLATFORM;
+            }
+        }
+        return platform;
+    }
+
+    public static String getService() {
+        String service = System.getProperty("service");
+        if (service == null) {
+            service = System.getenv("service");
+            if (service == null) {
+                service = DEFAULT_SERVICE;
+            }
+        }
+        return service;
+    }
+
+    public static String getDevice() {
+        String device = System.getProperty("device");
+        if (device == null) {
+            device = System.getenv("device");
+            if (device == null) {
+                device = DEFAULT_DEVICE;
+            }
+        }
+        return device;
     }
 }

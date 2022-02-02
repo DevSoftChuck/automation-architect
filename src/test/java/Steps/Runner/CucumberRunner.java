@@ -1,6 +1,6 @@
 package Steps.Runner;
 
-import Setup.SeleniumDriver;
+import Setup.DriverFactory.DriverFactory;
 import Setup.SlackLogger;
 import Setup.TestEnvironment;
 import Utils.Utils;
@@ -25,7 +25,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 @CucumberOptions(
 		features = {"src/test/java/Features"},
 		glue = {"Steps"},
-		tags = "@api or @solo",
+		tags = "@solo",
 		plugin = {	"pretty",
 					"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 					"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"})
@@ -54,12 +54,12 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 
 	@Before()
 	public void beforeScenario(Scenario scenario) {
-		if (scenario.getName().contains("API_")){
+		if(scenario.getName().contains("API -")){
 			testEnvironment.setupRestAssured("https://reqres.in");
 		}else{
 			MDC.put("testid", scenario.getName().toUpperCase());
 			testEnvironment.messageStartScenario(scenario);
-			SeleniumDriver.startBrowser();
+			DriverFactory.initialize();
 		}
 	}
 
@@ -71,11 +71,11 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 			TestEnvironment.passedTestsAmount++;
 		}
 
-		if(!scenario.getName().contains("API_")){
+		if(!scenario.getName().contains("API -")){
 			testEnvironment.messageFinishScenario(scenario);
 			MDC.remove("testid");
-			SeleniumDriver.getDriver().quit();
-			SeleniumDriver.removeDriver();
+			DriverFactory.getDriver().quit();
+			DriverFactory.removeDriver();
 		}
 		//        slackLogger.sendTestExecutionStatusToSlack(iTestContext);
 		testEnvironment.testResultsCleaner();
@@ -86,7 +86,7 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 		if (scenario.isFailed() && !scenario.getName().contains("API_")) {
 			String screenshotName = scenario.getName().replaceAll(" ", "_")
 					.concat(String.valueOf(Utils.parser("${S8}")));
-			byte[] screenshot = ((TakesScreenshot) SeleniumDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
+			byte[] screenshot = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
 			scenario.attach(screenshot, "image/png", screenshotName);
 
 			testEnvironment.allureSaveTextLogCucumber(scenario);

@@ -1,11 +1,8 @@
 package Utils;
 
-import Setup.SeleniumDriver;
-
 import java.time.Duration;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.Toolkit;
@@ -18,7 +15,7 @@ import org.openqa.selenium.support.ui.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.NoSuchElementException;
 import java.io.IOException;
-import static Setup.SeleniumDriver.getDriver;
+import static Setup.DriverFactory.DriverFactory.getDriver;
 
 public class Utils extends TestEnvironment {
 
@@ -208,19 +205,19 @@ public class Utils extends TestEnvironment {
 
     /** This method goes back to the previous page **/
     public static void goBackToPreviousPage() {
-        SeleniumDriver.getDriver().navigate().back();
+        getDriver().navigate().back();
     }
 
     /** This method goes to the page with the URL passed by parameter
      * @param url = URL you'd like to go to
      * **/
     public static void gotoURL(String url) {
-        SeleniumDriver.getDriver().navigate().to(url);
+        getDriver().navigate().to(url);
     }
 
     /** This method reloads the current page **/
     public static void reloadPage() {
-        SeleniumDriver.getDriver().navigate().refresh();
+        getDriver().navigate().refresh();
     }
 
     /* ----------------------------------------- METHODS TO NAVIGATE - END ------------------------------------------ */
@@ -231,9 +228,8 @@ public class Utils extends TestEnvironment {
      * @param numberTab = Number of the tab to which you'd like to switch. The first tab is the number 0.
      * **/
     public static void switchToTab(int numberTab) {
-        SeleniumDriver.getDriver().manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-        ArrayList<String> tabsList = new ArrayList<String>(SeleniumDriver.getDriver().getWindowHandles());
-        SeleniumDriver.getDriver().switchTo().window(tabsList.get(numberTab));
+        ArrayList<String> tabsList = new ArrayList<String>(getDriver().getWindowHandles());
+        getDriver().switchTo().window(tabsList.get(numberTab));
     }
 
     /** It switches to the second tab and goes to the URL passed by parameter.
@@ -241,19 +237,19 @@ public class Utils extends TestEnvironment {
      * **/
     public static void openInNewTab(String urlToOpenInNewTab) {
         String a = "window.open('about:blank','_blank');";
-        ((JavascriptExecutor)SeleniumDriver.getDriver()).executeScript(a);
+        ((JavascriptExecutor)getDriver()).executeScript(a);
         switchToTab(1);
-        SeleniumDriver.getDriver().navigate().to(urlToOpenInNewTab);
+        getDriver().navigate().to(urlToOpenInNewTab);
     }
 
     /** It closes the tab currently opened **/
     public static void closeCurrentTab() {
-        SeleniumDriver.getDriver().close();
+        getDriver().close();
     }
 
     /** It closes the tab currently opened **/
     public static int getNumberOfOpenTabs() {
-        ArrayList<String> tabsList = new ArrayList<String>(SeleniumDriver.getDriver().getWindowHandles());
+        ArrayList<String> tabsList = new ArrayList<String>(getDriver().getWindowHandles());
         return tabsList.size();
     }
 
@@ -277,7 +273,7 @@ public class Utils extends TestEnvironment {
     /** Scrolls to the bottom of the page **/
     public static void scrollToTheBottom() {
         waitForDocumentToBeReady();
-        JavascriptExecutor jse = (JavascriptExecutor)SeleniumDriver.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
         jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         // Give the method time to complete scrolling
@@ -293,7 +289,7 @@ public class Utils extends TestEnvironment {
     /** Scrolls to the top of the page **/
     public static void scrollToTheTop() {
         waitForDocumentToBeReady();
-        JavascriptExecutor jse = (JavascriptExecutor)SeleniumDriver.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
         jse.executeScript("window.scrollTo(0, 0)");
 
         // Give the method time to complete scrolling
@@ -311,7 +307,7 @@ public class Utils extends TestEnvironment {
      * **/
     public static void scrollToElement(WebElement element) {
         waitForDocumentToBeReady();
-        JavascriptExecutor jse = (JavascriptExecutor)SeleniumDriver.getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
         jse.executeScript("arguments[0].scrollIntoView(true);", element);
         waitForDocumentToBeReady();
     }

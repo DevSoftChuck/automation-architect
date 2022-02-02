@@ -15,16 +15,14 @@ You must have a device simulator running, so that the appium server can recogniz
 
 ### RUN APPIUM TESTS
 The following environment values determine which application/environment we are going to run:
-- `-Dmobile=android -Dexecutor=chrome` <sub>_**This will run your test cases on android using chrome browser.**_</sub>
-- `-Dmobile=android -Dexecutor=native` <sub>_**This will run your test cases on android using a native application.**_</sub>
-- `-Dmobile=ios -Dexecutor=safari` <sub>_**This will run your test cases on ios using safari browser.**_</sub>
-- `-Dmobile=ios -Dexecutor=chrome` <sub>_**This will run your test cases on android using chrome browser.**_</sub>
-- `-Dmobile=ios -Dexecutor=native` <sub>_**This will run your test cases on ios using a native application.**_</sub>
-- `-Dmobile=saucelab -Dremote.mobile=android -Dexecutor=chrome` <sub>_**This will run your test cases on Saucelabs using an android device and chrome browser.**_</sub>
-- `-Dmobile=saucelab -Dremote.mobile=android -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an android device and a native application.**_</sub>
-- `-Dmobile=saucelab -Dremote.mobile=ios -Dexecutor=chrome` <sub>_**This will run your test cases on Saucelabs using an ios device and chrome browser.**_</sub>
-- `-Dmobile=saucelab -Dremote.mobile=ios -Dexecutor=safari` <sub>_**This will run your test cases on Saucelabs using an ios device and safari browser.**_</sub>
-- `-Dmobile=saucelab -Dremote.mobile=ios -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an ios device and a native application.**_</sub>
+- `-Dplatform=android -Dexecutor=chrome` <sub>_**This will run your test cases on android using chrome browser.**_</sub>
+- `-Dplatform=android -Dexecutor=native` <sub>_**This will run your test cases on android using a native application.**_</sub>
+- `-Dplatform=ios -Dexecutor=safari` <sub>_**This will run your test cases on ios using safari browser.**_</sub>
+- `-Dplatform=ios -Dexecutor=native` <sub>_**This will run your test cases on ios using a native application.**_</sub>
+- `-Dplatform=saucelab -Dremote.platform=android -Dexecutor=chrome` <sub>_**This will run your test cases on Saucelabs using an android device and chrome browser.**_</sub>
+- `-Dplatform=saucelab -Dremote.platform=android -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an android device and a native application.**_</sub>
+- `-Dplatform=saucelab -Dremote.platform=ios -Dexecutor=safari` <sub>_**This will run your test cases on Saucelabs using an ios device and safari browser.**_</sub>
+- `-Dplatform=saucelab -Dremote.platform=ios -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an ios device and a native application.**_</sub>
 
 ## API 
 Currently, only Rest-Assured is supported, but it could be extended to Okhttp. Some materials that would be useful for expanding the API tests:
@@ -71,10 +69,11 @@ At this point, after installing Appium 2.x for the first time, if you run the se
 - `appium driver install xcuitest`
 - `appium driver install uiautomator2`
 
-Documentation:
+### Documentation:
 - [Appium Desired Capabilities](http://appium.io/docs/en/writing-running-appium/caps/)
 - [Getting Started](https://github.com/appium/appium/blob/master/docs/en/about-appium/getting-started.md)
 - [Sample Code](https://github.com/appium/appium/tree/master/sample-code/java)
+- [android-emulator-error-message-panic-missing-emulator-engine-program-for-x86](https://stackoverflow.com/questions/26483370/android-emulator-error-message-panic-missing-emulator-engine-program-for-x86)
 
 ## AUTHOR
 - **Ivan Andraschko** - [Ivan Andraschko](https://www.linkedin.com/in/ivan-andraschko/)

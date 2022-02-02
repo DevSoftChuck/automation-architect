@@ -38,75 +38,81 @@ public class SeleniumDriver extends TestEnvironment {
         drivers.set(driver);
     }
 
-    public static String getTestsExecutor() {
-        String getTestsExecutor = System.getProperty("tests.executor");
-        if (getTestsExecutor == null) {
-            getTestsExecutor = System.getenv("tests.executor");
-            if (getTestsExecutor == null) {
-                getTestsExecutor = DEFAULT_TESTS_EXECUTOR;
+    public static String getExecutor() {
+        String executor = System.getProperty("executor");
+        if (executor == null) {
+            executor = System.getenv("executor");
+            if (executor == null) {
+                executor = DEFAULT_BROWSER;
             }
         }
-        return getTestsExecutor;
+        return executor;
     }
 
-    private static String getRemoteBrowserName() {
-        String getRemoteBrowserName = System.getProperty("remote.browser");
-        if (getRemoteBrowserName == null) {
-            getRemoteBrowserName = System.getenv("remote.browser");
-            if (getRemoteBrowserName == null) {
-                getRemoteBrowserName = DEFAULT_REMOTE_BROWSER;
+    public static String getService() {
+        String service = System.getProperty("service");
+        if (service == null) {
+            service = System.getenv("service");
+            if (service == null) {
+                service = DEFAULT_SERVICE;
             }
         }
-        return getRemoteBrowserName;
+        return service;
     }
 
     public static void startBrowser() {
-        switch (getTestsExecutor().toLowerCase()) {
-            case "chrome":
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--lang=en");
-                chromeOptions.addArguments("--disable-extensions");
-                chromeOptions.addArguments("--disable-popup-blocking");
-                chromeOptions.addArguments("--disable-notifications");
-                chromeOptions.addArguments("--start-maximized");
-                addDriver(new ChromeDriver(chromeOptions));
-                break;
-            case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
+        switch (getService().toLowerCase()) {
+            case "local":
+                switch (getExecutor().toLowerCase()) {
+                    case "chrome":
+                        WebDriverManager.chromedriver().setup();
+                        ChromeOptions chromeOptions = new ChromeOptions();
+                        chromeOptions.addArguments("--lang=en");
+                        chromeOptions.addArguments("--disable-extensions");
+                        chromeOptions.addArguments("--disable-popup-blocking");
+                        chromeOptions.addArguments("--disable-notifications");
+                        chromeOptions.addArguments("--start-maximized");
+                        addDriver(new ChromeDriver(chromeOptions));
+                        break;
+                    case "firefox":
+                        WebDriverManager.firefoxdriver().setup();
+                        FirefoxOptions firefoxOptions = new FirefoxOptions();
 
-                //Setting Profile for firefox
-                FirefoxProfile profile = new FirefoxProfile();
-                profile.setPreference("intl.accept_languages","en-us");
-                profile.setPreference("permissions.default.desktop-notification", 2);
-                firefoxOptions.setProfile(profile);
-                addDriver(new FirefoxDriver(firefoxOptions));
-                break;
-            case "opera":
-                WebDriverManager.operadriver().setup();
-                OperaOptions operaOptions = new OperaOptions();
-                addDriver(new OperaDriver(operaOptions));
-                break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                EdgeOptions edgeOptions = new EdgeOptions();
-                addDriver(new EdgeDriver(edgeOptions));
-                break;
-            case "ie":
-                WebDriverManager.iedriver().setup();
-                InternetExplorerOptions internetExplorerOptions = new InternetExplorerOptions();
-                addDriver(new InternetExplorerDriver(internetExplorerOptions));
-                break;
-            case "safari":
-                SafariOptions safariOptions = new SafariOptions();
-                addDriver(new SafariDriver(safariOptions));
+                        //Setting Profile for firefox
+                        FirefoxProfile profile = new FirefoxProfile();
+                        profile.setPreference("intl.accept_languages", "en-us");
+                        profile.setPreference("permissions.default.desktop-notification", 2);
+                        firefoxOptions.setProfile(profile);
+                        addDriver(new FirefoxDriver(firefoxOptions));
+                        break;
+                    case "opera":
+                        WebDriverManager.operadriver().setup();
+                        OperaOptions operaOptions = new OperaOptions();
+                        addDriver(new OperaDriver(operaOptions));
+                        break;
+                    case "edge":
+                        WebDriverManager.edgedriver().setup();
+                        EdgeOptions edgeOptions = new EdgeOptions();
+                        addDriver(new EdgeDriver(edgeOptions));
+                        break;
+                    case "ie":
+                        WebDriverManager.iedriver().setup();
+                        InternetExplorerOptions internetExplorerOptions = new InternetExplorerOptions();
+                        addDriver(new InternetExplorerDriver(internetExplorerOptions));
+                        break;
+                    case "safari":
+                        SafariOptions safariOptions = new SafariOptions();
+                        addDriver(new SafariDriver(safariOptions));
+                        break;
+                    default:
+                        throw new IllegalStateException("This executor: "+ getExecutor().toLowerCase() +", is not supported yet!");
+                }
                 break;
             case "grid":
-                addDriver(getDriverForRemoteBrowser(getRemoteBrowserName().toLowerCase()));
+                addDriver(getDriverForRemoteBrowser(getExecutor().toLowerCase()));
                 break;
             default:
-                throw new IllegalStateException("This browser is not supported yet!");
+                throw new IllegalStateException("This service: "+getService().toLowerCase()+", is not supported yet!");
         }
         getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
         getDriver().manage().timeouts().scriptTimeout(Duration.ofSeconds(SCRIPT_TIMEOUT));
