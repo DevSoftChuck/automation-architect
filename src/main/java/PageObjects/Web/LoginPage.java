@@ -1,9 +1,7 @@
 package PageObjects.Web;
 
 import PageObjects.Page;
-import Setup.DriverFactory.DriverFactory;
 import Utils.Utils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
