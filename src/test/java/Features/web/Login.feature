@@ -1,4 +1,3 @@
-@test
 Feature: Login
 
     Background: Access to login page

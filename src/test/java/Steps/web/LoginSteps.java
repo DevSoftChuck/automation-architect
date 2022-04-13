@@ -75,7 +75,7 @@ public class LoginSteps extends TestEnvironment{
     @When("User goes to {string}")
     public void userGoesToObject(String object) throws Exception {
         object = Utils.parser(object);
-        String baseUrl = Utils.getConstantValue(EPropertiesNames.BASE_URL);
+        String baseUrl = Utils.parser(EPropertiesNames.BASE_URL.name());
         logger.info(String.format("Object url: \"%s\"", baseUrl + object));
         Utils.gotoURL(baseUrl + object);
     }

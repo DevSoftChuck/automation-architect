@@ -42,13 +42,13 @@ public class CucumberRunner extends AbstractTestNGCucumberTests {
 
 	@BeforeClass(alwaysRun = true)
 	public void onStart() {
-		testEnvironment.deleteOldLogs();
+		TestEnvironment.deleteOldLogs();
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void onFinish() {
-		testEnvironment.allureWriteExecutors();
-		testEnvironment.allureWriteProperties();
+		TestEnvironment.allureWriteExecutors();
+		TestEnvironment.allureWriteProperties();
 		testEnvironment.testResultsCleaner();
 	}
 

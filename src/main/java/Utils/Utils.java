@@ -81,7 +81,7 @@ public class Utils extends TestEnvironment {
                     .ignoring(StaleElementReferenceException.class);
             wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
         } catch (ElementNotVisibleException e) {
-            logger.error(String.format("The element \"%S\" is still displayed!", by));
+            logger.error(String.format("The element \"%S\" is not still displayed!", by));
         }
     }
 
