@@ -81,7 +81,7 @@ public class Utils extends TestEnvironment {
                     .ignoring(StaleElementReferenceException.class);
             wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
         } catch (ElementNotVisibleException e) {
-            logger.error(String.format("The element \"%S\" is not still displayed!", by));
+            logger.error(String.format("The element \"%S\" is still displayed!", by));
         }
     }
 
@@ -581,7 +581,7 @@ public class Utils extends TestEnvironment {
     private static String constantSearch(String source) {
         source = source.replace("$", "").replace("[", "").replace("]", "");
         try {
-            return PropertiesManager.getInstance().getConfig(EPropertiesNames.valueOf(source));
+            return PropertiesManager.getConfig(EPropertiesNames.valueOf(source));
         } catch(Exception e){
             System.out.println("Constant not found: " + e);
         }
@@ -591,7 +591,7 @@ public class Utils extends TestEnvironment {
     public static String getConstantValue(EPropertiesNames property) {
         String value = "";
         try {
-            return PropertiesManager.getInstance().getConfig(property);
+            return PropertiesManager.getConfig(property);
         } catch(Exception e){
             System.out.println("Constant "+property.name()+" not found: " + e);
         }

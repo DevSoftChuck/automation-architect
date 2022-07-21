@@ -1,5 +1,8 @@
 package PageObjects;
 
+import Setup.DriverFactory.DriverFactory;
+import Setup.SeleniumDriver;
+import Utils.Utils;
 import org.openqa.selenium.support.PageFactory;
 
 import static Setup.DriverFactory.DriverFactory.getDriver;
@@ -21,5 +24,13 @@ public abstract class Page<T>{
             return PageFactory.initElements(getIOSDriver(), clazz);
         }
         throw new IllegalStateException("Mobile page cannot be opened. Platform was not defined!");
+    }
+
+    protected void init(Object object){
+        PageFactory.initElements(DriverFactory.getDriver(), object);
+    }
+
+    protected void isLoaded(){
+        Utils.waitForDocumentToBeReady();
     }
 }
