@@ -71,8 +71,8 @@ public class TestBuilder {
         }
     }
 
-    public TestBuilder waitUntilElementDisappears(By element){
-        SeleniumUtils.waitForElementToBeNotVisible(element);
+    public TestBuilder waitUntilElementDisappears(By webElement){
+        SeleniumUtils.waitForElementToBeNotVisible(webElement);
         return this;
     }
 
@@ -93,7 +93,7 @@ public class TestBuilder {
         return this;
     }
 
-    public TestBuilder sendKeysOn(WebElement webElement, String keys){
+    public TestBuilder sendKeysOn(By webElement, String keys){
         SeleniumUtils.waitForElementTobeVisible(webElement).sendKeys(keys);
         return this;
     }

@@ -7,13 +7,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
-
-import static Setup.DriverFactory.getDriver;
 
 public class SeleniumUtils {
 
@@ -21,8 +17,16 @@ public class SeleniumUtils {
             .withTimeout(Duration.ofSeconds(TestEnvironment.VISIBLE_TIMEOUT))
             .pollingEvery(Duration.ofSeconds(TestEnvironment.POLLING_TIME));
 
-    public static WebElement waitForElementTobeVisible(WebElement element) {
-        return wait.until(ExpectedConditions.visibilityOf(element));
+    private static WebElement findElement(By locator){
+        return DriverFactory.getDriver().findElement(locator);
+    }
+
+    private WebElement findElements(By locator){
+        return DriverFactory.getDriver().findElement(locator);
+    }
+
+    public static WebElement waitForElementTobeVisible(By element) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
     }
 
     public static WebElement waitForElementTobePresent(By locator) {
@@ -65,37 +69,34 @@ public class SeleniumUtils {
 
     /* ----------------------------------------- METHODS TO DRAG AND DROP ------------------------------------------- */
 
-    public static void dragAndDrop(WebElement element, WebElement target) {
-        Actions a = new Actions(getDriver());
-        a.dragAndDrop(element, target).build().perform();
+    public static void dragAndDrop(By element, By target) {
+        Actions a = new Actions(DriverFactory.getDriver());
+        a.dragAndDrop(findElement(element), findElement(target)).build().perform();
     }
 
     /* -------------------------------------- METHODS TO DRAG AND DROP - END ---------------------------------------- */
 
     /* -------------------------------------- METHODS TO HOVER OVER ELEMENTS ---------------------------------------- */
 
-    public static void hoverOverElement(WebElement element) {
-        Actions a = new Actions(getDriver());
-        a.moveToElement(element).build().perform();
+    public static void hoverOverElement(By locator) {
+        Actions a = new Actions(DriverFactory.getDriver());
+        a.moveToElement(findElement(locator)).build().perform();
     }
 
     /* ----------------------------------- METHODS TO HOVER OVER ELEMENTS - END ------------------------------------- */
 
     /* --------------------------------- METHODS TO SELECT ELEMENTS IN DROPDOWN'S ----------------------------------- */
 
-    public void selectFromDropdownByIndex(int value, WebElement webElement) {
-        Select dropdown = new Select(webElement);
-        dropdown.selectByIndex(value);
+    public void selectFromDropdownByIndex(int value, By locator) {
+        new Select(findElement(locator)).selectByIndex(value);
     }
 
-    public void selectFromDropdownByText(String textValue, WebElement webElement) {
-        Select dropdown = new Select(webElement);
-        dropdown.selectByVisibleText(textValue);
+    public void selectFromDropdownByText(String textValue, By locator) {
+         new Select(findElement(locator)).selectByVisibleText(textValue);
     }
 
-    public void selectFromDropdownByValue(String textValue, WebElement webElement) {
-        Select dropdown = new Select(webElement);
-        dropdown.selectByValue(textValue);
+    public void selectFromDropdownByValue(String textValue, By locator) {
+        new Select(findElement(locator)).selectByValue(textValue);
     }
 
     /* ------------------------------ METHODS TO SELECT ELEMENTS IN DROPDOWN'S - END -------------------------------- */
@@ -103,7 +104,7 @@ public class SeleniumUtils {
     /* ------------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS --------------------------------- */
 
     public static void scrollToTheBottom() {
-        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) DriverFactory.getDriver();
         jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         // Give the method time to complete scrolling
@@ -115,7 +116,7 @@ public class SeleniumUtils {
     }
 
     public static void scrollToTheTop() {
-        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+        JavascriptExecutor jse = (JavascriptExecutor) DriverFactory.getDriver();
         jse.executeScript("window.scrollTo(0, 0)");
 
         // Give the method time to complete scrolling
@@ -126,9 +127,9 @@ public class SeleniumUtils {
         }
     }
 
-    public static void scrollToElement(WebElement element) {
-        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
-        jse.executeScript("arguments[0].scrollIntoView(true);", element);
+    public static void scrollToElement(By locator) {
+        JavascriptExecutor jse = (JavascriptExecutor) DriverFactory.getDriver();
+        jse.executeScript("arguments[0].scrollIntoView(true);", findElement(locator));
     }
 
     /* ---------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS - END ------------------------------ */
@@ -136,16 +137,16 @@ public class SeleniumUtils {
     /* -------------------------------------------- METHODS TO NAVIGATE --------------------------------------------- */
 
     public static void goBackToPreviousPage() {
-        getDriver().navigate().back();
+        DriverFactory.getDriver().navigate().back();
     }
 
 
     public static void gotoURL(String url) {
-        getDriver().navigate().to(url);
+        DriverFactory.getDriver().navigate().to(url);
     }
 
     public static void reloadPage() {
-        getDriver().navigate().refresh();
+        DriverFactory.getDriver().navigate().refresh();
     }
 
     /* ----------------------------------------- METHODS TO NAVIGATE - END ------------------------------------------ */
@@ -156,23 +157,23 @@ public class SeleniumUtils {
      * @param numberTab = Number of the tab to which you'd like to switch. The first tab is the number 0.
      */
     public static void switchToTab(int numberTab) {
-        ArrayList<String> tabsList = new ArrayList<>(getDriver().getWindowHandles());
-        getDriver().switchTo().window(tabsList.get(numberTab));
+        ArrayList<String> tabsList = new ArrayList<>(DriverFactory.getDriver().getWindowHandles());
+        DriverFactory.getDriver().switchTo().window(tabsList.get(numberTab));
     }
 
     public static void openInNewTab(String urlToOpenInNewTab) {
         String a = "window.open('about:blank','_blank');";
-        ((JavascriptExecutor)getDriver()).executeScript(a);
+        ((JavascriptExecutor)DriverFactory.getDriver()).executeScript(a);
         switchToTab(1);
-        getDriver().navigate().to(urlToOpenInNewTab);
+        DriverFactory.getDriver().navigate().to(urlToOpenInNewTab);
     }
 
     public static void closeCurrentTab() {
-        getDriver().close();
+        DriverFactory.getDriver().close();
     }
 
     public static int getNumberOfOpenTabs() {
-        ArrayList<String> tabsList = new ArrayList<String>(getDriver().getWindowHandles());
+        ArrayList<String> tabsList = new ArrayList<>(DriverFactory.getDriver().getWindowHandles());
         return tabsList.size();
     }
 
