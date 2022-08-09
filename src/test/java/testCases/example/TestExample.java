@@ -1,5 +1,6 @@
 package testCases.example;
 
+import PageObjects.TestPageObject;
 import Setup.TestBuilder;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
@@ -15,7 +16,11 @@ public class TestExample extends BaseTestCase {
     @Test(groups = {"Regression"}, priority = 1, description = "Test description")
     public void testExample(){
         SoftAssert softAssert = new SoftAssert();
-        new TestBuilder<>(softAssert)
-                .goTo("https://google.com");
+        new TestBuilder(softAssert)
+                .goTo("https://google.com")
+                .newInstance(TestPageObject.class)
+                    .printTestPageObject()
+                    .switchBackToTestBuilder()
+                .goTo("https://facebook.com");
     }
 }

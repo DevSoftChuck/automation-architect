@@ -32,7 +32,7 @@
         <cucumber.version>7.0.0</cucumber.version>
         <extent.version>5.0.8</extent.version>
         <pdfreporter.version>1.7.3</pdfreporter.version>
-        <selenium.java.version>4.1.1</selenium.java.version>
+        <selenium.java.version>4.3.0</selenium.java.version>
         <selenium.server.version>3.141.59</selenium.server.version>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
         <maven.compiler.plugin.source.version>1.8</maven.compiler.plugin.source.version>
@@ -42,13 +42,19 @@
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
         <ttaf.version>1.0.8-SNAPSHOT</ttaf.version>
         <aspectj.version>1.9.8.M1</aspectj.version>
-        <allure.testng.version>2.14.0</allure.testng.version>
-        <rest.assured.version>4.4.0</rest.assured.version>
+        <allure.testng.version>2.18.1</allure.testng.version>
+        <rest.assured.version>5.1.1</rest.assured.version>
         <appium.version>8.0.0-beta2</appium.version>
 
     </properties>
 
     <dependencies>
+        <!-- Guava library solve ImmutableMap issue, https://stackoverflow.com/a/70969932/2986279 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
         <dependency>
             <groupId>org.aeonbits.owner</groupId>
             <artifactId>owner-java8</artifactId>
@@ -73,29 +79,29 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>4.0.0</version>
+            <version>5.2.2</version>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.2.10</version>
+            <version>1.2.11</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.33</version>
+            <version>1.7.36</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.10</version>
+            <version>1.2.11</version>
         </dependency>
 
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20210307</version>
+            <version>20220320</version>
         </dependency>
 
         <dependency>
@@ -107,7 +113,7 @@
         <dependency>
             <groupId>com.slack.api</groupId>
             <artifactId>slack-api-client</artifactId>
-            <version>1.12.1</version>
+            <version>1.24.0</version>
         </dependency>
 
         <dependency>
@@ -125,7 +131,7 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
-            <version>5.10.0</version>
+            <version>5.12.1</version>
         </dependency>
 
     </dependencies>
