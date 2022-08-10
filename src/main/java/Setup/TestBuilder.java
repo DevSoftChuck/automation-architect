@@ -2,6 +2,8 @@ package Setup;
 
 import Utils.SeleniumUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
@@ -82,8 +84,11 @@ public class TestBuilder {
     }
 
     public TestBuilder ignoreOrClickOn(By webElement, By waitForItDisappears){
-        SeleniumUtils.waitForElementToBeNotVisible(waitForItDisappears);
-        SeleniumUtils.waitForElementTobeClickable(webElement).click();
+        try{
+            SeleniumUtils.waitForElementTobeClickable(webElement).click();
+        }catch (Exception ignore){
+
+        }
         return this;
     }
 

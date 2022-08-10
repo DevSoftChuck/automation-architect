@@ -1,21 +1,22 @@
 package Utils;
 
 import Setup.DriverFactory;
-import Setup.TestEnvironment;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-
 import java.time.Duration;
 import java.util.ArrayList;
 
 public class SeleniumUtils {
 
+    public static final int VISIBLE_TIMEOUT = 30;
+    public static final long POLLING_TIME = 5;
     private static final FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-            .withTimeout(Duration.ofSeconds(TestEnvironment.VISIBLE_TIMEOUT))
-            .pollingEvery(Duration.ofSeconds(TestEnvironment.POLLING_TIME));
+            .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+            .pollingEvery(Duration.ofSeconds(POLLING_TIME));
+    private static final Actions actions = new Actions(DriverFactory.getDriver());
 
     private static WebElement findElement(By locator){
         return DriverFactory.getDriver().findElement(locator);
@@ -64,14 +65,14 @@ public class SeleniumUtils {
     }
 
     public static void clickByJavascriptExecutor(By locator){
-        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].click();", locator);
+        ((JavascriptExecutor) DriverFactory.getDriver())
+                .executeScript("arguments[0].click();", findElement(locator));
     }
 
     /* ----------------------------------------- METHODS TO DRAG AND DROP ------------------------------------------- */
 
     public static void dragAndDrop(By element, By target) {
-        Actions a = new Actions(DriverFactory.getDriver());
-        a.dragAndDrop(findElement(element), findElement(target)).build().perform();
+        actions.dragAndDrop(findElement(element), findElement(target)).build().perform();
     }
 
     /* -------------------------------------- METHODS TO DRAG AND DROP - END ---------------------------------------- */
@@ -79,8 +80,7 @@ public class SeleniumUtils {
     /* -------------------------------------- METHODS TO HOVER OVER ELEMENTS ---------------------------------------- */
 
     public static void hoverOverElement(By locator) {
-        Actions a = new Actions(DriverFactory.getDriver());
-        a.moveToElement(findElement(locator)).build().perform();
+        actions.moveToElement(findElement(locator)).build().perform();
     }
 
     /* ----------------------------------- METHODS TO HOVER OVER ELEMENTS - END ------------------------------------- */
@@ -104,32 +104,23 @@ public class SeleniumUtils {
     /* ------------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS --------------------------------- */
 
     public static void scrollToTheBottom() {
-        JavascriptExecutor jse = (JavascriptExecutor) DriverFactory.getDriver();
-        jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        ((JavascriptExecutor) DriverFactory.getDriver())
+                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         // Give the method time to complete scrolling
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Utils.pause(1000);
     }
 
     public static void scrollToTheTop() {
-        JavascriptExecutor jse = (JavascriptExecutor) DriverFactory.getDriver();
-        jse.executeScript("window.scrollTo(0, 0)");
+        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollTo(0, 0)");
 
         // Give the method time to complete scrolling
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Utils.pause(1000);
     }
 
     public static void scrollToElement(By locator) {
-        JavascriptExecutor jse = (JavascriptExecutor) DriverFactory.getDriver();
-        jse.executeScript("arguments[0].scrollIntoView(true);", findElement(locator));
+        ((JavascriptExecutor) DriverFactory.getDriver())
+                .executeScript("arguments[0].scrollIntoView(true);", findElement(locator));
     }
 
     /* ---------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS - END ------------------------------ */
@@ -162,8 +153,7 @@ public class SeleniumUtils {
     }
 
     public static void openInNewTab(String urlToOpenInNewTab) {
-        String a = "window.open('about:blank','_blank');";
-        ((JavascriptExecutor)DriverFactory.getDriver()).executeScript(a);
+        ((JavascriptExecutor)DriverFactory.getDriver()).executeScript("window.open('about:blank','_blank');");
         switchToTab(1);
         DriverFactory.getDriver().navigate().to(urlToOpenInNewTab);
     }

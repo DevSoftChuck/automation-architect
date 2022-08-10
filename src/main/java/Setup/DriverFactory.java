@@ -21,6 +21,8 @@ public class DriverFactory {
 
     private static final List<WebDriver> storedDrivers = new ArrayList<>();
     private static final ThreadLocal<WebDriver> drivers = new ThreadLocal<>();
+    private static final int PAGE_LOAD_TIMEOUT = 60;
+    private static final long SCRIPT_TIMEOUT = 30;
 
     public static WebDriver getDriver() {
         return drivers.get();
@@ -45,9 +47,9 @@ public class DriverFactory {
     }
 
     private static void setupDriverConfiguration(){
-        getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(TestEnvironment.PAGE_LOAD_TIMEOUT));
-        getDriver().manage().timeouts().scriptTimeout(Duration.ofSeconds(TestEnvironment.SCRIPT_TIMEOUT));
-        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(TestEnvironment.PAGE_LOAD_TIMEOUT));
+        getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
+        getDriver().manage().timeouts().scriptTimeout(Duration.ofSeconds(SCRIPT_TIMEOUT));
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(PAGE_LOAD_TIMEOUT));
         getDriver().manage().deleteAllCookies();
         getDriver().manage().window().maximize();
     }
