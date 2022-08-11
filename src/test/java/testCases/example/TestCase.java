@@ -17,7 +17,6 @@ public class TestCase extends BaseTestCase {
     @Link(name = "Test name", url = "https://test.com")
     @Test(groups = {"Regression"}, priority = 1, description = "Test description")
     public void testExample(){
-
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
                 .sendKeysOn(LoginPage.usernameInput, PropertiesManager.getConfig("USER"))

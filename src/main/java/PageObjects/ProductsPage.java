@@ -2,6 +2,7 @@ package PageObjects;
 
 import Setup.TestBuilder;
 import Utils.SeleniumUtils;
+import Utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -25,6 +26,7 @@ public class ProductsPage extends Header{
                 addToCartBtnList.get(itemNumber).click();
             }
         }
+        Utils.pause(10000);
         return this;
     }
 

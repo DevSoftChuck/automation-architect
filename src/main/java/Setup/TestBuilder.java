@@ -100,9 +100,7 @@ public class TestBuilder {
     public TestBuilder ignoreOrClickOn(By webElement){
         try{
             SeleniumUtils.waitForElementToBeClickable(webElement).click();
-        }catch (Exception ignore){
-
-        }
+        }catch (Exception ignore){}
         return this;
     }
 

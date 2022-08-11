@@ -2,6 +2,7 @@ package testCases;
 
 import Setup.DriverFactory;
 import io.qameta.allure.Attachment;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
@@ -26,7 +27,9 @@ public class BaseTestCase {
     @AfterMethod(alwaysRun = true)
     public void afterTest(ITestResult result, Method method){
         if(result.getStatus() == ITestResult.FAILURE && DriverFactory.getDriver() != null){
-            takesScreenShot();
+            try {
+                takesScreenShot();
+            }catch (NoSuchWindowException ignore){}
         }
         DriverFactory.getDriver().close();
         DriverFactory.removeDriver();
