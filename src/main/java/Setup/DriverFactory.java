@@ -67,7 +67,6 @@ public class DriverFactory {
             case "local":
                 addDriver(getLocalSeleniumDriver());
                 setupDriverConfiguration();
-
                 break;
             default:
                 throw new IllegalStateException("This remote driver: " +

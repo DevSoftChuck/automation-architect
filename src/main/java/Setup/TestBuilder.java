@@ -2,19 +2,12 @@ package Setup;
 
 import Utils.SeleniumUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class TestBuilder {
     private final SoftAssert softAssert;
-    private final TestBuilder testBuilder;
 
 //    private final Set<T> uniques = new HashSet<>();
-
 //    private <T> T returnOrCreateInstance(Class<T> clazz){
 //        T newInstance = newInstance(clazz);
 //        if (this.uniques.add(newInstance)){
@@ -31,9 +24,8 @@ public class TestBuilder {
 //        }
 //    }
 
-    public TestBuilder(SoftAssert softAssert) {
-        this.softAssert = softAssert;
-        this.testBuilder = this;
+    public TestBuilder() {
+        this.softAssert = new SoftAssert();
     }
 
     /**
@@ -60,8 +52,7 @@ public class TestBuilder {
      * int i = 5;
      *
      * classToLoad.getDeclaredConstructor(cArg).newInstance(l, s, i);
-     *
-     * */
+     */
     public <T> T newInstance(Class<T> clazz){
         try{
             Class[] cArg = new Class[1];
@@ -73,19 +64,42 @@ public class TestBuilder {
         }
     }
 
+    /* --------------------------------- METHODS TO WAIT, CHECK AND ASSERT ELEMENTS --------------------------------- */
+
     public TestBuilder waitUntilElementDisappears(By webElement){
         SeleniumUtils.waitForElementToBeNotVisible(webElement);
         return this;
     }
 
-    public TestBuilder clickOn(By webElement){
-        SeleniumUtils.waitForElementTobeClickable(webElement).click();
+    public TestBuilder checkVisibilityOf(By webElement, String message){
+        this.softAssert.assertTrue(SeleniumUtils.isExpectedElementDisplayed(webElement), message);
         return this;
     }
 
-    public TestBuilder ignoreOrClickOn(By webElement, By waitForItDisappears){
+    public TestBuilder checkEqualityOf(By actualElement, By expectedElement, String message){
+        this.softAssert.assertEquals(actualElement, expectedElement, message);
+        return this;
+    }
+
+    /* ------------------------------ METHODS TO WAIT, CHECK AND ASSERT ELEMENTS - END ------------------------------ */
+
+    /* ---------------------------------------- METHODS TO CLICK ON ELEMENTS ---------------------------------------- */
+
+    public TestBuilder clickOn(By webElement){
+        SeleniumUtils.scrollToElement(webElement);
+        SeleniumUtils.waitForElementToBeClickable(webElement).click();
+        return this;
+    }
+
+    public TestBuilder clickOn(By webElement, By waitForItDisappears){
+        SeleniumUtils.waitForElementToBeNotVisible(waitForItDisappears);
+        SeleniumUtils.waitForElementToBeClickable(webElement).click();
+        return this;
+    }
+
+    public TestBuilder ignoreOrClickOn(By webElement){
         try{
-            SeleniumUtils.waitForElementTobeClickable(webElement).click();
+            SeleniumUtils.waitForElementToBeClickable(webElement).click();
         }catch (Exception ignore){
 
         }
@@ -93,18 +107,15 @@ public class TestBuilder {
     }
 
     public TestBuilder waitAndClickOn(By webElement, By waitForVisibility){
-        SeleniumUtils.waitForElementToBeNotVisible(waitForVisibility);
-        SeleniumUtils.waitForElementTobeClickable(webElement).click();
+        SeleniumUtils.waitForElementToBeVisible(waitForVisibility);
+        SeleniumUtils.waitForElementToBeClickable(webElement).click();
         return this;
     }
+
+    /* ------------------------------------- METHODS TO CLICK ON ELEMENTS - END ------------------------------------- */
 
     public TestBuilder sendKeysOn(By webElement, String keys){
-        SeleniumUtils.waitForElementTobeVisible(webElement).sendKeys(keys);
-        return this;
-    }
-
-    public TestBuilder checkVisibilityOf(By webElement, String errorMessage){
-        this.softAssert.assertTrue(SeleniumUtils.isExpectedElementDisplayed(webElement), errorMessage);
+        SeleniumUtils.waitForElementToBeVisible(webElement).sendKeys(keys);
         return this;
     }
 
@@ -113,7 +124,7 @@ public class TestBuilder {
         return this;
     }
 
-    public void assertAll(){
+    public void finish(){
         this.softAssert.assertAll();
     }
 

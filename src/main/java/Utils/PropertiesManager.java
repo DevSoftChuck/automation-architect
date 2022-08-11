@@ -7,6 +7,12 @@ import org.aeonbits.owner.ConfigCache;
 @Sources("file:src/test/resources/config.properties")
 public interface PropertiesManager extends Accessible{
 
+    @Key("BASE_URL")
+    String BASE_URL();
+
+    @Key("PASSWORD")
+    String PASSWORD();
+
     /**
      * Returns the value from the config file
      * @param propertyName property name that we want its value

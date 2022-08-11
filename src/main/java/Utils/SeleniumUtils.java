@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SeleniumUtils {
 
@@ -18,19 +19,19 @@ public class SeleniumUtils {
             .pollingEvery(Duration.ofSeconds(POLLING_TIME));
     private static final Actions actions = new Actions(DriverFactory.getDriver());
 
-    private static WebElement findElement(By locator){
+    public static WebElement findElement(By locator){
         return DriverFactory.getDriver().findElement(locator);
     }
 
-    private WebElement findElements(By locator){
-        return DriverFactory.getDriver().findElement(locator);
+    public static List<WebElement> findElements(By locator){
+        return DriverFactory.getDriver().findElements(locator);
     }
 
-    public static WebElement waitForElementTobeVisible(By element) {
+    public static WebElement waitForElementToBeVisible(By element) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
     }
 
-    public static WebElement waitForElementTobePresent(By locator) {
+    public static WebElement waitForElementToBePresent(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
@@ -38,7 +39,7 @@ public class SeleniumUtils {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
-    public static WebElement waitForElementTobeClickable(By element) {
+    public static WebElement waitForElementToBeClickable(By element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -87,15 +88,15 @@ public class SeleniumUtils {
 
     /* --------------------------------- METHODS TO SELECT ELEMENTS IN DROPDOWN'S ----------------------------------- */
 
-    public void selectFromDropdownByIndex(int value, By locator) {
+    public static void selectFromDropdownByIndex(int value, By locator) {
         new Select(findElement(locator)).selectByIndex(value);
     }
 
-    public void selectFromDropdownByText(String textValue, By locator) {
+    public static void selectFromDropdownByText(String textValue, By locator) {
          new Select(findElement(locator)).selectByVisibleText(textValue);
     }
 
-    public void selectFromDropdownByValue(String textValue, By locator) {
+    public static void selectFromDropdownByValue(String textValue, By locator) {
         new Select(findElement(locator)).selectByValue(textValue);
     }
 
@@ -121,6 +122,7 @@ public class SeleniumUtils {
     public static void scrollToElement(By locator) {
         ((JavascriptExecutor) DriverFactory.getDriver())
                 .executeScript("arguments[0].scrollIntoView(true);", findElement(locator));
+        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollBy(0,-150)");
     }
 
     /* ---------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS - END ------------------------------ */

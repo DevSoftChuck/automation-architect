@@ -3,6 +3,7 @@ package PageObjects;
 import Setup.TestBuilder;
 
 public abstract class Page{
+
     private TestBuilder testBuilder;
 
     //Inits all the pages, use this method if you prefer
