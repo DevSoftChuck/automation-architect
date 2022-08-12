@@ -26,7 +26,6 @@ public class ProductsPage extends Header{
                 addToCartBtnList.get(itemNumber).click();
             }
         }
-        Utils.pause(10000);
         return this;
     }
 

@@ -19,9 +19,7 @@ public class BaseTestCase {
         String fullClassName = this.getClass().getName();
         int index = fullClassName.lastIndexOf('.');
         String className = index == -1 ? this.getClass().getName() : fullClassName.substring(index +1);
-        System.setProperty("jobName", className + "#" + method.getName());
-
-        DriverFactory.initialize(System.getProperty("jobName"));
+        DriverFactory.initialize(className + "#" + method.getName());
     }
 
     @AfterMethod(alwaysRun = true)
@@ -31,13 +29,8 @@ public class BaseTestCase {
                 takesScreenShot();
             }catch (NoSuchWindowException ignore){}
         }
-        DriverFactory.getDriver().close();
+        DriverFactory.getDriver().quit();
         DriverFactory.removeDriver();
-    }
-
-    @AfterSuite(alwaysRun = true, description = "Teardown Test Suite")
-    public void afterSuite(){
-        DriverFactory.destroyDriver();
     }
 
     @Attachment(value = "Scenario FAIL screenshot", type = "type/png")

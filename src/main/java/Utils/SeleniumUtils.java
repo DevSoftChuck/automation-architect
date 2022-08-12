@@ -14,10 +14,6 @@ public class SeleniumUtils {
 
     public static final int VISIBLE_TIMEOUT = 30;
     public static final long POLLING_TIME = 5;
-    private static final FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-            .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
-            .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-    private static final Actions actions = new Actions(DriverFactory.getDriver());
 
     public static WebElement findElement(By locator){
         return DriverFactory.getDriver().findElement(locator);
@@ -28,28 +24,46 @@ public class SeleniumUtils {
     }
 
     public static WebElement waitForElementToBeVisible(By element) {
+        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
     }
 
     public static WebElement waitForElementToBePresent(By locator) {
+        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     public static void waitForElementToBeNotVisible(By locator) {
+        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
     public static WebElement waitForElementToBeClickable(By element) {
+        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public static void waitForJavascriptFinishes() {
+        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
         wait.until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
     }
 
     public static boolean isExpectedElementDisplayed(By element){
         try{
+            FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+                    .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                    .pollingEvery(Duration.ofSeconds(POLLING_TIME));
             return wait.until(ExpectedConditions.visibilityOfElementLocated(element)).isDisplayed();
         }catch (NoSuchElementException | StaleElementReferenceException | TimeoutException ignore){
             return false;
@@ -58,6 +72,9 @@ public class SeleniumUtils {
 
     public static boolean isExpectedElementPresent(By locator){
         try{
+            FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+                    .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
+                    .pollingEvery(Duration.ofSeconds(POLLING_TIME));
             wait.until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
         }catch (NoSuchElementException | StaleElementReferenceException | TimeoutException ignore){
@@ -73,6 +90,7 @@ public class SeleniumUtils {
     /* ----------------------------------------- METHODS TO DRAG AND DROP ------------------------------------------- */
 
     public static void dragAndDrop(By element, By target) {
+        Actions actions = new Actions(DriverFactory.getDriver());
         actions.dragAndDrop(findElement(element), findElement(target)).build().perform();
     }
 
@@ -81,6 +99,7 @@ public class SeleniumUtils {
     /* -------------------------------------- METHODS TO HOVER OVER ELEMENTS ---------------------------------------- */
 
     public static void hoverOverElement(By locator) {
+        Actions actions = new Actions(DriverFactory.getDriver());
         actions.moveToElement(findElement(locator)).build().perform();
     }
 

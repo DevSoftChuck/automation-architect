@@ -12,14 +12,11 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DriverFactory {
 
-    private static final List<WebDriver> storedDrivers = new ArrayList<>();
     private static final ThreadLocal<WebDriver> drivers = new ThreadLocal<>();
     private static final int PAGE_LOAD_TIMEOUT = 60;
     private static final long SCRIPT_TIMEOUT = 30;
@@ -29,20 +26,10 @@ public class DriverFactory {
     }
 
     private static void addDriver(WebDriver driver) {
-        storedDrivers.add(driver);
         drivers.set(driver);
     }
 
-    public static void destroyDriver() {
-        for (WebDriver driver : storedDrivers) {
-            if (driver != null) {
-                driver.quit();
-            }
-        }
-    }
-
     public static void removeDriver() {
-        storedDrivers.remove(drivers.get());
         drivers.remove();
     }
 
