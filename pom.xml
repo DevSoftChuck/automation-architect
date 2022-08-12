@@ -11,8 +11,9 @@
 
     <licenses>
         <license>
-            <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -24,16 +25,17 @@
     </developers>
 
     <properties>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compile.encoding>UTF-8</maven.compile.encoding>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
-        <maven.compiler.plugin.source.version>17</maven.compiler.plugin.source.version>
-        <maven.compiler.plugin.target.version>17</maven.compiler.plugin.target.version>
+        <maven.compiler.version>17</maven.compiler.version>
         <maven.resources.plugin.version>2.6</maven.resources.plugin.version>
         <maven.surefire.plugin.version>2.17</maven.surefire.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
         <aspectj.version>1.9.8.M1</aspectj.version>
+        <testng.file>testng.xml</testng.file>
+        <testng.parallel>methods</testng.parallel>
+        <testng.threads>1</testng.threads>
+        <testng.groups>regression</testng.groups>
+
     </properties>
 
     <dependencies>
@@ -139,8 +141,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.version}</source>
+                    <target>${maven.compiler.version}</target>
                 </configuration>
             </plugin>
 
@@ -165,11 +167,13 @@
                     </argLine>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
-                        <java.awt.headless>true</java.awt.headless>
                     </systemPropertyVariables>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/${testng.file}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <groups>${testng.groups}</groups>
+                    <parallel>${testng.parallel}</parallel>
+                    <threadCount>${testng.threads}</threadCount>
                 </configuration>
                 <dependencies>
                     <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->

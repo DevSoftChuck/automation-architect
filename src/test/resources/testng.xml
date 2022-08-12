@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite  name="Web testing" thread-count="2" data-provider-thread-count="2" parallel="methods" verbose="1">
+<suite  name="SauceDemo" verbose="1">
     <listeners>
         <listener class-name="Setup.Listener.TestNGAnnotationTransformer"/>
     </listeners>
     <test name="Regression">
         <classes>
-            <class name="testCases.example.TestCase" />
+            <class name="testCases.example.SauceDemoTest" />
         </classes>
     </test>
 </suite>

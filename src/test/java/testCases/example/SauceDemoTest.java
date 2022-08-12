@@ -9,13 +9,13 @@ import org.testng.annotations.Test;
 import testCases.BaseTestCase;
 
 
-public class TestCase extends BaseTestCase {
+public class SauceDemoTest extends BaseTestCase {
 
     @Severity(SeverityLevel.BLOCKER)
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"Regression"}, priority = 1, description = "Test description")
+    @Test(groups = {"regression"}, priority = 1, description = "Test description")
     public void testExample1(){
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
@@ -43,7 +43,7 @@ public class TestCase extends BaseTestCase {
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"Regression"}, priority = 1, description = "Test description")
+    @Test(groups = {"regression"}, priority = 1, description = "Test description")
     public void testExample2(){
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
@@ -69,7 +69,7 @@ public class TestCase extends BaseTestCase {
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"Regression"}, priority = 1, description = "Test description")
+    @Test(groups = {"regression"}, priority = 1, description = "Test description")
     public void testExample3(){
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
@@ -95,7 +95,7 @@ public class TestCase extends BaseTestCase {
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"Regression"}, priority = 1, description = "Test description")
+    @Test(groups = {"regression"}, priority = 1, description = "Test description")
     public void testExample4(){
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
@@ -121,7 +121,7 @@ public class TestCase extends BaseTestCase {
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"Regression"}, priority = 1, description = "Test description")
+    @Test(groups = {"regression"}, priority = 1, description = "Test description")
     public void testExample5(){
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
@@ -147,7 +147,7 @@ public class TestCase extends BaseTestCase {
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"Regression"}, priority = 1, description = "Test description")
+    @Test(groups = {"regression"}, priority = 1, description = "Test description")
     public void testExample(){
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
