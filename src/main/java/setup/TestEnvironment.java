@@ -1,4 +1,4 @@
-package Setup;
+package setup;
 
 import io.qameta.allure.Attachment;
 import io.restassured.RestAssured;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.lessThan;
-import static Setup.DriverFactory.getDriver;
+import static setup.DriverFactory.getDriver;
 
 /**
  * @author Ivan Andraschko

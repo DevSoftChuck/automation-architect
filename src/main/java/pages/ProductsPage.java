@@ -1,8 +1,7 @@
-package PageObjects;
+package pages;
 
-import Setup.TestBuilder;
-import Utils.SeleniumUtils;
-import Utils.Utils;
+import setup.TestBuilder;
+import utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

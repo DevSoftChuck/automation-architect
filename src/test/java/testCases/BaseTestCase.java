@@ -1,6 +1,6 @@
 package testCases;
 
-import Setup.DriverFactory;
+import setup.DriverFactory;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;

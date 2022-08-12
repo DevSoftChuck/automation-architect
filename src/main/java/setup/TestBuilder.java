@@ -1,6 +1,6 @@
-package Setup;
+package setup;
 
-import Utils.SeleniumUtils;
+import utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.testng.asserts.SoftAssert;
 

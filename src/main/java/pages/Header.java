@@ -1,6 +1,6 @@
-package PageObjects;
+package pages;
 
-import Setup.TestBuilder;
+import setup.TestBuilder;
 import org.openqa.selenium.By;
 
 public class Header extends Page{

@@ -2,7 +2,7 @@
 
 <suite  name="SauceDemo" verbose="1">
     <listeners>
-        <listener class-name="Setup.Listener.TestNGAnnotationTransformer"/>
+        <listener class-name="setup.listener.TestNGAnnotationTransformer"/>
     </listeners>
     <test name="Regression">
         <classes>

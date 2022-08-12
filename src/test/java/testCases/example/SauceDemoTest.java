@@ -1,8 +1,8 @@
 package testCases.example;
 
-import PageObjects.*;
-import Setup.TestBuilder;
-import Utils.PropertiesManager;
+import pages.*;
+import setup.TestBuilder;
+import utils.PropertiesManager;
 import com.google.common.collect.Sets;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;

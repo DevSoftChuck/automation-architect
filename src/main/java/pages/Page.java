@@ -1,6 +1,6 @@
-package PageObjects;
+package pages;
 
-import Setup.TestBuilder;
+import setup.TestBuilder;
 
 public abstract class Page{
 

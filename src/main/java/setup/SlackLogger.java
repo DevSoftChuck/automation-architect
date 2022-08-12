@@ -1,26 +1,4 @@
-package Setup;
-
-import com.slack.api.Slack;
-import com.slack.api.model.Attachment;
-import com.slack.api.model.block.ActionsBlock;
-import com.slack.api.model.block.ContextBlock;
-import com.slack.api.model.block.DividerBlock;
-import com.slack.api.model.block.SectionBlock;
-import com.slack.api.model.block.composition.MarkdownTextObject;
-import com.slack.api.model.block.composition.PlainTextObject;
-import com.slack.api.model.block.element.ButtonElement;
-import com.slack.api.model.block.element.ImageElement;
-import com.slack.api.webhook.Payload;
-import com.slack.api.webhook.WebhookResponse;
-import org.apache.commons.lang3.StringUtils;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+package setup;
 
 /**
  * @author Ivan Andraschko

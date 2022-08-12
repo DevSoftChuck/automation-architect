@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config.Sources;
