@@ -24,7 +24,6 @@ public enum DriverOptions {
             chromeOptions.addArguments("--disable-notifications");
             chromeOptions.addArguments("--ignore-certificate-errors");
             chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-
             return chromeOptions;
         }
     };
