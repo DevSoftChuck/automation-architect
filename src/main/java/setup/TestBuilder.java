@@ -42,23 +42,15 @@ public class TestBuilder {
      *
      * Class classToLoad = MyClass.class;
      *
-     * Class[] cArg = new Class[3]; //Our constructor has 3 arguments
-     * cArg[0] = Long.class; //First argument is of *object* type Long
-     * cArg[1] = String.class; //Second argument is of *object* type String
-     * cArg[2] = int.class; //Third argument is of *primitive* type int
-     *
      * Long l = new Long(88);
      * String s = "text";
      * int i = 5;
      *
-     * classToLoad.getDeclaredConstructor(cArg).newInstance(l, s, i);
+     * classToLoad.getDeclaredConstructor(Long.class, String.class, Integer.class).newInstance(l, s, i);
      */
     public <T> T newInstance(Class<T> clazz){
         try{
-            Class[] cArg = new Class[1];
-            cArg[0] = TestBuilder.class;
-
-            return (T) clazz.getDeclaredConstructor(cArg).newInstance(this);
+            return clazz.getDeclaredConstructor(TestBuilder.class).newInstance(this);
         } catch (Exception e){
             throw new RuntimeException(e);
         }

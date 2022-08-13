@@ -1,4 +1,4 @@
-package pages;
+package pages.sauce;
 
 import setup.TestBuilder;
 import org.openqa.selenium.By;

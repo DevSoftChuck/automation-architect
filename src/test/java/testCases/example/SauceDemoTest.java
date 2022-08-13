@@ -1,6 +1,6 @@
 package testCases.example;
 
-import pages.*;
+import pages.sauce.*;
 import setup.TestBuilder;
 import utils.PropertiesManager;
 import com.google.common.collect.Sets;
