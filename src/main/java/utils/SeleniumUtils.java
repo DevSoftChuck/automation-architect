@@ -15,56 +15,41 @@ public class SeleniumUtils {
     public static final int VISIBLE_TIMEOUT = 30;
     public static final long POLLING_TIME = 5;
 
-    public static WebElement findElement(By locator){
-        return DriverFactory.getDriver().findElement(locator);
-    }
-
-    public static List<WebElement> findElements(By locator){
-        return DriverFactory.getDriver().findElements(locator);
-    }
-
-    public static WebElement waitForElementToBeVisible(By element) {
-        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
+    private static FluentWait<WebDriver> getFluentWait(){
+        return new FluentWait<>(DriverFactory.getDriver())
                 .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
                 .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
+    /* -------------------------------------------------- WAITS ----------------------------------------------------- */
+
+    public static WebElement waitForElementToBeVisible(By element) {
+        return getFluentWait().until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
+
+    public static List<WebElement> waitForAllElementsToBeVisible(By element) {
+        return getFluentWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(element));
     }
 
     public static WebElement waitForElementToBePresent(By locator) {
-        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
-                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        return getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     public static void waitForElementToBeNotVisible(By locator) {
-        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
-                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        getFluentWait().until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
     public static WebElement waitForElementToBeClickable(By element) {
-        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
-                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-        return wait.until(ExpectedConditions.elementToBeClickable(element));
+        return getFluentWait().until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public static void waitForJavascriptFinishes() {
-        FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-                .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
-                .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-        wait.until(webDriver -> ((JavascriptExecutor) webDriver)
+        getFluentWait().until(webDriver -> ((JavascriptExecutor) webDriver)
                 .executeScript("return document.readyState").equals("complete"));
     }
 
     public static boolean isExpectedElementDisplayed(By element){
         try{
-            FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-                    .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
-                    .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-            return wait.until(ExpectedConditions.visibilityOfElementLocated(element)).isDisplayed();
+            return getFluentWait().until(ExpectedConditions.visibilityOfElementLocated(element)).isDisplayed();
         }catch (NoSuchElementException | StaleElementReferenceException | TimeoutException ignore){
             return false;
         }
@@ -72,10 +57,7 @@ public class SeleniumUtils {
 
     public static boolean isExpectedElementPresent(By locator){
         try{
-            FluentWait<WebDriver> wait = new FluentWait<>(DriverFactory.getDriver())
-                    .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
-                    .pollingEvery(Duration.ofSeconds(POLLING_TIME));
-            wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+            getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
             return true;
         }catch (NoSuchElementException | StaleElementReferenceException | TimeoutException ignore){
             return false;
@@ -83,43 +65,37 @@ public class SeleniumUtils {
     }
 
     public static void clickByJavascriptExecutor(By locator){
-        ((JavascriptExecutor) DriverFactory.getDriver())
-                .executeScript("arguments[0].click();", findElement(locator));
+        getFluentWait().until(webDriver -> ((JavascriptExecutor) webDriver)
+                .executeScript("arguments[0].click();", waitForElementToBeClickable(locator)));
     }
 
     /* ----------------------------------------- METHODS TO DRAG AND DROP ------------------------------------------- */
 
     public static void dragAndDrop(By element, By target) {
         Actions actions = new Actions(DriverFactory.getDriver());
-        actions.dragAndDrop(findElement(element), findElement(target)).build().perform();
+        actions.dragAndDrop(waitForElementToBeVisible(element), waitForElementToBeVisible(target)).build().perform();
     }
-
-    /* -------------------------------------- METHODS TO DRAG AND DROP - END ---------------------------------------- */
 
     /* -------------------------------------- METHODS TO HOVER OVER ELEMENTS ---------------------------------------- */
 
     public static void hoverOverElement(By locator) {
         Actions actions = new Actions(DriverFactory.getDriver());
-        actions.moveToElement(findElement(locator)).build().perform();
+        actions.moveToElement(waitForElementToBeVisible(locator)).build().perform();
     }
-
-    /* ----------------------------------- METHODS TO HOVER OVER ELEMENTS - END ------------------------------------- */
 
     /* --------------------------------- METHODS TO SELECT ELEMENTS IN DROPDOWN'S ----------------------------------- */
 
     public static void selectFromDropdownByIndex(int value, By locator) {
-        new Select(findElement(locator)).selectByIndex(value);
+        new Select(waitForElementToBeVisible(locator)).selectByIndex(value);
     }
 
     public static void selectFromDropdownByText(String textValue, By locator) {
-         new Select(findElement(locator)).selectByVisibleText(textValue);
+         new Select(waitForElementToBeVisible(locator)).selectByVisibleText(textValue);
     }
 
     public static void selectFromDropdownByValue(String textValue, By locator) {
-        new Select(findElement(locator)).selectByValue(textValue);
+        new Select(waitForElementToBeVisible(locator)).selectByValue(textValue);
     }
-
-    /* ------------------------------ METHODS TO SELECT ELEMENTS IN DROPDOWN'S - END -------------------------------- */
 
     /* ------------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS --------------------------------- */
 
@@ -139,12 +115,10 @@ public class SeleniumUtils {
     }
 
     public static void scrollToElement(By locator) {
-        ((JavascriptExecutor) DriverFactory.getDriver())
-                .executeScript("arguments[0].scrollIntoView(true);", findElement(locator));
+        getFluentWait().until(webDriver -> ((JavascriptExecutor) webDriver)
+                .executeScript("arguments[0].scrollIntoView(true);", waitForElementToBeVisible(locator)));
         ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollBy(0,-150)");
     }
-
-    /* ---------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS - END ------------------------------ */
 
     /* -------------------------------------------- METHODS TO NAVIGATE --------------------------------------------- */
 
@@ -161,21 +135,15 @@ public class SeleniumUtils {
         DriverFactory.getDriver().navigate().refresh();
     }
 
-    /* ----------------------------------------- METHODS TO NAVIGATE - END ------------------------------------------ */
-
     /* ------------------------------------------ METHODS TO MANAGE TABS -------------------------------------------- */
 
-    /** It switches to the tab passed by parameter. The first tab is the number 0.
-     * @param numberTab = Number of the tab to which you'd like to switch. The first tab is the number 0.
-     */
     public static void switchToTab(int numberTab) {
         ArrayList<String> tabsList = new ArrayList<>(DriverFactory.getDriver().getWindowHandles());
         DriverFactory.getDriver().switchTo().window(tabsList.get(numberTab));
     }
 
     public static void openInNewTab(String urlToOpenInNewTab) {
-        ((JavascriptExecutor)DriverFactory.getDriver()).executeScript("window.open('about:blank','_blank');");
-        switchToTab(1);
+        DriverFactory.getDriver().switchTo().newWindow(WindowType.TAB);
         DriverFactory.getDriver().navigate().to(urlToOpenInNewTab);
     }
 
@@ -187,7 +155,5 @@ public class SeleniumUtils {
         ArrayList<String> tabsList = new ArrayList<>(DriverFactory.getDriver().getWindowHandles());
         return tabsList.size();
     }
-
-    /* --------------------------------------- METHODS TO MANAGE TABS - END ----------------------------------------- */
 
 }

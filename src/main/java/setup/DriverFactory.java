@@ -2,6 +2,7 @@ package setup;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,7 +12,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
@@ -69,13 +69,14 @@ public class DriverFactory {
                 chromeOptions.addArguments("--disable-notifications");
                 chromeOptions.addArguments("--ignore-certificate-errors");
                 chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                chromeOptions.setHeadless(TestEnvironment.HEADLESS);
                 yield new ChromeDriver(chromeOptions);
             }
             case "firefox" -> {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.setHeadless(TestEnvironment.HEADLESS);
 
-                //Setting Profile for firefox
                 FirefoxProfile profile = new FirefoxProfile();
                 profile.setPreference("intl.accept_languages", "en-us");
                 firefoxOptions.setProfile(profile);
@@ -104,13 +105,16 @@ public class DriverFactory {
                 chromeOptions.addArguments("--disable-notifications");
                 chromeOptions.addArguments("--ignore-certificate-errors");
                 chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                chromeOptions.setHeadless(TestEnvironment.HEADLESS);
+
                 chromeOptions.setCapability("sauce:options", prefs);
-                yield makeConnection(chromeOptions);
+                yield makeRemoteConnection(chromeOptions);
             }
             case "firefox" -> {
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setPlatformName(TestEnvironment.DEFAULT_SAUCE_PLATFORM_NAME);
                 firefoxOptions.setBrowserVersion(TestEnvironment.DEFAULT_SAUCE_BROWSER_VERSION);
+                firefoxOptions.setHeadless(TestEnvironment.HEADLESS);
 
                 //Setting Profile for firefox
                 FirefoxProfile profile = new FirefoxProfile();
@@ -118,14 +122,14 @@ public class DriverFactory {
                 firefoxOptions.setProfile(profile);
                 firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
                 firefoxOptions.setCapability("sauce:options", prefs);
-                yield makeConnection(firefoxOptions);
+                yield makeRemoteConnection(firefoxOptions);
             }
             default -> throw new IllegalArgumentException("This browser: " +
                     TestEnvironment.DEFAULT_BROWSER.toLowerCase() + ", is not supported yet!");
         };
     }
 
-    private static WebDriver makeConnection(Capabilities capabilities) {
+    private static WebDriver makeRemoteConnection(Capabilities capabilities) {
         RemoteWebDriver remoteWebDriver;
         try {
             remoteWebDriver = new RemoteWebDriver(

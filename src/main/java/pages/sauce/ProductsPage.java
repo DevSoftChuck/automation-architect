@@ -18,7 +18,7 @@ public class ProductsPage extends Header{
     }
 
     public ProductsPage addProductToCart(Set<Integer> list){
-        List<WebElement> addToCartBtnList = SeleniumUtils.findElements(addToCartBtn);
+        List<WebElement> addToCartBtnList = SeleniumUtils.waitForAllElementsToBeVisible(addToCartBtn);
 
         for (int itemNumber : list){
             if (itemNumber < addToCartBtnList.size()){

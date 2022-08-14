@@ -58,6 +58,9 @@ public class TestEnvironment {
             ("sauce.user", "");
     public static final String DEFAULT_SAUCE_ACCESS_KEY = System.getProperty
             ("sauce.key", "");
+    public static final boolean HEADLESS = Boolean.parseBoolean(System.getProperty
+            ("headless", "false"));
+
 
     //ENVIRONMENT METHODS//
 

@@ -48,7 +48,7 @@ public class TestBuilder {
      *
      * classToLoad.getDeclaredConstructor(Long.class, String.class, Integer.class).newInstance(l, s, i);
      */
-    public <T> T newInstance(Class<T> clazz){
+    public <T> T returnNewInstance(Class<T> clazz){
         try{
             return clazz.getDeclaredConstructor(TestBuilder.class).newInstance(this);
         } catch (Exception e){
