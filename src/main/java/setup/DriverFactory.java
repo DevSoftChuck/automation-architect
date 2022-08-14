@@ -2,7 +2,6 @@ package setup;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,8 +19,8 @@ import java.util.Map;
 public class DriverFactory {
 
     private static final ThreadLocal<WebDriver> drivers = new ThreadLocal<>();
-    private static final int PAGE_LOAD_TIMEOUT = 60;
-    private static final long SCRIPT_TIMEOUT = 30;
+    private static final int PAGE_LOAD_TIMEOUT = 30;
+    private static final long SCRIPT_TIMEOUT = 15;
 
     public static void initialize(String testName) {
         switch (TestEnvironment.DEFAULT_DRIVER_REMOTE_SERVER.toLowerCase()) {
@@ -47,6 +46,7 @@ public class DriverFactory {
     }
 
     public static void removeDriver() {
+        drivers.get().quit();
         drivers.remove();
     }
 

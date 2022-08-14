@@ -3,4 +3,4 @@ allure-results/*
 target/
 logs/
 allure-report/
-cucumber-reports/
+automation_salesforce.iml

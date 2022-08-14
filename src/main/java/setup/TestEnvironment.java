@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.lessThan;
-import static setup.DriverFactory.getDriver;
 
 /**
  * @author Ivan Andraschko
@@ -32,18 +31,17 @@ public class TestEnvironment {
     public static Logger logger = LoggerFactory.getLogger(Logger.class);
     public static final String TODAY_DATE = new SimpleDateFormat("yyyy-MM-dd HH:ss").format(new Date());
 
-    //AMOUNT OF TEST EXECUTED//
+    /* ------------------------------------------- AMOUNT OF TEST EXECUTED ------------------------------------------ */
     public static int passedTestsAmount = 0;
     public static int failedTestsAmount = 0;
 
-    //GENERAL SETTINGS//
+    /* ---------------------------------------------- GENERAL SETTINGS ---------------------------------------------- */
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLUE = "\u001b[34m";
     public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String EXECUTOR = "MAVEN";
 
-    //ENVIRONMENT PROPERTIES//
+    /* ------------------------------------------- ENVIRONMENT PROPERTIES ------------------------------------------- */
     public static final String DEFAULT_BROWSER = System.getProperty
             ("browser", "chrome");
     public static final String DEFAULT_DRIVER_REMOTE_SERVER = System.getProperty
@@ -62,7 +60,7 @@ public class TestEnvironment {
             ("headless", "false"));
 
 
-    //ENVIRONMENT METHODS//
+    /* --------------------------------------------- ENVIRONMENT METHODS -------------------------------------------- */
 
     public static void allureWriteProperties() {
         Properties properties = new Properties();
@@ -73,16 +71,6 @@ public class TestEnvironment {
         } catch (IOException e) {
             logger.error("Failed to create properties file!", e);
         }
-    }
-
-    @Attachment(value = "Scenario FAIL screenshot", type = "image/png")
-    public byte[] allureSaveScreenshotPNG() {
-        return ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
-    }
-
-    public void testResultsCleaner() {
-        passedTestsAmount = 0;
-        failedTestsAmount = 0;
     }
 
     public void setupRestAssured(String baseURL) {

@@ -12,8 +12,8 @@ import java.util.List;
 
 public class SeleniumUtils {
 
-    public static final int VISIBLE_TIMEOUT = 30;
-    public static final long POLLING_TIME = 5;
+    public static final int VISIBLE_TIMEOUT = 10;
+    public static final long POLLING_TIME = 1;
 
     private static FluentWait<WebDriver> getFluentWait(){
         return new FluentWait<>(DriverFactory.getDriver())

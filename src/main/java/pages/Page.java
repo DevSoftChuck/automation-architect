@@ -1,4 +1,4 @@
-package pages.sauce;
+package pages;
 
 import setup.TestBuilder;
 
