@@ -65,8 +65,8 @@ public class SeleniumUtils {
     }
 
     public static void clickByJavascriptExecutor(By locator){
-        getFluentWait().until(webDriver -> ((JavascriptExecutor) webDriver)
-                .executeScript("arguments[0].click();", waitForElementToBeClickable(locator)));
+        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].click();",
+                waitForElementToBeClickable(locator));
     }
 
     /* ----------------------------------------- METHODS TO DRAG AND DROP ------------------------------------------- */
@@ -115,8 +115,8 @@ public class SeleniumUtils {
     }
 
     public static void scrollToElement(By locator) {
-        getFluentWait().until(webDriver -> ((JavascriptExecutor) webDriver)
-                .executeScript("arguments[0].scrollIntoView(true);", waitForElementToBeVisible(locator)));
+        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].scrollIntoView(true);",
+                waitForElementToBeVisible(locator));
         ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollBy(0,-150)");
     }
 
