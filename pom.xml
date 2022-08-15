@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>Automation</groupId>
-    <artifactId>automation_altimetrik</artifactId>
+    <artifactId>fluent_automation</artifactId>
     <version>1.0</version>
-    <name>Quick Builder</name>
+    <name>Fluent builder automation</name>
 
     <licenses>
         <license>
@@ -97,6 +97,12 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
+            <version>2.18.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-rest-assured</artifactId>
             <version>2.18.1</version>
         </dependency>
 

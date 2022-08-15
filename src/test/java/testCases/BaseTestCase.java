@@ -1,6 +1,5 @@
 package testCases;
 
-import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.AfterSuite;
 import setup.DriverFactory;
 import io.qameta.allure.Attachment;
