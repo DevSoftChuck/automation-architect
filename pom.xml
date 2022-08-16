@@ -9,14 +9,6 @@
     <version>1.0</version>
     <name>Fluent builder automation</name>
 
-    <licenses>
-        <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
     <developers>
         <developer>
             <name>Ivan Andraschko</name>
@@ -31,11 +23,9 @@
         <maven.surefire.plugin.version>2.17</maven.surefire.plugin.version>
         <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
         <aspectj.version>1.9.8.M1</aspectj.version>
-        <testng.file>testng.xml</testng.file>
         <testng.parallel>methods</testng.parallel>
         <testng.threads>1</testng.threads>
-        <testng.groups>regression</testng.groups>
-
+        <testng.groups>sanity</testng.groups>
     </properties>
 
     <dependencies>
@@ -175,7 +165,7 @@
                         <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/${testng.file}</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <groups>${testng.groups}</groups>
                     <parallel>${testng.parallel}</parallel>

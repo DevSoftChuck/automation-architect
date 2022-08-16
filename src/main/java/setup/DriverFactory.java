@@ -24,7 +24,7 @@ public class DriverFactory {
 
     public static void initialize(String testName) {
         switch (TestEnvironment.DEFAULT_DRIVER_REMOTE_SERVER.toLowerCase()) {
-            case "saucegrid" -> {
+            case "saucelab" -> {
                 addDriver(getRemoteSeleniumDriver(testName));
                 setupDriverConfiguration();
             }

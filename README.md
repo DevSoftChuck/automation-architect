@@ -1,31 +1,23 @@
-# Salesforce Automation project
-
-**Several tools for supporting test automation frameworks:**
-Java 1.8, Selenium 4.1.1, TestNG 7.4.0, Cucumber 7.0.0, REST Assured 4.4.0, Maven, Travis CI (Jenkins Soon), Allure Reports, Cucumber Reports, Slack API (Soon), SeleniumGrid 4.1.1, WebDriverManager, Saucelabs (Soon), GitHub Pages.
+# Automation project
 
 ## RUN TESTS
 
-In terminal type `mvn test` -> This will run all tests from tests package.`(src/test/java/Features)`  
+In terminal type `mvn test` -> This will run all tests from tests package.`(src/test/java/testCases)`  
 You can pass some environment values e.g:
-   - `-Dexecutor=chrome` <sub>_**This will run your test cases using the selected executor, the available executors are firefox, grid, saucelabs, and chrome.**_</sub>
-   - `-Dcucumber.filter.tags="@tag or @another and @api"` <sub>_**This will run all `.feature` scenarios with the provided tag.**_</sub>
-
-### PRECONDITIONS TO RUN APPIUM TESTS
-You must have a device simulator running, so that the appium server can recognize it. The device name is defined in the TestEnvironment.java class. The installation steps are described [here](#APPIUM).
-
-### RUN APPIUM TESTS
-The following environment values determine which application/environment we are going to run:
-- `-Dplatform=android -Dexecutor=chrome` <sub>_**This will run your test cases on android using chrome browser.**_</sub>
-- `-Dplatform=android -Dexecutor=native` <sub>_**This will run your test cases on android using a native application.**_</sub>
-- `-Dplatform=ios -Dexecutor=safari` <sub>_**This will run your test cases on ios using safari browser.**_</sub>
-- `-Dplatform=ios -Dexecutor=native` <sub>_**This will run your test cases on ios using a native application.**_</sub>
-- `-Dplatform=saucelab -Dremote.platform=android -Dexecutor=chrome` <sub>_**This will run your test cases on Saucelabs using an android device and chrome browser.**_</sub>
-- `-Dplatform=saucelab -Dremote.platform=android -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an android device and a native application.**_</sub>
-- `-Dplatform=saucelab -Dremote.platform=ios -Dexecutor=safari` <sub>_**This will run your test cases on Saucelabs using an ios device and safari browser.**_</sub>
-- `-Dplatform=saucelab -Dremote.platform=ios -Dexecutor=native` <sub>_**This will run your test cases on Saucelabs using an ios device and a native application.**_</sub>
+   - `-Dbrowser=chrome` <sub>_**This will run your test cases using a specific browser, the available browser are firefox and chrome.**_</sub>
+   - `-Ddriver.remote.server=local` <sub>_**This will specify in which environment you want to run your test cases, the available environments are `local` and `saucelab`.**_</sub>
+   - `-Dsauce.platform.name=Windows11` <sub>_**Platform on which test cases will be running on Saucelab.**_</sub>
+   - `-Dsauce.browser.version=latest` <sub>_**Browser version in Saucelab.**_</sub>
+   - `-Dsauce.user=none` <sub>_**Saucelab username.**_</sub>
+   - `-Dsauce.key=none` <sub>_**Saucelab access key.**_</sub>
+   - `-Dheadless=false` <sub>_**Specify if you want to run your browser in headless mode.**_</sub>
+   - `-Dtestng.parallel=methods` <sub>_**You can choose how to run your test cases in parallel, the available options are between `methods`, `tests`, `classes` or `instances`.**_</sub>
+   - `-Dtestng.threads=1` <sub>_**The size of the thread pool for running in parallel.**_</sub>
+   - `-Dtestng.groups=sanity` <sub>_**The list of groups you want to be excluded from this run.
+     .**_</sub>
 
 ## API 
-Currently, only Rest-Assured is supported, but it could be extended to Okhttp. Some materials that would be useful for expanding the API tests:
+Currently, only Rest-Assured is supported. Some materials that would be useful for expanding the API tests:
 - [JSONPath Online Evaluator](https://jsonpath.com/)
 - [Expressions in JSONPath](https://toolsqa.com/rest-assured/expressions-in-jsonpath/)
 - [Read JSON Response Body using Rest Assured](https://toolsqa.com/rest-assured/read-json-response-body-using-rest-assured/)
@@ -34,46 +26,23 @@ Currently, only Rest-Assured is supported, but it could be extended to Okhttp. S
 
 ## RESULTS AND LOGS
 ### CI/CD
-- **Travis:** After each CI/CD cycle run, tests results will be automatically uploaded to [Github pages](https://ivan-andraschko.github.io/salesforce-automation/)
-
 - **Jenkins:** Soon...
 
-### Localhost
-After each local cycle run logs and results are saved inside project, on allure-reports, allure-results, cucumber-reports, and logs folders.
-### Allure & Cucumber Reports
+### Allure
 - **Allure:** In terminal type `allure generate allure-results --clean` to generate Allure tests results, and then `allure open` to open the allure report.  
-- **Cucumber:** Report is generated automatically, you will find those reports under cucumber-reports folder.
+
 ## SELENIUM GRID 
 Here are the steps to deploy the Grid 4 to a Kubernetes cluster on development:
 - Initialize kubernetes locally: `$ minikube start`.
 - Install the NGINX ingress controller: `$ minikube addons enable ingress` [NGINX Installation Guide](https://kubernetes.github.io/ingress-nginx/deploy/).
-- Configure your localhost to point hostname to kubernetes cluster: The private URL to access on the grid is defined as **salesforce-qa-testing.com** into k8s/ingress-nginx.yaml file:
-  - **Windows**: Edit this file `C:\Windows\System32\drivers\etc\hosts` and place the result of `$ minikube ip` alongside of **salesforce-qa-testing.com** URL, e.g.: `192.168.99.100 salesforce-qa-testing.com`. 
+- Configure your localhost to point hostname to kubernetes cluster: The private URL to access on the grid is defined as **local-testing.com** into k8s/ingress-nginx.yaml file:
+  - **Windows**: Edit this file `C:\Windows\System32\drivers\etc\hosts` and place the result of `$ minikube ip` alongside of **local-testing.com** URL, e.g.: `192.168.99.100 salesforce-qa-testing.com`. 
   - **Unix**: Sames as windows but within this file `/etc/hosts`.
 - Deploy all the grid components to kubernetes: `$ kubectl apply -f k8s`.
 
 Run your test cases on Selenium grid:
-1. Make sure that SeleniumGrid is running properly, check http://salesforce-qa-testing.com.
-2. In terminal type `mvn test -Dtests.executor=grid -Dremote.browser=chrome`.
-
-## APPIUM
-### Installing Appium 2.0
-At the moment, Appium 2.0 is not the main line of Appium development, so it cannot be installed with a simple `npm install -g appium`. Instead, Appium 2.0 beta versions will be available with a special NPM tag next, so you can install it on any platform using NPM as follows:
-- `npm install -g appium@next`
-
-### Installing Appium drivers
-At this point, after installing Appium 2.x for the first time, if you run the server, you'll get a line in the logs that looks something like this:
-`[Appium] No drivers have been installed. Use the "appium driver" command to install the one(s) you want to use.`
-
-(And you'll get the same message with respect to plugins). What this is telling us is that you need to have Appium install a driver before you run any tests. So we must install all the drivers that will be used in this project:
-- `appium driver install xcuitest`
-- `appium driver install uiautomator2`
-
-### Documentation:
-- [Appium Desired Capabilities](http://appium.io/docs/en/writing-running-appium/caps/)
-- [Getting Started](https://github.com/appium/appium/blob/master/docs/en/about-appium/getting-started.md)
-- [Sample Code](https://github.com/appium/appium/tree/master/sample-code/java)
-- [android-emulator-error-message-panic-missing-emulator-engine-program-for-x86](https://stackoverflow.com/questions/26483370/android-emulator-error-message-panic-missing-emulator-engine-program-for-x86)
+1. Make sure that SeleniumGrid is running properly, check http://local-testing.com.
+2. In terminal type `mvn test -Dselenium.grid.urlr=http://local-testing.com` Soon...
 
 ## AUTHOR
 - **Ivan Andraschko** - [Ivan Andraschko](https://www.linkedin.com/in/ivan-andraschko/)

@@ -51,7 +51,7 @@ public class TestEnvironment {
     public static final String DEFAULT_SAUCE_BROWSER_VERSION = System.getProperty
             ("sauce.browser.version", "latest");
     public static final String SELENIUM_GRID_URL = System.getProperty
-            ("selenium.gridURL", "http://salesforce-qa-testing.com/");
+            ("selenium.grid.url", "http://local-testing.com/");
     public static final String DEFAULT_SAUCE_USERNAME = System.getProperty
             ("sauce.user", "");
     public static final String DEFAULT_SAUCE_ACCESS_KEY = System.getProperty

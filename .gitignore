@@ -3,4 +3,4 @@ allure-results/*
 target/
 logs/
 allure-report/
-automation_salesforce.iml
+/fluent_automation.iml
