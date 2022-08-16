@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="setup.listener.TestNGAnnotationTransformer"/>
     </listeners>
-    <test name="Regression">
+    <test name="SauceDemoTest">
         <classes>
             <class name="testCases.example.SauceDemoTest" />
         </classes>

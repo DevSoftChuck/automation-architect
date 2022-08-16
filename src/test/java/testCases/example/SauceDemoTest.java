@@ -15,7 +15,7 @@ public class SauceDemoTest extends BaseTestCase {
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"regression"}, priority = 1, description = "Verify user can complete checkout")
+    @Test(groups = {"regression", "sanity"}, priority = 1, description = "Verify user can complete checkout")
     public void testExample1(){
         new TestBuilder()
                 .goTo(PropertiesManager.getConfig().BASE_URL())
