@@ -4,3 +4,4 @@ target/
 logs/
 allure-report/
 /fluent_automation.iml
+/allure-results/
