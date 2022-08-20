@@ -1,5 +1,6 @@
 package utils;
 
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import setup.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SeleniumUtils {
 
@@ -20,53 +22,94 @@ public class SeleniumUtils {
                 .withTimeout(Duration.ofSeconds(VISIBLE_TIMEOUT))
                 .pollingEvery(Duration.ofSeconds(POLLING_TIME));
     }
+
     /* -------------------------------------------------- WAITS ----------------------------------------------------- */
 
-    public static WebElement waitForElementToBeVisible(By element) {
-        return getFluentWait().until(ExpectedConditions.visibilityOfElementLocated(element));
+    public static WebElement waitForElementToBeVisible(Object element){
+        return switch (element){
+            case WebElement webElement -> getFluentWait().until(ExpectedConditions.visibilityOf(webElement));
+            case By locator -> getFluentWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
+            default -> throw new IllegalStateException("Unexpected value: " + element);
+        };
     }
 
-    public static List<WebElement> waitForAllElementsToBeVisible(By element) {
-        return getFluentWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(element));
+    public static List<WebElement> waitForAllElementsToBeVisible(Object element) {
+        return switch (element){
+            case WebElement webElement -> getFluentWait()
+                    .until(ExpectedConditions.visibilityOfAllElements(webElement));
+            case By locator -> getFluentWait()
+                    .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+            default -> throw new IllegalStateException("Unexpected value: " + element);
+        };
     }
 
-    public static WebElement waitForElementToBePresent(By locator) {
-        return getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
+    public static WebElement waitForElementToBePresent(Object element) {
+        return switch (element){
+            case WebElement webElement -> getFluentWait().until(webDriver -> webElement);
+            case By locator -> getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
+            default -> throw new IllegalStateException("Unexpected value: " + element);
+        };
     }
 
-    public static void waitForElementToBeNotVisible(By locator) {
-        getFluentWait().until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    public static void waitForElementToBeNotVisible(Object element) {
+        switch (element){
+            case WebElement webElement -> getFluentWait().until(ExpectedConditions.invisibilityOf(webElement));
+            case By locator -> getFluentWait().until(ExpectedConditions.invisibilityOfElementLocated(locator));
+            default -> throw new IllegalStateException("Unexpected value: " + element);
+        }
     }
 
-    public static WebElement waitForElementToBeClickable(By element) {
-        return getFluentWait().until(ExpectedConditions.elementToBeClickable(element));
+    public static WebElement waitForElementToBeClickable(Object element) {
+        return switch (element){
+            case WebElement webElement -> getFluentWait().until(ExpectedConditions.elementToBeClickable(webElement));
+            case By locator -> getFluentWait().until(ExpectedConditions.elementToBeClickable(locator));
+            default -> throw new IllegalStateException("Unexpected value: " + element);
+        };
     }
 
-    public static void waitForJavascriptFinishes() {
-        getFluentWait().until(webDriver -> ((JavascriptExecutor) webDriver)
-                .executeScript("return document.readyState").equals("complete"));
+    public static boolean waitForJavascriptFinishes() {
+        return getFluentWait().until((ExpectedCondition<Boolean>) webDriver ->
+                ((JavascriptExecutor) Objects.requireNonNull(webDriver))
+                        .executeScript("return document.readyState").equals("complete"));
     }
 
-    public static boolean isExpectedElementDisplayed(By element){
+    public static boolean isExpectedElementDisplayed(Object element){
         try{
-            return getFluentWait().until(ExpectedConditions.visibilityOfElementLocated(element)).isDisplayed();
+            return switch (element){
+                case WebElement webElement -> getFluentWait().until(webDriver -> webElement.isDisplayed());
+                case By locator -> getFluentWait().until(webDriver -> webDriver.findElement(locator).isDisplayed());
+                default -> throw new IllegalStateException("Unexpected value: " + element);
+            };
         }catch (NoSuchElementException | StaleElementReferenceException | TimeoutException ignore){
             return false;
         }
     }
 
-    public static boolean isExpectedElementPresent(By locator){
+    public static boolean isExpectedElementPresent(Object element){
         try{
-            getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
+            switch (element) {
+                case WebElement webElement -> {
+                    getFluentWait().until(webDriver -> webElement);
+                }
+                case By locator -> {
+                    getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
+                }
+                default -> throw new IllegalStateException("Unexpected value: " + element);
+            }
             return true;
         }catch (NoSuchElementException | StaleElementReferenceException | TimeoutException ignore){
             return false;
         }
     }
 
-    public static void clickByJavascriptExecutor(By locator){
-        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].click();",
-                waitForElementToBeClickable(locator));
+    public static boolean verifyPresenceOfElement(By locator){
+        return DriverFactory.getDriver().findElements(locator).size() > 0;
+    }
+
+    public static WebElement clickByJavascriptExecutor(Object element){
+        WebElement elementToClick = waitForElementToBeClickable(element);
+        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].click();", elementToClick);
+        return elementToClick;
     }
 
     /* ----------------------------------------- METHODS TO DRAG AND DROP ------------------------------------------- */
@@ -100,24 +143,24 @@ public class SeleniumUtils {
     /* ------------------------------- METHODS TO SCROLL AND GET ELEMENTS POSITIONS --------------------------------- */
 
     public static void scrollToTheBottom() {
-        ((JavascriptExecutor) DriverFactory.getDriver())
-                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
-
-        // Give the method time to complete scrolling
-        Utils.pause(1000);
+        if (waitForJavascriptFinishes()){
+            ((JavascriptExecutor) DriverFactory.getDriver())
+                    .executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        }
     }
 
     public static void scrollToTheTop() {
-        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollTo(0, 0)");
-
-        // Give the method time to complete scrolling
-        Utils.pause(1000);
+        if (waitForJavascriptFinishes()){
+            ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollTo(0, 0)");
+        }
     }
 
-    public static void scrollToElement(By locator) {
-        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].scrollIntoView(true);",
-                waitForElementToBeVisible(locator));
-        ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollBy(0,-150)");
+    public static void scrollToElement(Object element) {
+        if (waitForJavascriptFinishes()){
+            ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("arguments[0].scrollIntoView(true);",
+                    waitForElementToBeVisible(element));
+            ((JavascriptExecutor) DriverFactory.getDriver()).executeScript("window.scrollBy(0,-150)");
+        }
     }
 
     /* -------------------------------------------- METHODS TO NAVIGATE --------------------------------------------- */
@@ -129,6 +172,7 @@ public class SeleniumUtils {
 
     public static void gotoURL(String url) {
         DriverFactory.getDriver().navigate().to(url);
+        waitForJavascriptFinishes();
     }
 
     public static void reloadPage() {
