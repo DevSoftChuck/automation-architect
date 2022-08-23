@@ -1,6 +1,5 @@
 package setup;
 
-import io.qameta.allure.Attachment;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -8,11 +7,8 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -58,7 +54,12 @@ public class TestEnvironment {
             ("sauce.key", "");
     public static final boolean HEADLESS = Boolean.parseBoolean(System.getProperty
             ("headless", "false"));
-
+    protected static final String BUILD_NUMBER = System.getProperty
+            ("buildNumber", "Build was made on localhost");
+    protected static final String BUILD_WEB_URL = System.getProperty
+            ("buildURL", "Build was made on localhost");
+    protected static final String BRANCH = System.getProperty
+            ("branch", "Build was made on localhost");
 
     /* --------------------------------------------- ENVIRONMENT METHODS -------------------------------------------- */
 
@@ -66,6 +67,9 @@ public class TestEnvironment {
         Properties properties = new Properties();
         properties.setProperty("All tests were executed on:", "URL");
         properties.setProperty("Browser:", DEFAULT_BROWSER);
+        properties.setProperty("Build URL:", BUILD_WEB_URL);
+        properties.setProperty("Build Run:", BUILD_NUMBER);
+        properties.setProperty("Branch:", BRANCH);
         try {
             properties.store(Files.newOutputStream(Paths.get("allure-results/environment.properties")), null);
         } catch (IOException e) {

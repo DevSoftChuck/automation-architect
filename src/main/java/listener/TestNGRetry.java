@@ -1,4 +1,4 @@
-package setup.listener;
+package listener;
 
 import setup.TestEnvironment;
 import org.testng.IRetryAnalyzer;

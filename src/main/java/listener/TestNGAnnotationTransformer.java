@@ -1,4 +1,4 @@
-package setup.listener;
+package listener;
 
 import org.testng.IAnnotationTransformer;
 import org.testng.annotations.ITestAnnotation;

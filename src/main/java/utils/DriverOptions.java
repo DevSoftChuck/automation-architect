@@ -1,4 +1,4 @@
-package setup;
+package utils;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;

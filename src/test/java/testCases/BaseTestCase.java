@@ -1,6 +1,8 @@
 package testCases;
 
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import setup.DriverFactory;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.NoSuchWindowException;
@@ -11,13 +13,30 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import setup.TestEnvironment;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Paths;
 
 public class BaseTestCase {
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void afterFinish(){
         TestEnvironment.allureWriteProperties();
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command("cmd.exe", "/c", "allure generate allure-results --clean");
+        try {
+            processBuilder.start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @BeforeSuite(alwaysRun = true)
+    public void beforeStart(){
+        deleteFolder("logs");
+        deleteFolder("allure-report");
+        deleteFolder("allure-results");
     }
 
     @BeforeMethod(alwaysRun = true, description = "Setting up test class")
@@ -49,6 +68,20 @@ public class BaseTestCase {
     @Attachment(value = "Scenario FAIL screenshot", type = "type/png")
     public static byte[] takesScreenShot(){
         return ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
+    }
+
+    public static String getCurrentPath() {
+        return Paths.get(".").toAbsolutePath().normalize().toString();
+    }
+
+    protected void deleteFolder(String folderName) {
+        try {
+            FileUtils.deleteDirectory(new File(getCurrentPath()
+                    + File.separator
+                    + folderName));
+        } catch (IOException e) {
+            TestEnvironment.logger.error("Failed to delete " + folderName + " directory!", e);
+        }
     }
 
     public void messageSuccessTest(ITestResult iTestResult) {
