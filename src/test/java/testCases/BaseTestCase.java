@@ -12,29 +12,25 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import setup.TestEnvironment;
+import utils.CommandExecutor;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
 public class BaseTestCase {
 
     @AfterSuite(alwaysRun = true)
-    public void afterFinish(){
+    public void afterFinish() throws InterruptedException {
         TestEnvironment.allureWriteProperties();
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("cmd.exe", "/c", "allure generate allure-results --clean");
-        try {
-            processBuilder.start().waitFor();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        CommandExecutor.executeCommand("allure generate allure-results --clean")
+                .waitFor(5, TimeUnit.SECONDS);
     }
 
     @BeforeSuite(alwaysRun = true)
     public void beforeStart(){
-        deleteFolder("logs");
         deleteFolder("allure-report");
         deleteFolder("allure-results");
     }

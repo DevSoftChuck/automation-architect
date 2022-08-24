@@ -9,25 +9,22 @@ import java.util.stream.Collectors;
 
 public class CommandExecutor {
 
-    private static final int PROCESS_TIME_OUT = 60;
-
     public static Process executeCommand(String commands){
         try {
             List<ProcessBuilder> builders = new ArrayList<>();
-            builders.add(getInitialProcessBuilder());
+
             if (commands.contains("|"))
                 for (String command : commands.split("\\|"))
-                    builders.add(new ProcessBuilder(command.trim().split(" ")));
+                    builders.add(getInheritProcessBuilder(command.trim()));
             else
-                builders.add(new ProcessBuilder(commands.trim().split(" ")));
+                builders.add(getInheritProcessBuilder(commands.trim()));
 
             //Replaces the last element in this list with the same but modified element.
             builders.set(builders.size() - 1,
                     builders.get(builders.size() - 1)
                             .redirectErrorStream(true)
-//                            .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-//                            .redirectOutput(ProcessBuilder.Redirect.appendTo(new File("logs/process_log")))
             );
+
             List<Process> processes = ProcessBuilder.startPipeline(builders);
             return processes.get(processes.size() - 1);
         } catch (IOException e) {
@@ -35,18 +32,16 @@ public class CommandExecutor {
         }
     }
 
-    private static ProcessBuilder getInitialProcessBuilder(){
+    private static ProcessBuilder getInheritProcessBuilder(String command){
         ProcessBuilder processBuilder;
-        Map<String, String> environment = new HashMap<>();
-        environment.put("allure", "C:\\Program Files (x86)\\allure-2.18.1\\bin");
-
         if (System.getProperty("os.name").toLowerCase().contains("win")){
-            processBuilder = new ProcessBuilder("cmd.exe", "/c");
+            processBuilder = new ProcessBuilder("cmd.exe", "/S/D/c", command);
         } else {
-            processBuilder = new ProcessBuilder("/bin/sh", "-c");
+            processBuilder = new ProcessBuilder("/bin/sh", "-c", command);
         }
         processBuilder.directory(new File(System.getProperty("user.dir")));
-        processBuilder.environment().putAll(environment);
+        processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
         return processBuilder;
     }
 
@@ -78,12 +73,12 @@ public class CommandExecutor {
      * http://iteratrlearning.com/java9/2016/09/13/java9-timeouts-completablefutures.html
      * */
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        String command = "ping 127.0.0.1 -n 10 | findstr Approximate";
+        String command = "allure generate allure-results --clean";
 
         CompletableFuture<Process> processFuture =
                 CompletableFuture.supplyAsync(() -> CommandExecutor.executeCommand(command));
-        processFuture.thenApplyAsync(process -> CommandExecutor.searchFor(process, "Approximate"))
-                .completeOnTimeout(false, PROCESS_TIME_OUT, TimeUnit.SECONDS)
+        processFuture.thenApplyAsync(process -> CommandExecutor.searchFor(process, "generated"))
+                .completeOnTimeout(false, 60, TimeUnit.SECONDS)
                 .thenAccept(isFounded ->{
                     try {
                         if (isFounded) {
