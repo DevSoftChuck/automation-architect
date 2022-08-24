@@ -77,7 +77,7 @@ public class CommandExecutor {
      * https://www.baeldung.com/java-9-completablefuture
      * http://iteratrlearning.com/java9/2016/09/13/java9-timeouts-completablefutures.html
      * */
-    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         String command = "ping 127.0.0.1 -n 10 | findstr Approximate";
 
         CompletableFuture<Process> processFuture =

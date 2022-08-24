@@ -18,29 +18,8 @@
     <logger name="net.andreinc.mockneat.utils.file.FileManager" level="OFF"/>
     <logger name="io.github.bonigarcia" level="OFF"/>
 
-    <!--LOGGER FOR .LOG FILE-->
-    <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>testid</key>
-            <defaultValue>unknown</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-                    <level>ALL</level>
-                    <onMatch>ACCEPT</onMatch>
-                </filter>
-                <file>${LOG_PATH}/${testid}.log</file>
-                <encoder>
-                    <pattern>%d{HH:mm:ss} %-5level - %msg%n</pattern>
-                    <outputPatternAsHeader>true</outputPatternAsHeader>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
 <!--    <logger name="io.github.bonigarcia" level="DEBUG"/>-->
     <root level="ALL">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="SIFT"/>
     </root>
 </configuration>
