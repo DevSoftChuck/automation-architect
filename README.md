@@ -13,8 +13,8 @@ You can pass some environment values e.g:
    - `-Dheadless=false` <sub>_**Specify if you want to run your browser in headless mode.**_</sub>
    - `-Dtestng.parallel=methods` <sub>_**You can choose how to run your test cases in parallel, the available options are between `methods`, `tests`, `classes` or `instances`.**_</sub>
    - `-Dtestng.threads=1` <sub>_**The size of the thread pool for running in parallel.**_</sub>
-   - `-Dtestng.groups=sanity` <sub>_**The list of groups you want to be excluded from this run.
-     .**_</sub>
+   - `-Dtestng.groups=sanity` <sub>_**The list of groups you want to be excluded from this run.**_</sub>
+   - `-Dselenium.grid.url=http://local-testing.com` <sub>_* Selenium endpoint to run test cases on kubernetes containers. *_</sub>
 
 ## API 
 Currently, only Rest-Assured is supported. Some materials that would be useful for expanding the API tests:
@@ -36,15 +36,15 @@ Here are the steps to deploy the Grid 4 to a Kubernetes cluster on development:
 - Initialize kubernetes locally: `$ minikube start`.
 - Install the NGINX ingress controller: `$ minikube addons enable ingress` [NGINX Installation Guide](https://kubernetes.github.io/ingress-nginx/deploy/).
 - Configure your localhost to point hostname to kubernetes cluster: The private URL to access on the grid is defined as **local-testing.com** into k8s/ingress-nginx.yaml file:
-  - **Windows**: Edit this file `C:\Windows\System32\drivers\etc\hosts` and place the result of `$ minikube ip` alongside of **local-testing.com** URL, e.g.: `192.168.99.100 salesforce-qa-testing.com`. 
+  - **Windows**: Edit this file `C:\Windows\System32\drivers\etc\hosts` and place the result of `$ minikube ip` alongside of **local-testing.com** URL, e.g.: `192.168.99.100 local-testing.com`. 
   - **Unix**: Sames as windows but within this file `/etc/hosts`.
 - Deploy all the grid components to kubernetes: `$ kubectl apply -f k8s`.
 
 Run your test cases on Selenium grid:
 1. Make sure that SeleniumGrid is running properly, check http://local-testing.com.
-2. In terminal type `mvn test -Dselenium.grid.urlr=http://local-testing.com` Soon...
+2. In terminal type `mvn test -Dselenium.grid.urlr=http://local-testing.com`
 
 ## AUTHOR
-- **Ivan Andraschko** - [Ivan Andraschko](https://www.linkedin.com/in/ivan-andraschko/)
+- [Ivan Andraschko](https://www.linkedin.com/in/ivan-andraschko/)
 ## LICENSE
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
