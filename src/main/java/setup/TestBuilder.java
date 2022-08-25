@@ -7,23 +7,6 @@ import org.testng.asserts.SoftAssert;
 public class TestBuilder {
     private final SoftAssert softAssert;
 
-//    private final Set<T> uniques = new HashSet<>();
-//    private <T> T returnOrCreateInstance(Class<T> clazz){
-//        T newInstance = newInstance(clazz);
-//        if (this.uniques.add(newInstance)){
-//            return newInstance;
-//        }else {
-//            T instanceTemp = null;
-//            for(T unique : this.uniques){
-//                instanceTemp = unique;
-//                if(instanceTemp.equals(newInstance)){
-//                    break;
-//                }
-//            }
-//            return instanceTemp;
-//        }
-//    }
-
     public TestBuilder() {
         this.softAssert = new SoftAssert();
     }

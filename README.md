@@ -1,4 +1,10 @@
 # Automation project
+**Tools supporting test automation frameworks:**
+Java 17, Selenium 4.4.0, TestNG 7.4.0, REST Assured 5.1.1, Maven, 
+(Jenkins Soon), Allure Reports, Slack API (Soon), SeleniumGrid, 
+WebDriverManager 5.2.3, Saucelabs (Soon), Owner framework, 
+ForceAPI rest (Soon).
+
 
 ## RUN TESTS
 

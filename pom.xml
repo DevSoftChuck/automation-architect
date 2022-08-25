@@ -39,13 +39,13 @@
         </dependency>
         <dependency>
             <groupId>org.aeonbits.owner</groupId>
-            <artifactId>owner-java8</artifactId>
+            <artifactId>owner</artifactId>
             <version>1.0.12</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.4.0</version>
+            <version>7.6.1</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -142,6 +142,7 @@
                     <source>17</source>
                     <target>17</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
 
