@@ -1,6 +1,5 @@
 package pages;
 
-import setup.TestBuilder;
 import org.openqa.selenium.By;
 
 public class LoginPage extends Page {
@@ -9,7 +8,4 @@ public class LoginPage extends Page {
     public static By passwordInput = By.xpath("//input[@id='password']");
     public static By loginBtn = By.xpath("//input[@id='login-button']");
 
-    public LoginPage(TestBuilder testBuilder){
-        init(testBuilder);
-    }
 }

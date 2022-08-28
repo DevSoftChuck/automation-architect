@@ -1,14 +1,15 @@
-package setup;
+package testCases;
 
 import utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.testng.asserts.SoftAssert;
 
-public class TestBuilder {
-    private final SoftAssert softAssert;
+public class TestBuilder extends BaseTestCase {
+    private final ThreadLocal<SoftAssert> softAssertList = new ThreadLocal<>();
 
-    public TestBuilder() {
-        this.softAssert = new SoftAssert();
+    public TestBuilder initializeTestCase() {
+        this.softAssertList.set(new SoftAssert());
+        return this;
     }
 
     /**
@@ -33,7 +34,7 @@ public class TestBuilder {
      */
     public <T> T returnNewInstance(Class<T> clazz){
         try{
-            return clazz.getDeclaredConstructor(TestBuilder.class).newInstance(this);
+            return clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -47,16 +48,14 @@ public class TestBuilder {
     }
 
     public TestBuilder checkVisibilityOf(By webElement, String message){
-        this.softAssert.assertTrue(SeleniumUtils.isExpectedElementDisplayed(webElement), message);
+        this.softAssertList.get().assertTrue(SeleniumUtils.isExpectedElementDisplayed(webElement), message);
         return this;
     }
 
-    public TestBuilder checkEqualityOf(By actualElement, By expectedElement, String message){
-        this.softAssert.assertEquals(actualElement, expectedElement, message);
+    public <T> TestBuilder checkEqualityOf(final T actual, final T expected, final String message){
+        this.softAssertList.get().assertEquals(actual, expected, message);
         return this;
     }
-
-    /* ------------------------------ METHODS TO WAIT, CHECK AND ASSERT ELEMENTS - END ------------------------------ */
 
     /* ---------------------------------------- METHODS TO CLICK ON ELEMENTS ---------------------------------------- */
 
@@ -85,8 +84,6 @@ public class TestBuilder {
         return this;
     }
 
-    /* ------------------------------------- METHODS TO CLICK ON ELEMENTS - END ------------------------------------- */
-
     public TestBuilder sendKeysOn(By webElement, String keys){
         SeleniumUtils.waitForElementToBeVisible(webElement).sendKeys(keys);
         return this;
@@ -97,8 +94,11 @@ public class TestBuilder {
         return this;
     }
 
-    public void finish(){
-        this.softAssert.assertAll();
+    public SoftAssert getSoftAssert(){
+        return this.softAssertList.get();
     }
 
+    public void finishTestCase(){
+        this.softAssertList.get().assertAll();
+    }
 }

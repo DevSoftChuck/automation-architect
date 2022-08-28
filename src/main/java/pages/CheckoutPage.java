@@ -1,6 +1,5 @@
 package pages;
 
-import setup.TestBuilder;
 import org.openqa.selenium.By;
 
 public class CheckoutPage extends Header{
@@ -17,7 +16,4 @@ public class CheckoutPage extends Header{
     /* -------------------------------------------------- COMPLETE -------------------------------------------------- */
     public static By completionTitle = By.xpath("//h2[@class='complete-header']");
 
-    public CheckoutPage(TestBuilder testBuilder) {
-        super(testBuilder);
-    }
 }
