@@ -23,20 +23,22 @@ import java.util.concurrent.TimeUnit;
 public class BaseTestCase {
 
     @AfterSuite(alwaysRun = true)
-    public void afterFinish() throws InterruptedException {
+    protected void afterFinish() throws InterruptedException {
         TestEnvironment.allureWriteProperties();
         CommandExecutor.executeCommand("allure generate allure-results --clean")
                 .waitFor(5, TimeUnit.SECONDS);
     }
 
     @BeforeSuite(alwaysRun = true)
-    public void beforeStart(){
+    protected void beforeStart(){
         deleteFolder("allure-report");
         deleteFolder("allure-results");
     }
 
     @BeforeMethod(alwaysRun = true, description = "Setting up test class")
-    public void beforeTest(Method method){
+    protected void beforeTest(Method method){
+        System.out.println("Before method within BaseTestCase");
+
         String fullClassName = this.getClass().getName();
         int index = fullClassName.lastIndexOf('.');
         String className = index == -1 ? this.getClass().getName() : fullClassName.substring(index + 1);
@@ -44,7 +46,7 @@ public class BaseTestCase {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void afterTest(ITestResult result, Method method){
+    protected void afterTest(ITestResult result, Method method){
         switch (result.getStatus()){
             case ITestResult.FAILURE -> {
                 if (DriverFactory.getDriver() != null){
@@ -62,11 +64,11 @@ public class BaseTestCase {
     }
 
     @Attachment(value = "Scenario FAIL screenshot", type = "type/png")
-    public static byte[] takesScreenShot(){
+    protected static byte[] takesScreenShot(){
         return ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
-    public static String getCurrentPath() {
+    protected static String getCurrentPath() {
         return Paths.get(".").toAbsolutePath().normalize().toString();
     }
 
@@ -80,13 +82,13 @@ public class BaseTestCase {
         }
     }
 
-    public void messageSuccessTest(ITestResult iTestResult) {
+    protected void messageSuccessTest(ITestResult iTestResult) {
         TestEnvironment.logger.info(TestEnvironment.ANSI_BLUE + "TEST NAME: " +
                 iTestResult.getMethod().getDescription().toUpperCase() + TestEnvironment.ANSI_RESET +
                 " FINISHED WITH " + TestEnvironment.ANSI_GREEN + "SUCCESS STATUS " + TestEnvironment.ANSI_RESET);
     }
 
-    public void messageFailTest(ITestResult iTestResult) {
+    protected void messageFailTest(ITestResult iTestResult) {
         TestEnvironment.logger.error(TestEnvironment.ANSI_BLUE + "TEST NAME: " +
                 iTestResult.getMethod().getDescription().toUpperCase() + TestEnvironment.ANSI_RESET +
                 " FINISHED WITH " + TestEnvironment.ANSI_RED + "FAILED STATUS " + TestEnvironment.ANSI_RESET);

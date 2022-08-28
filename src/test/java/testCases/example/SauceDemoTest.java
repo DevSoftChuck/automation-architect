@@ -16,7 +16,6 @@ public class SauceDemoTest extends TestBuilder {
     @Link(name = "Test name", url = "https://test.com")
     @Test(groups = {"regression", "sanity"}, priority = 1, description = "Verify user can complete checkout")
     public void testExample1(){
-        initializeTestCase();
         goTo(PropertiesManager.getConfig().BASE_URL());
         sendKeysOn(LoginPage.usernameInput, PropertiesManager.getConfig("USER"));
         sendKeysOn(LoginPage.passwordInput, PropertiesManager.getConfig().PASSWORD());
@@ -31,6 +30,5 @@ public class SauceDemoTest extends TestBuilder {
         clickOn(CheckoutPage.continueBtn);
         clickOn(CheckoutPage.finishBtn);
         checkVisibilityOf(CheckoutPage.completionTitle, "Completion title isn't displayed!");
-        finishTestCase();
     }
 }

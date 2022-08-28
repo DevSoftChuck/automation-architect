@@ -1,15 +1,18 @@
 package testCases;
 
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.testng.asserts.SoftAssert;
 
 public class TestBuilder extends BaseTestCase {
-    private final ThreadLocal<SoftAssert> softAssertList = new ThreadLocal<>();
 
-    public TestBuilder initializeTestCase() {
+    protected final ThreadLocal<SoftAssert> softAssertList = new ThreadLocal<>();
+
+    @BeforeMethod(alwaysRun = true, description = "Setting up asserts")
+    protected void beforeTestBuilder(){
         this.softAssertList.set(new SoftAssert());
-        return this;
     }
 
     /**
@@ -42,63 +45,64 @@ public class TestBuilder extends BaseTestCase {
 
     /* --------------------------------- METHODS TO WAIT, CHECK AND ASSERT ELEMENTS --------------------------------- */
 
-    public TestBuilder waitUntilElementDisappears(By webElement){
+    protected TestBuilder waitUntilElementDisappears(By webElement){
         SeleniumUtils.waitForElementToBeNotVisible(webElement);
         return this;
     }
 
-    public TestBuilder checkVisibilityOf(By webElement, String message){
+    protected TestBuilder checkVisibilityOf(By webElement, String message){
         this.softAssertList.get().assertTrue(SeleniumUtils.isExpectedElementDisplayed(webElement), message);
         return this;
     }
 
-    public <T> TestBuilder checkEqualityOf(final T actual, final T expected, final String message){
+    protected <T> TestBuilder checkEqualityOf(final T actual, final T expected, final String message){
         this.softAssertList.get().assertEquals(actual, expected, message);
         return this;
     }
 
     /* ---------------------------------------- METHODS TO CLICK ON ELEMENTS ---------------------------------------- */
 
-    public TestBuilder clickOn(By webElement){
+    protected TestBuilder clickOn(By webElement){
         SeleniumUtils.scrollToElement(webElement);
         SeleniumUtils.waitForElementToBeClickable(webElement).click();
         return this;
     }
 
-    public TestBuilder clickOn(By webElement, By waitForItDisappears){
+    protected TestBuilder clickOn(By webElement, By waitForItDisappears){
         SeleniumUtils.waitForElementToBeNotVisible(waitForItDisappears);
         SeleniumUtils.waitForElementToBeClickable(webElement).click();
         return this;
     }
 
-    public TestBuilder ignoreOrClickOn(By webElement){
+    protected TestBuilder ignoreOrClickOn(By webElement){
         try{
             SeleniumUtils.waitForElementToBeClickable(webElement).click();
         }catch (Exception ignore){}
         return this;
     }
 
-    public TestBuilder waitAndClickOn(By webElement, By waitForVisibility){
+    protected TestBuilder waitAndClickOn(By webElement, By waitForVisibility){
         SeleniumUtils.waitForElementToBeVisible(waitForVisibility);
         SeleniumUtils.waitForElementToBeClickable(webElement).click();
         return this;
     }
 
-    public TestBuilder sendKeysOn(By webElement, String keys){
+    protected TestBuilder sendKeysOn(By webElement, String keys){
         SeleniumUtils.waitForElementToBeVisible(webElement).sendKeys(keys);
         return this;
     }
 
-    public TestBuilder goTo(String url){
+    protected TestBuilder goTo(String url){
         SeleniumUtils.gotoURL(url);
         return this;
     }
 
-    public SoftAssert getSoftAssert(){
+    protected SoftAssert getSoftAssert(){
         return this.softAssertList.get();
     }
 
-    public void finishTestCase(){
+    @AfterMethod(alwaysRun = true)
+    protected void afterTestBuilder(){
         this.softAssertList.get().assertAll();
     }
 }
