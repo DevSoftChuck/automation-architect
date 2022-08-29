@@ -2,7 +2,7 @@ package testCases.example;
 
 import pages.*;
 import testCases.TestBuilder;
-import utils.PropertiesManager;
+import config.PropertiesManager;
 import com.google.common.collect.Sets;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
