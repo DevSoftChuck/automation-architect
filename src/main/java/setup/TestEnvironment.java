@@ -25,11 +25,6 @@ import static org.hamcrest.Matchers.lessThan;
 public class TestEnvironment {
 
     public static Logger logger = LoggerFactory.getLogger(Logger.class);
-    public static final String TODAY_DATE = new SimpleDateFormat("yyyy-MM-dd HH:ss").format(new Date());
-
-    /* ------------------------------------------- AMOUNT OF TEST EXECUTED ------------------------------------------ */
-    public static int passedTestsAmount = 0;
-    public static int failedTestsAmount = 0;
 
     /* ---------------------------------------------- GENERAL SETTINGS ---------------------------------------------- */
     public static final String ANSI_RED = "\u001B[31m";
