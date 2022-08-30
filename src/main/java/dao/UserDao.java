@@ -5,20 +5,21 @@ import java.util.Optional;
 
 public class UserDao extends Base implements Dao<User> {
 
-    protected String TZ_COLUMNS = "Id, Name";
-
     public UserDao(){
         super();
+    }
+
+    public Optional<User> getBySoql(String id){
+        return runQuery(String.format(SELECT_BASE_QUERY, "Id, Name", "User", "Id="+id), User.class)
+                .getRecords()
+                .stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst();
     }
 
     @Override
     public Optional<User> get(String id) {
         return Optional.ofNullable(tzConnection.getSObject("User", id).as(User.class));
-//        return runQuery(String.format(SELECT_BASE_QUERY, TZ_COLUMNS, "User", "Id="+id), User.class)
-//                .getRecords()
-//                .stream()
-//                .filter(user -> user.getId().equals(id))
-//                .findFirst();
     }
 
     @Override
