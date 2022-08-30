@@ -1,9 +1,8 @@
 # Automation project
 **Tools supporting test automation frameworks:**
-Java 17, Selenium 4.4.0, TestNG 7.4.0, REST Assured 5.1.1, Maven, 
-(Jenkins Soon), Allure Reports, Slack API (Soon), SeleniumGrid, 
-WebDriverManager 5.2.3, Saucelabs (Soon), Owner framework, 
-ForceAPI rest (Soon).
+Java 17, Selenium 4.4.0, TestNG, REST Assured, Kubernetes and Jenkins (Soon), 
+Allure Reports, Slack API (Soon), SeleniumGrid, WebDriverManager, 
+Saucelabs (Soon), Owner framework, Salesforce API Rest.
 
 
 ## RUN TESTS
@@ -38,10 +37,10 @@ We also support Salesforce API request, please take a look:
 - **Jenkins:** Soon...
 
 ### Allure
-- **Allure:** In terminal type `allure generate allure-results --clean` to generate Allure tests results, and then `allure open` to open the allure report.  
+- **Allure:** In terminal type `allure open` to open the allure report.  
 
 ## SELENIUM GRID 
-Here are the steps to deploy the Grid 4 to a Kubernetes cluster on development:
+Here are the steps to deploy the Grid to a Kubernetes cluster on development:
 - Initialize kubernetes locally: `$ minikube start`.
 - Install the NGINX ingress controller: `$ minikube addons enable ingress` [NGINX Installation Guide](https://kubernetes.github.io/ingress-nginx/deploy/).
 - Configure your localhost to point hostname to kubernetes cluster: The private URL to access on the grid is defined as **local-testing.com** into k8s/ingress-nginx.yaml file:
