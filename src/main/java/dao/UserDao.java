@@ -1,41 +1,38 @@
 package dao;
 
 import models.User;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class UserDao extends Base implements Dao<User> {
 
-    private List<User> users = new ArrayList<>();
+    protected String TZ_COLUMNS = "Id, Name";
+
+    public UserDao(){
+        super();
+    }
 
     @Override
     public Optional<User> get(String id) {
-        return runQuery(String.format(SELECT_BASE_QUERY, "User", "Id="+id), User.class)
-                .getRecords()
-                .stream()
-                .filter(user -> user.getId().equals(id))
-                .findFirst();
+        return Optional.ofNullable(tzConnection.getSObject("User", id).as(User.class));
+//        return runQuery(String.format(SELECT_BASE_QUERY, TZ_COLUMNS, "User", "Id="+id), User.class)
+//                .getRecords()
+//                .stream()
+//                .filter(user -> user.getId().equals(id))
+//                .findFirst();
     }
 
     @Override
-    public List<User> getAll() {
-        return runQuery(String.format(SELECT_BASE_QUERY, "User", "1=1"), User.class)
-                .getRecords();
+    public String create(User user) {
+        return tzConnection.createSObject("User", user);
     }
 
     @Override
-    public void save(User user) {
-
-    }
-
-    @Override
-    public void update(User user, String[] params) {
-
+    public void update(String id, User user) {
+        tzConnection.updateSObject("User", id, user);
     }
 
     @Override
     public void delete(User user) {
-
+        tzConnection.deleteSObject("User", user.getId());
     }
 }

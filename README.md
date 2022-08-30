@@ -29,6 +29,9 @@ Currently, only Rest-Assured is supported. Some materials that would be useful f
 - [Read JSON Response Body using Rest Assured](https://toolsqa.com/rest-assured/read-json-response-body-using-rest-assured/)
 - [Rest Assured Tutorial](https://www.toolsqa.com/rest-assured-tutorial/)
 
+We also support Salesforce API request, please take a look:
+- [Force.com REST API Connector](https://github.com/jesperfj/force-rest-api)
+
 
 ## RESULTS AND LOGS
 ### CI/CD
