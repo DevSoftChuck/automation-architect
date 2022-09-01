@@ -1,5 +1,7 @@
 package testCases.example;
 
+import models.csvData.CheckoutData;
+import models.csvData.CsvBean;
 import pages.*;
 import testCases.TestBuilder;
 import config.PropertiesManager;
@@ -14,8 +16,9 @@ public class SauceDemoTest extends TestBuilder {
     @Epic("Epic test")
     @Description("Test description")
     @Link(name = "Test name", url = "https://test.com")
-    @Test(groups = {"regression", "sanity"}, priority = 1, description = "Verify user can complete checkout")
-    public void testExample1(){
+    @Test(groups = {"regression", "sanity"}, priority = 1, description = "Verify user can complete checkout",
+            dataProvider = "checkout")
+    public void testExample1(CheckoutData checkoutData){
         goTo(PropertiesManager.getConfig().BASE_URL());
         sendKeysOn(LoginPage.usernameInput, PropertiesManager.getConfig("USER"));
         sendKeysOn(LoginPage.passwordInput, PropertiesManager.getConfig().PASSWORD());
@@ -24,9 +27,9 @@ public class SauceDemoTest extends TestBuilder {
                 .filterBy("hilo");
         clickOn(Header.cartBtn);
         clickOn(CartPage.checkoutBtn);
-        sendKeysOn(CheckoutPage.firstnameInput, "John");
-        sendKeysOn(CheckoutPage.lastnameInput, "Doe");
-        sendKeysOn(CheckoutPage.postalCodeInput, "89501");
+        sendKeysOn(CheckoutPage.firstnameInput, checkoutData.getName());
+        sendKeysOn(CheckoutPage.lastnameInput, checkoutData.getLastname());
+        sendKeysOn(CheckoutPage.postalCodeInput, checkoutData.getPostalCode());
         clickOn(CheckoutPage.continueBtn);
         clickOn(CheckoutPage.finishBtn);
         checkVisibilityOf(CheckoutPage.completionTitle, "Completion title isn't displayed!");

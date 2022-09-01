@@ -1,6 +1,6 @@
 package dao;
 
-import models.User;
+import models.sObjects.User;
 import java.util.Optional;
 
 public class UserDao extends Base implements Dao<User> {

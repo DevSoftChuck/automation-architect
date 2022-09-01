@@ -1,6 +1,6 @@
 # Automation project
 **Tools supporting test automation frameworks:**
-Java 17, Selenium 4.4.0, TestNG, REST Assured, Kubernetes and Jenkins (Soon), 
+Java 17, Selenium 4.4.0, TestNG, Lombok, OpenCSV, REST Assured, Kubernetes and Jenkins (Soon), 
 Allure Reports, Slack API (Soon), SeleniumGrid, WebDriverManager, 
 Saucelabs (Soon), Owner framework, Salesforce API Rest.
 

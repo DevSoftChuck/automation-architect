@@ -1,26 +1,30 @@
 package testCases;
 
+import models.csvData.CheckoutData;
+import models.csvData.CsvBean;
 import org.apache.commons.io.FileUtils;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import setup.DriverFactory;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import setup.TestEnvironment;
 import utils.CommandExecutor;
+import utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTestCase {
+
+    /* --------------------------------------------------- HOOKS ---------------------------------------------------- */
 
     @AfterSuite(alwaysRun = true)
     protected void afterFinish() throws InterruptedException {
@@ -37,8 +41,6 @@ public class BaseTestCase {
 
     @BeforeMethod(alwaysRun = true, description = "Setting up test class")
     protected void beforeTest(Method method){
-        System.out.println("Before method within BaseTestCase");
-
         String fullClassName = this.getClass().getName();
         int index = fullClassName.lastIndexOf('.');
         String className = index == -1 ? this.getClass().getName() : fullClassName.substring(index + 1);
@@ -52,16 +54,16 @@ public class BaseTestCase {
                 if (DriverFactory.getDriver() != null){
                     try { takesScreenShot(); }catch (NoSuchWindowException ignore){}
                 }
-                TestEnvironment.failedTestsAmount += 1;
                 messageFailTest(result);
             }
             case ITestResult.SUCCESS -> {
-                TestEnvironment.passedTestsAmount += 1;
                 messageSuccessTest(result);
             }
         }
         DriverFactory.removeDriver();
     }
+
+    /* ------------------------------------------------ UTIL METHODS ------------------------------------------------ */
 
     @Attachment(value = "Scenario FAIL screenshot", type = "type/png")
     protected static byte[] takesScreenShot(){
@@ -92,5 +94,22 @@ public class BaseTestCase {
         TestEnvironment.logger.error(TestEnvironment.ANSI_BLUE + "TEST NAME: " +
                 iTestResult.getMethod().getDescription().toUpperCase() + TestEnvironment.ANSI_RESET +
                 " FINISHED WITH " + TestEnvironment.ANSI_RED + "FAILED STATUS " + TestEnvironment.ANSI_RESET);
+    }
+
+    /* ----------------------------------------------- DATA PROVIDERS ----------------------------------------------- */
+
+    @DataProvider(name = "checkout")
+    protected Object[][] checkoutData(){
+        Path path = Paths.get("src/test/resources/csv/checkoutData.csv");
+        //for each row within our csv file, we will create a POJO class of it and save it into an array
+        List<CsvBean> lista = Utils.injectCsvFileToPojo(path, CheckoutData.class);
+
+        // In order to fill our test method with this data, lets put each row from our array into another but accepted
+        // testng array
+        Object[][] data = new Object[lista.size()][1];
+        for (int i = 0; i < lista.size(); i++) {
+            data[i] = new Object[] {lista.get(i)};
+        }
+        return data;
     }
 }
