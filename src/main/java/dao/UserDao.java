@@ -14,17 +14,17 @@ public class UserDao extends Base implements Dao<User> {
             WHERE %s
             """;
 
-    public UserDao(SalesforceApi salesforceConnection){
-        super(salesforceConnection);
+    public UserDao from(String environment){
+        connection = SalesforceApi.getOrCreateInstance(environment);
+        return this;
     }
-
     public List<User> getAllWhere(String condition){
         return connection.query(String.format(SELECT_BASE_QUERY, condition), User.class).getRecords();
     }
 
     public User getWhere(String condition){
         return connection.query(String.format(SELECT_BASE_QUERY, condition), User.class)
-                .getRecords().stream().findAny().orElse(null);
+                .getRecords().stream().findFirst().orElse(null);
     }
 
     @Override

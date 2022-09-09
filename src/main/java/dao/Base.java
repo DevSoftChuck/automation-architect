@@ -6,7 +6,4 @@ public class Base {
 
     protected SalesforceApi connection;
 
-    public Base(SalesforceApi salesforceConnection){
-        connection = salesforceConnection;
-    }
 }

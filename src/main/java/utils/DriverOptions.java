@@ -1,6 +1,6 @@
 package utils;
 
-import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -28,5 +28,5 @@ public enum DriverOptions {
         }
     };
 
-    public abstract Capabilities getOptions();
+    public abstract MutableCapabilities getOptions();
 }
