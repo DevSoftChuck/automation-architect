@@ -1,4 +1,4 @@
-package testCases.example;
+package testCases.example.web;
 
 import models.csvData.CheckoutData;
 import models.csvData.CsvBean;

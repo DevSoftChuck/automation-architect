@@ -6,7 +6,7 @@
     </listeners>
     <test name="SauceDemoTest">
         <classes>
-            <class name="testCases.example.SauceDemoTest" />
+            <class name="testCases.example.web.SauceDemoTest" />
         </classes>
     </test>
 </suite>
