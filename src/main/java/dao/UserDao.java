@@ -18,6 +18,7 @@ public class UserDao extends Base implements Dao<User> {
         connection = SalesforceApi.getOrCreateInstance(environment);
         return this;
     }
+
     public List<User> getAllWhere(String condition){
         return connection.query(String.format(SELECT_BASE_QUERY, condition), User.class).getRecords();
     }

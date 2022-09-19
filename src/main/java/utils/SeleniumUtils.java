@@ -29,7 +29,7 @@ public class SeleniumUtils {
         return switch (element){
             case WebElement webElement -> getFluentWait().until(ExpectedConditions.visibilityOf(webElement));
             case By locator -> getFluentWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
-            default -> throw new IllegalStateException("Unexpected value: " + element);
+            default -> throw new IllegalArgumentException("Unexpected value: " + element);
         };
     }
 
@@ -39,7 +39,7 @@ public class SeleniumUtils {
                     .until(ExpectedConditions.visibilityOfAllElements(webElement));
             case By locator -> getFluentWait()
                     .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
-            default -> throw new IllegalStateException("Unexpected value: " + element);
+            default -> throw new IllegalArgumentException("Unexpected value: " + element);
         };
     }
 
@@ -47,7 +47,7 @@ public class SeleniumUtils {
         return switch (element){
             case WebElement webElement -> getFluentWait().until(webDriver -> webElement);
             case By locator -> getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
-            default -> throw new IllegalStateException("Unexpected value: " + element);
+            default -> throw new IllegalArgumentException("Unexpected value: " + element);
         };
     }
 
@@ -55,7 +55,7 @@ public class SeleniumUtils {
         switch (element){
             case WebElement webElement -> getFluentWait().until(ExpectedConditions.invisibilityOf(webElement));
             case By locator -> getFluentWait().until(ExpectedConditions.invisibilityOfElementLocated(locator));
-            default -> throw new IllegalStateException("Unexpected value: " + element);
+            default -> throw new IllegalArgumentException("Unexpected value: " + element);
         }
     }
 
@@ -63,7 +63,7 @@ public class SeleniumUtils {
         return switch (element){
             case WebElement webElement -> getFluentWait().until(ExpectedConditions.elementToBeClickable(webElement));
             case By locator -> getFluentWait().until(ExpectedConditions.elementToBeClickable(locator));
-            default -> throw new IllegalStateException("Unexpected value: " + element);
+            default -> throw new IllegalArgumentException("Unexpected value: " + element);
         };
     }
 
