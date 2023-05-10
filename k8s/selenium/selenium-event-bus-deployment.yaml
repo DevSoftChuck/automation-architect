@@ -17,17 +17,17 @@ spec:
         app: selenium-event-bus
         name: selenium-event-bus
         component: "selenium-grid-4"
-  spec:
-    containers:
-      - name: selenium-event-bus
-        image: selenium/event-bus:4.9.0
-        ports:
-          - containerPort: 4442
-            protocol: TCP
-          - containerPort: 4443
-            protocol: TCP
-          - containerPort: 5557
-            protocol: TCP
+    spec:
+      containers:
+        - name: selenium-event-bus
+          image: selenium/event-bus:4.9.0
+          ports:
+            - containerPort: 4442
+              protocol: TCP
+            - containerPort: 4443
+              protocol: TCP
+            - containerPort: 5557
+              protocol: TCP
 
 ---
 

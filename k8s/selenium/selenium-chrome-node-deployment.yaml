@@ -11,17 +11,19 @@ spec:
   selector:
     matchLabels:
       app: selenium-chrome-node
-    template:
-      metadata:
-        labels:
-          app: selenium-chrome-node
-          name: selenium-chrome-node
-          component: "selenium-grid-4"
+  template:
+    metadata:
+      labels:
+        app: selenium-chrome-node
+        name: selenium-chrome-node
+        component: "selenium-grid-4"
     spec:
       containers:
         - name: selenium-chrome-node
           image: selenium/node-chrome:4.9.0
           env:
+            - name: JAVA_OPTS
+              value: "-Xmx512m -Dselenium.LOGGER.level=WARNING"
             - name: SE_EVENT_BUS_HOST
               value: "selenium-event-bus"
             - name: SE_EVENT_BUS_PUBLISH_PORT
@@ -43,7 +45,7 @@ spec:
             - name: SE_NODE_SESSION_TIMEOUT
               value: "600"
           ports:
-            - containerPort: 5553
+            - containerPort: 5555
               protocol: TCP
           volumeMounts:
             - name: dshm
@@ -68,5 +70,5 @@ spec:
   ports:
     - name: port1
       protocol: TCP
-      port: 6900
-      targetPort: 5900
+      port: 5555
+      targetPort: 5555

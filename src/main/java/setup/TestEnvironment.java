@@ -40,7 +40,7 @@ public class TestEnvironment {
     public static final String DEFAULT_SAUCE_BROWSER_VERSION = System.getProperty
             ("sauce.browser.version", "latest");
     public static final String SELENIUM_GRID_URL = System.getProperty
-            ("selenium.grid.url", "http://127.0.0.1:40021/");
+            ("selenium.grid.url", "http://127.0.0.1:43927/");
     public static final String DEFAULT_SAUCE_USERNAME = System.getProperty
             ("sauce.user", "");
     public static final String DEFAULT_SAUCE_ACCESS_KEY = System.getProperty

@@ -17,40 +17,40 @@ spec:
         app: selenium-firefox-node
         name: selenium-firefox-node
         component: "selenium-grid-4"
-  spec:
-    containers:
-      - name: selenium-firefox-node
-        image: selenium/node-firefox:4.9.0
-        env:
-          - name: SE_EVENT_BUS_HOST
-            value: "selenium-event-bus"
-          - name: SE_EVENT_BUS_PUBLISH_PORT
-            value: "4442"
-          - name: SE_EVENT_BUS_SUBSCRIBE_PORT
-            value: "4443"
-          - name: SCREEN_WIDTH
-            value: "1980"
-          - name: SCREEN_HEIGHT
-            value: "1024"
-          - name: SCREEN_DEPTH
-            value: "24"
-          - name: SCREEN_DPI
-            value: "96"
-          - name: SE_NODE_MAX_SESSIONS
-            value: "2"
-          - name: SE_NODE_OVERRIDE_MAX_SESSIONS
-            value: "true"
-          - name: SE_NODE_SESSION_TIMEOUT
-            value: "600"
-        ports:
-          - containerPort: 5553
-            protocol: TCP
-        volumeMounts:
-          - name: dshm
-            mountPath: /dev/shm
-    volumes:
-      - name: dshm
-        emptyDir: { "medium": "Memory" }
+    spec:
+      containers:
+        - name: selenium-firefox-node
+          image: selenium/node-firefox:4.9.0
+          env:
+            - name: SE_EVENT_BUS_HOST
+              value: "selenium-event-bus"
+            - name: SE_EVENT_BUS_PUBLISH_PORT
+              value: "4442"
+            - name: SE_EVENT_BUS_SUBSCRIBE_PORT
+              value: "4443"
+            - name: SCREEN_WIDTH
+              value: "1980"
+            - name: SCREEN_HEIGHT
+              value: "1024"
+            - name: SCREEN_DEPTH
+              value: "24"
+            - name: SCREEN_DPI
+              value: "96"
+            - name: SE_NODE_MAX_SESSIONS
+              value: "2"
+            - name: SE_NODE_OVERRIDE_MAX_SESSIONS
+              value: "true"
+            - name: SE_NODE_SESSION_TIMEOUT
+              value: "600"
+          ports:
+            - containerPort: 5554
+              protocol: TCP
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm
+      volumes:
+        - name: dshm
+          emptyDir: { "medium": "Memory" }
 
 ---
 
@@ -68,5 +68,5 @@ spec:
   ports:
     - name: port1
       protocol: TCP
-      port: 6902
-      targetPort: 5900
+      port: 5554
+      targetPort: 5554
