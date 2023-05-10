@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 
 import static org.hamcrest.Matchers.lessThan;
@@ -36,13 +34,13 @@ public class TestEnvironment {
     public static final String DEFAULT_BROWSER = System.getProperty
             ("browser", "chrome");
     public static final String DEFAULT_DRIVER_REMOTE_SERVER = System.getProperty
-            ("driver.remote.server", "local");
+            ("driver.remote.server", "baas");
     public static final String DEFAULT_SAUCE_PLATFORM_NAME = System.getProperty
-            ("sauce.platform.name", "Windows 11");
+            ("sauce.platform.name", "Linux");
     public static final String DEFAULT_SAUCE_BROWSER_VERSION = System.getProperty
             ("sauce.browser.version", "latest");
     public static final String SELENIUM_GRID_URL = System.getProperty
-            ("selenium.grid.url", "http://local-testing.com/");
+            ("selenium.grid.url", "http://127.0.0.1:40021/");
     public static final String DEFAULT_SAUCE_USERNAME = System.getProperty
             ("sauce.user", "");
     public static final String DEFAULT_SAUCE_ACCESS_KEY = System.getProperty

@@ -1,53 +1,72 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: selenium-firefox-node
- labels:
-  app: selenium-firefox-node
   name: selenium-firefox-node
-  component: "selenium-grid-4"
-spec:
- replicas: 2
- selector:
-  matchLabels:
-   app: selenium-firefox-node
- template:
-  metadata:
-   labels:
+  labels:
     app: selenium-firefox-node
     name: selenium-firefox-node
     component: "selenium-grid-4"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: selenium-firefox-node
+  template:
+    metadata:
+      labels:
+        app: selenium-firefox-node
+        name: selenium-firefox-node
+        component: "selenium-grid-4"
   spec:
-   containers:
-    - name: selenium-firefox-node
-      image: selenium/node-firefox:4.1.1-20211217
-      env:
-       - name: SE_EVENT_BUS_HOST
-         value: "selenium-event-bus"
-       - name: SE_EVENT_BUS_PUBLISH_PORT
-         value: "4442"
-       - name: SE_EVENT_BUS_SUBSCRIBE_PORT
-         value: "4443"
-       - name: SCREEN_WIDTH
-         value: "1980"
-       - name: SCREEN_HEIGHT
-         value: "1024"
-       - name: SCREEN_DEPTH
-         value: "24"
-       - name: SCREEN_DPI
-         value: "96"
-       - name: SE_NODE_MAX_SESSIONS
-         value: "2"
-       - name: SE_NODE_OVERRIDE_MAX_SESSIONS
-         value: "true"
-       - name: SE_NODE_SESSION_TIMEOUT
-         value: "600"
-      ports:
-       - containerPort: 5553
-         protocol: TCP
-      volumeMounts:
-       - name: dshm
-         mountPath: /dev/shm
-   volumes:
-    - name: dshm
-      emptyDir: { "medium": "Memory" }
+    containers:
+      - name: selenium-firefox-node
+        image: selenium/node-firefox:4.9.0
+        env:
+          - name: SE_EVENT_BUS_HOST
+            value: "selenium-event-bus"
+          - name: SE_EVENT_BUS_PUBLISH_PORT
+            value: "4442"
+          - name: SE_EVENT_BUS_SUBSCRIBE_PORT
+            value: "4443"
+          - name: SCREEN_WIDTH
+            value: "1980"
+          - name: SCREEN_HEIGHT
+            value: "1024"
+          - name: SCREEN_DEPTH
+            value: "24"
+          - name: SCREEN_DPI
+            value: "96"
+          - name: SE_NODE_MAX_SESSIONS
+            value: "2"
+          - name: SE_NODE_OVERRIDE_MAX_SESSIONS
+            value: "true"
+          - name: SE_NODE_SESSION_TIMEOUT
+            value: "600"
+        ports:
+          - containerPort: 5553
+            protocol: TCP
+        volumeMounts:
+          - name: dshm
+            mountPath: /dev/shm
+    volumes:
+      - name: dshm
+        emptyDir: { "medium": "Memory" }
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: selenium-firefox-node
+  labels:
+    name: selenium-firefox-node
+    component: "selenium-grid-4"
+spec:
+  type: ClusterIP
+  selector:
+    app: selenium-firefox-node
+  ports:
+    - name: port1
+      protocol: TCP
+      port: 6902
+      targetPort: 5900

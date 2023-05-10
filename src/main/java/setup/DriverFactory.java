@@ -1,6 +1,5 @@
 package setup;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +9,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
 import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
@@ -24,7 +22,7 @@ public class DriverFactory {
 
     public static void initialize(String testName) {
         switch (TestEnvironment.DEFAULT_DRIVER_REMOTE_SERVER.toLowerCase()) {
-            case "saucelab" -> {
+            case "baas" -> {
                 addDriver(getRemoteSeleniumDriver(testName));
                 setupDriverConfiguration();
             }
@@ -61,8 +59,9 @@ public class DriverFactory {
     private static WebDriver getLocalSeleniumDriver(){
         return switch (TestEnvironment.DEFAULT_BROWSER.toLowerCase()) {
             case "chrome" -> {
-                WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--no-sandbox");
+                chromeOptions.addArguments("--disable-dev-shm-usage");
                 chromeOptions.addArguments("--lang=en");
                 chromeOptions.addArguments("--disable-extensions");
                 chromeOptions.addArguments("--disable-popup-blocking");
@@ -73,10 +72,8 @@ public class DriverFactory {
                 yield new ChromeDriver(chromeOptions);
             }
             case "firefox" -> {
-                WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setHeadless(TestEnvironment.HEADLESS);
-
                 FirefoxProfile profile = new FirefoxProfile();
                 profile.setPreference("intl.accept_languages", "en-us");
                 firefoxOptions.setProfile(profile);
@@ -121,7 +118,7 @@ public class DriverFactory {
                 profile.setPreference("intl.accept_languages", "en-us");
                 firefoxOptions.setProfile(profile);
                 firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-                firefoxOptions.setCapability("sauce:options", prefs);
+                firefoxOptions.setCapability("se:options", prefs);
                 yield makeRemoteConnection(firefoxOptions);
             }
             default -> throw new IllegalArgumentException("This browser: " +
@@ -132,10 +129,12 @@ public class DriverFactory {
     private static WebDriver makeRemoteConnection(Capabilities capabilities) {
         RemoteWebDriver remoteWebDriver;
         try {
+//            remoteWebDriver = new RemoteWebDriver(
+//                    new URL("https://ondemand.us-west-1.saucelabs.com/wd/hub"), capabilities);
             remoteWebDriver = new RemoteWebDriver(
-                    new URL("https://ondemand.us-west-1.saucelabs.com/wd/hub"), capabilities);
+                    new URL(TestEnvironment.SELENIUM_GRID_URL), capabilities);
         } catch (Exception e) {
-            TestEnvironment.logger.error("Failed to launch Chrome remote driver in Saucelabs");
+            TestEnvironment.logger.error("Failed to launch Chrome remote driver in Baas!");
             throw new RuntimeException(e);
         }
         return remoteWebDriver;
