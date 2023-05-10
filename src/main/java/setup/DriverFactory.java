@@ -73,6 +73,11 @@ public class DriverFactory {
             }
             case "firefox" -> {
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
+//                firefoxOptions.setBinary("/home/chm/.local/share/flatpak/exports/bin/org.mozilla.firefox");
+//                firefoxOptions.setBinary("/home/chm/.local/share/flatpak/app/org.mozilla.firefox");
+//                firefoxOptions.setBinary("/home/chm/.local/share/flatpak/app/org.mozilla.firefox/x86_64/stable/a1eea8bb1c254ae48f51ac92cb532b9b4822149acad8a87d1e84297d90738ad2/files/lib/firefox/firefox");
+//                firefoxOptions.setBinary("/opt/firefox/firefox-bin");
+
                 firefoxOptions.setHeadless(TestEnvironment.HEADLESS);
                 FirefoxProfile profile = new FirefoxProfile();
                 profile.setPreference("intl.accept_languages", "en-us");

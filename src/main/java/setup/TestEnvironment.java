@@ -32,15 +32,15 @@ public class TestEnvironment {
 
     /* ------------------------------------------- ENVIRONMENT PROPERTIES ------------------------------------------- */
     public static final String DEFAULT_BROWSER = System.getProperty
-            ("browser", "chrome");
+            ("browser", "firefox");
     public static final String DEFAULT_DRIVER_REMOTE_SERVER = System.getProperty
-            ("driver.remote.server", "baas");
+            ("driver.remote.server", "local");
     public static final String DEFAULT_SAUCE_PLATFORM_NAME = System.getProperty
             ("sauce.platform.name", "Linux");
     public static final String DEFAULT_SAUCE_BROWSER_VERSION = System.getProperty
             ("sauce.browser.version", "latest");
     public static final String SELENIUM_GRID_URL = System.getProperty
-            ("selenium.grid.url", "http://127.0.0.1:43927/");
+            ("selenium.grid.url", "http://127.0.0.1:41183/");
     public static final String DEFAULT_SAUCE_USERNAME = System.getProperty
             ("sauce.user", "");
     public static final String DEFAULT_SAUCE_ACCESS_KEY = System.getProperty

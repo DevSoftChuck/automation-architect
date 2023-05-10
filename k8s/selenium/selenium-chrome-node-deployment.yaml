@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: selenium-chrome-node
-          image: selenium/node-chrome:4.9.0
+          image: selenium/node-chrome:4.9.1-20230508
           env:
             - name: JAVA_OPTS
               value: "-Xmx512m -Dselenium.LOGGER.level=WARNING"
