@@ -24,6 +24,12 @@ spec:
           env:
             - name: SE_OPTS
               value: "--log-level FINE"
+            - name: SE_EVENT_BUS_HOST
+              value: "selenium-event-bus"
+            - name: SE_EVENT_BUS_PUBLISH_PORT
+              value: "4442"
+            - name: SE_EVENT_BUS_SUBSCRIBE_PORT
+              value: "4443"
             - name: SE_SESSION_REQUEST_TIMEOUT
               value: "600"
             - name: SE_SESSION_RETRY_INTERVAL
