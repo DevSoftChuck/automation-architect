@@ -22,7 +22,9 @@ spec:
        - name: selenium-router
          image: selenium/router:4.9.1-20230508
          env:
-           - name: JAVA_OPTS
+           - name: SE_OPTS
+             value: "--log-level FINE"
+           - name: SE_JAVA_OPTS
              value: "-Xmx1024m"
            - name: SE_DISTRIBUTOR_HOST
              value: "selenium-distributor"

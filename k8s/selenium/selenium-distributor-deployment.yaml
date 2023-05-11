@@ -22,6 +22,8 @@ spec:
         - name: selenium-distributor
           image: selenium/distributor:4.9.1-20230508
           env:
+            - name: SE_OPTS
+              value: "--log-level FINE"
             - name: SE_EVENT_BUS_HOST
               value: "selenium-event-bus"
             - name: SE_EVENT_BUS_PUBLISH_PORT

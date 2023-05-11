@@ -21,6 +21,9 @@ spec:
       containers:
         - name: selenium-event-bus
           image: selenium/event-bus:4.9.1-20230508
+          env:
+            - name: SE_OPTS
+              value: "--log-level FINE"
           ports:
             - containerPort: 4442
               protocol: TCP

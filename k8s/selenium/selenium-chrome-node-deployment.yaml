@@ -22,8 +22,10 @@ spec:
         - name: selenium-chrome-node
           image: selenium/node-chrome:4.9.1-20230508
           env:
-            - name: JAVA_OPTS
-              value: "-Xmx512m -Dselenium.LOGGER.level=WARNING"
+            - name: SE_OPTS
+              value: "--log-level FINE"
+            - name: SE_JAVA_OPTS
+              value: "-Xmx512m"
             - name: SE_EVENT_BUS_HOST
               value: "selenium-event-bus"
             - name: SE_EVENT_BUS_PUBLISH_PORT

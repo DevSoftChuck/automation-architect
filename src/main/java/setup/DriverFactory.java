@@ -109,7 +109,7 @@ public class DriverFactory {
                 chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
                 chromeOptions.setHeadless(TestEnvironment.HEADLESS);
 
-                chromeOptions.setCapability("sauce:options", prefs);
+//                chromeOptions.setCapability("se:options", prefs);
                 yield makeRemoteConnection(chromeOptions);
             }
             case "firefox" -> {
